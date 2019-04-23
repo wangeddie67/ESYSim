@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Argumentconfiguration name="Record analyse" version="2.0" exec="./recordanalyse" compile="make">
+    <Argu argument="-record_file_name" loop="" value="../example/socrecord" note="file path of record file" type="10" darg="" dval="0" extension="record" />
+    <Argu argument="-record_buffer_size" loop="" value="10000" note="buffer size of record interface" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-record_file_text_enable" loop="" value="0" note="record file is text format" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-window_enable" loop="" value="0" note="enable window analyzer" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-window_buffer_size" loop="" value="100" note="buffer size of window file interface" type="1" darg="-window_enable" dval="1" extension="" />
+    <Argu argument="-window_file_name" loop="" value="../example/recordwindow" note="File path of window file" type="9" darg="-window_enable" dval="1" extension="win" />
+    <Argu argument="-window_width" loop="" value="100" note="width of window" type="1" darg="-window_enable" dval="1" extension="" />
+    <Argu argument="-window_step" loop="" value="100" note="step of window" type="1" darg="-window_enable" dval="1" extension="" />
+    <Argu argument="-tile_number" loop="" value="64" note="number of tile" type="1" darg="-window_enable" dval="1" extension="" />
+    <Argu argument="-display_total_hops" loop="" value="0" note="display total hops in record file" type="3" darg="" dval="0" extension="" />
+</Argumentconfiguration>

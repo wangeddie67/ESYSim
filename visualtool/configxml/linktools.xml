@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Toolsconfiguration>
+    <Tool direction="../esynet" father="Simulation" configName="esynet"/>
+    <Tool direction="../esymap" father="Simulation" configName="esymap"/>
+    <Tool direction="../esymap" father="Configuration" configName="tgffsocket"/>
+    <Tool direction="../esyarch" father="Simulation" configName="esyarch"/>
+    <Tool direction="../traceanalyse" father="Analysis" configName="traceanalyse"/>
+    <Tool direction="../recordanalyse" father="Analysis" configName="recordanalyse"/>
+    <Tool direction="../esynetrtl" father="Configuration" configName="nocgenerator"/>
+    <Tool direction="../esynetrtl" father="Simulation" configName="behaviorSim"/>
+    <Tool direction="../esynetrtl" father="Simulation" configName="gateSimulator"/>
+</Toolsconfiguration>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Argumentconfiguration name="Event trace analyse" version="2.0" exec="./traceanalyse" compile="make">
+    <Argu argument="-event_trace_file_name" loop="" value="../example/event" note="file path of event trace file" type="10" darg="" dval="0" extension="event" />
+    <Argu argument="-event_trace_buffer_size" loop="" value="10000" note="buffer size of event trace interface" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-event_trace_file_text_enable" loop="" value="0" note="event trace file is text format" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-path_enable" loop="" value="0" note="enable path analyzer" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-path_trace_file_name" loop="" value="../example/pathevent" note="File path of path pair" type="9" darg="-path_enable" dval="1" extension="path" />
+    <Argu argument="-path_trace_buffer_size" loop="" value="1000" note="buffer size of event trace interface" type="1" darg="-path_enable" dval="1" extension="" />
+    <Argu argument="-reduce_enable" loop="" value="0" note="enable reduce analyzer" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-reduce_buffer_size" loop="" value="10000" note="buffer size of reduced trace interface" type="1" darg="-reduce_enable" dval="1" extension="" />
+    <Argu argument="-reduce_text_enable" loop="" value="0" note="reduced trace is text format" type="3" darg="-reduce_enable" dval="1" extension="" />
+    <Argu argument="-window_enable" loop="" value="0" note="enable window analyzer" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-window_buffer_size" loop="" value="100" note="buffer size of window file interface" type="1" darg="-window_enable" dval="1" extension="" />
+    <Argu argument="-window_file_name" loop="" value="../example/trafficwindow" note="File path of window file" type="9" darg="-window_enable" dval="1" extension="win" />
+    <Argu argument="-window_width" loop="" value="100" note="width of window" type="1" darg="-window_enable" dval="1" extension="" />
+    <Argu argument="-window_step" loop="" value="100" note="step of window" type="1" darg="-window_enable" dval="1" extension="" />
+    <Argu argument="-router_number" loop="" value="64" note="number of router" type="1" darg="-window_enable" dval="1" extension="" />
+</Argumentconfiguration>

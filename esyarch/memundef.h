@@ -1,0 +1,40 @@
+/*
+ * memundef.h
+ *
+ *  Created on: 2016年3月22日
+ *      Author: root
+ */
+/*undef the memory.h's define*/
+#ifndef MEMUNDEF_H_
+#define MEMUNDEF_H_
+#undef MEM_PTAB_SET(ADDR)
+#undef MEM_PTAB_TAG(ADDR)
+#undef MEM_PTE_ADDR(PTE, IDX)
+#undef MEM_PAGE(MEM, ADDR)
+#undef MEM_OFFSET(ADDR)
+#undef MEM_TICKLE(MEM, ADDR)
+#undef MEM_FORALL(MEM, ITER, PTE)
+#undef MEM_READ(MEM, ADDR, TYPE)
+#undef __UNCHK_MEM_READ(MEM, ADDR, TYPE)
+#undef MEM_WRITE(MEM, ADDR, TYPE, VAL)
+#undef __UNCHK_MEM_WRITE(MEM, ADDR, TYPE, VAL)
+#undef MEM_READ_BYTE(MEM, ADDR)
+#undef MEM_READ_SBYTE(MEM, ADDR)
+#undef MEM_READ_HALF(MEM, ADDR)
+#undef MEM_READ_SHALF(MEM, ADDR)
+#undef MEM_READ_WORD(MEM, ADDR)
+#undef MEM_READ_SWORD(MEM, ADDR)
+#undef MEM_READ_QWORD(MEM, ADDR)
+#undef MEM_READ_SQWORD(MEM, ADDR)
+#undef MEM_WRITE_BYTE(MEM, ADDR, VAL)
+#undef MEM_WRITE_SBYTE(MEM, ADDR, VAL)
+#undef MEM_WRITE_HALF(MEM, ADDR, VAL)
+#undef MEM_WRITE_SHALF(MEM, ADDR, VAL)
+#undef MEM_WRITE_WORD(MEM, ADDR, VAL)
+#undef MEM_WRITE_SWORD(MEM, ADDR, VAL)
+#undef MEM_WRITE_SFLOAT(MEM, ADDR, VAL)
+#undef MEM_WRITE_DFLOAT(MEM, ADDR, VAL)
+#undef MEM_WRITE_QWORD(MEM, ADDR, VAL)
+#undef MEM_WRITE_SQWORD(MEM, ADDR, VAL)
+
+#endif /* MEMUNDEF_H_ */

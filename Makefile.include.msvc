@@ -1,0 +1,40 @@
+#Environment Variables in MSVC platform
+
+CCPP = cl /Za /nologo
+CC = cl /Za /nologo
+OFLAGS = /W3 /Zi /EHsc
+MAKE = nmake /nologo
+AR = lib
+AROPT = -out:
+RANLIB = dir
+RM = del/f/q
+RMDIR = del/s/f/q
+LN = copy
+LNDIR = xcopy/s/e/i
+DIFF = dir
+OEXT = obj
+LEXT = lib
+EEXT = .exe
+CS = &&
+X = \\\\
+CFLAGS = $(OFLAGS)
+OUTOPT = /Fe
+
+EXEC =
+
+INTERFACE_DIR = ..$(X)interface
+INTERFACE_TARGET = $(INTERFACE_DIR)$(X)interface_lib
+INTERFACE_LIB = $(INTERFACE_DIR)$(X)*.$(OEXT)
+
+TINYXML_DIR = ..$(X)tinyxml
+TINYXML_TARGET = $(TINYXML_DIR)$(X)tinyxml_lib
+TINYXML_LIB = $(TINYXML_DIR)$(X)*.$(OEXT)
+
+.SUFFIXES: .$(OEXT) .cc
+
+.cc.obj:
+        $(CCPP) /c $(CFLAGS)  -I$(INTERFACE_DIR) -I$(TINYXML_DIR) $<
+
+.c.obj:
+        $(CC) /c $(CFLAGS)  -I$(INTERFACE_DIR) -I$(TINYXML_DIR) $<
+

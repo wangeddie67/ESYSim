@@ -1,0 +1,28 @@
+[Buildset]
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x18\x00t\x00r\x00a\x00c\x00e\x002\x00w\x00i\x00n\x00d\x00o\x00w)
+
+[Defines And Includes][Compiler]
+Name=GCC
+Path=gcc
+Type=GCC
+
+[Launch]
+Launch Configurations=Launch Configuration 0
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=New Compiled Binary Launcher (2)
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=-event_trace_file_name /home/jwang/VisualNoC-develop/run/INPUT_64/blackscholes/event -event_trace_buffer_size 10000 -traffic_window_file_name ../example/trafficwindow -window_width 100 -window_step 100 -router_num 100
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+Dependency Action=Nothing
+EnvironmentGroup=
+Executable=file:///home/jwang/VisualNoC-develop/trace2window/trace2window
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Project Target=
+Use External Terminal=false
+Working Directory=
+isExecutable=true

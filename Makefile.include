@@ -1,0 +1,43 @@
+#Environment Variables in GCC platform
+
+CCPP = g++
+CC = gcc
+OFLAGS = -g -w -Wall
+MAKE = make
+AR = ar qcv
+AROPT =
+RANLIB = ranlib
+RM = rm -rvf
+RMDIR = rm -rvf
+LN = ln -s
+LNDIR = ln -s
+DIFF = diff
+OEXT = o
+LEXT = a
+EEXT =
+CS = ;
+X=/
+CFLAGS = $(OFLAGS)
+OUTOPT = -o 
+MV = mv -vf
+
+EXEC = ./
+
+INTERFACE_DIR = ..$(X)interface
+INTERFACE_TARGET = $(INTERFACE_DIR)$(X)interface_lib
+INTERFACE_LIB = $(INTERFACE_DIR)$(X)*.$(OEXT)
+
+TINYXML_DIR = ..$(X)tinyxml
+TINYXML_TARGET = $(TINYXML_DIR)$(X)tinyxml_lib
+TINYXML_LIB = $(TINYXML_DIR)$(X)*.$(OEXT)
+
+.SUFFIXES: .$(OEXT) .cc
+
+.cc.o:
+	$(CCPP) -c $(CFLAGS) $< -I$(INTERFACE_DIR) -I$(TINYXML_DIR)
+
+.cpp.o:
+	$(CCPP) -c $(CFLAGS) $< -I$(INTERFACE_DIR) -I$(TINYXML_DIR)
+
+.c.o:
+	$(CC) -c $(CFLAGS) $< -I$(INTERFACE_DIR) -I$(TINYXML_DIR)

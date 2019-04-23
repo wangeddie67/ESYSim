@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Argumentconfiguration name="RTL NoC Generator" version="1.0" exec="./nocgenerator" compile="make">
+    <Argu argument="-network_cfg_file" loop="" value="./rtl" note="path of network configuration file" type="8" darg="" dval="0" extension="netcfg" />
+    <Argu argument="-verilog_path" loop="" value="./generated_code" note="path of output noc design" type="0" darg="" dval="0" extension="" />
+    <Argu argument="-dc_enable" loop="" value="0" note="enable Design Compiler" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-dc_path" loop="" value="~/workspace/ftnoc" note="path of Design Compiler" type="0" darg="-dc_enable" dval="1" extension="" />
+    <Argu argument="-synthetic_library" loop="" value="{/home/junkaizhan/software/synopsys/DC_2015_06/libraries/syn/dw_foundation.sldb}" note="path of synthetic library" type="0" darg="-dc_enable" dval="1" extension="" />
+    <Argu argument="-target_library" loop="" value="[list /home/junkaizhan/technology/tcbn65gplus_digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_200a/tcbn65gplustc.db]" note="path of target library" type="0" darg="-dc_enable" dval="1" extension="" />
+    <Argu argument="-link_library" loop="" value="{* /home/junkaizhan/technology/tcbn65gplus_digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_200a/tcbn65gplustc.db /home/junkaizhan/software/synopsys/DC_2015_06/libraries/syn/dw_foundation.sldb}" note="path of link library" type="0" darg="-dc_enable" dval="1" extension="" />
+    <Argu argument="-symbol_library" loop="" value="[list /home/junkaizhan/technology/tcbn65gplus_digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_200a/tcbn65gplustc.db]" note="path of symbol library" type="0" darg="-dc_enable" dval="1" extension="" />
+    <Argu argument="-search_path" loop="" value="[list /home/junkaizhan/software/synopsys/DC_2015_06/libraries/syn  /home/junkaizhan/software/synopsys/DC_2015_06/dw/  /home/junkaizhan/technology/tcbn65gplus_digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_200a ]" note="path for search library" type="0" darg="-dc_enable" dval="1" extension="" />
+    <Argu argument="-clk_period" loop="" value="2" note="clock period for synthesis" type="0" darg="-dc_enable" dval="1" extension="" />
+    <Argu argument="-max_fanout" loop="" value="10" note="maximum fanout" type="0" darg="-dc_enable" dval="1" extension="" />
+</Argumentconfiguration>

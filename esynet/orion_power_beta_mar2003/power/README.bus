@@ -1,0 +1,78 @@
+Orion: A Power-Performance Simulator for Interconnection Networks
+=================================================================
+(c) Princeton University, 2003.
+
+This is a draft document and it describes the bus power models of Orion, coded in C.
+----------
+
+The bus power model is defined by SIM_power_misc.h, SIM_power_misc_internal.h and SIM_power_misc.c.
+
+
+I. Limitations
+Currently we cannot support bus wider than 64-bit, but this can be easily worked around for identity encoded bus (basically no encoding) as explained below.
+
+
+II. How to use
+(1) Define a SIM_power_bus_t type variable, say, your_bus.
+
+(2) Initialize by calling
+    SIM_bus_init(SIM_power_bus_t *bus, int model, int encoding, u_int width,
+                 u_int grp_width, u_int n_snd, u_int n_rcv, double length,
+		 double time)
+        bus       -> pointer to a bus structure, in this case just &your_bus.
+	model     -> model type, you should use GENERIC_BUS.
+	encoding  -> bus encoding scheme, if no special encoding is applied,
+	             use IDENT_ENC.
+	width     -> bus width in bits.
+	grp_width -> group width for bus inversion encoding, does not matter
+	             for other encodings, you can pass 0.
+        n_snd     -> number of senders.
+	n_rcv     -> number of receivers.
+	             // If there is only one sender and one receiver, the bus is directed,
+		     // e.g. link wires.  Otherwise, we assume broadcasting buses.
+		     // For directed buses, we currently use repeater size taken from the
+		     // MIT Raw microprocessor, which may not be optimal for other designs.
+		     // We are working on adding a systematic repeater sizing scheme.
+	length    -> bus length in um.
+	time      -> only used by broadcasting buses.
+	             if you choose to use the default output driver transistor
+	             sizes, then pass 0; if you want to re-size the transistors
+		     according to your bus timing specification, then pass the 
+		     required rise/fall time in seconds.
+    (*) I have no idea about how the interface between the bus and a receiver 
+        is implemented, so I simply assume an inverter as the one used in a
+	decoder, i.e. Wdecinvn and Wdecinvp in SIM_power.h.  If you want to
+	change this, please define two new parameters in SIM_power.h and change
+	SIM_generic_bus_cap() in SIM_power_misc.c.
+
+(3) Each time someone is sending data to the bus, call
+    SIM_bus_record(SIM_power_bus_t *bus, LIB_Type_max_uint old_state,
+                   LIB_Type_max_uint new_state)
+        bus       -> same as above.
+	old_state -> last state sent through the bus.
+	new_state -> current state sent through the bus.
+    (*) I call decoded data "data", i.e. data before and after traversing the
+        bus, and encoded data "state", i.e. data when traversing the bus.
+	For identity encoded buses, they are identical.  For other encoding
+	schemes, you need to call SIM_bus_state() to get state from data.
+
+(4) Any time you want to know how much energy has been consumed by the bus,
+    (not necessarily at the end of simulation), call
+    double SIM_bus_report(SIM_power_bus_t *bus)
+        bus -> same as above.
+    The energy consumption is in the return value.
+
+
+III. Work around for buses wider than 64-bit
+For example, if your bus is 128-bit wide, you can initialize it with data_width 64-bit.  When calling SIM_bus_record(), treat the bus as an array and call the function twice, one for lower 64-bit and another for upper 64-bit.
+This does not quite work for non-identity encoded buses, and is a common problem across many models.  I will fix it as soon as possible.
+
+
+IV. Misc.
+(1) I assume once a data is written to the bus, it will be maintained until the next bus transaction.  If this is not the case or there is some reset between transactions, please let me know.
+(2) My models were originally developed based on Wattch, so if you are familiar with Wattch, you will find some similarities.
+(3) I hope to continually improve my models.  If you find some bugs or enhance the models, please let me know.  Thanks.
+
+
+Hangsheng Wang
+hangshen@princeton.edu

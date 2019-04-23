@@ -1,0 +1,82 @@
+[Buildset]
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x0c\x00p\x00o\x00p\x00n\x00e\x00t)
+
+[Defines And Includes][Compiler]
+Name=GCC
+Path=gcc
+Type=GCC
+
+[Launch]
+Launch Configurations=Launch Configuration 0,Launch Configuration 1,Launch Configuration 2,Launch Configuration 3
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=hipfar
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=-event_trace_enable -vc_number 2 -traffic_pir 0.05 -event_trace_buffer_size 10000 -fault_inject_enable -fault_inject_file_name ../example/faultcfg -routing_alg 5
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+Dependency Action=Nothing
+EnvironmentGroup=
+Executable=file:///home/jwang/VisualNoC/popnet/popnet
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Project Target=
+Use External Terminal=false
+Working Directory=file:///home/jwang/VisualNoC/popnet
+isExecutable=true
+
+[Launch][Launch Configuration 1]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=dyxy
+Type=Native Application
+
+[Launch][Launch Configuration 1][Data]
+Arguments=-event_trace_enable -vc_number 2 -traffic_pir 0.05 -event_trace_buffer_size 10000 -fault_inject_file_name ../example/faultcfg -routing_alg 2
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+Dependency Action=Nothing
+EnvironmentGroup=
+Executable=file:///home/jwang/VisualNoC/popnet/popnet
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Project Target=
+Use External Terminal=false
+Working Directory=
+isExecutable=true
+
+[Launch][Launch Configuration 2]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=ERescuer
+Type=Native Application
+
+[Launch][Launch Configuration 2][Data]
+Arguments=-router_cfg_file_name ../example/mesh_9x9.xml -fault_inject_file_name ../example/faultcfg_9x9 -flit_size 1 -link_length 1000 -router_cfg_enable -random_seed 1 -sim_length 20000 -simulation_period 1 -traffic_rule 0 -traffic_pir 0.05 -event_trace_enable -event_trace_buffer_size 10000 -event_trace_file_name ../example/event -fault_inject_enable -injected_packet 40500 -routing_alg 3
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+Dependency Action=Nothing
+EnvironmentGroup=
+Executable=file:///home/jwang/VisualNoC/popnet/popnet
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Project Target=
+Use External Terminal=false
+Working Directory=
+isExecutable=true
+
+[Launch][Launch Configuration 3]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=New Compiled Binary Launcher
+Type=Native Application
+
+[Launch][Launch Configuration 3][Data]
+Arguments=-event_trace_enable -vc_number 2 -traffic_pir 0.01 -event_trace_buffer_size 10000 -fault_inject_file_name ../example/faultcfg -routing_alg 0
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+Dependency Action=Nothing
+EnvironmentGroup=
+Executable=file:///home/jwang/VisualNoC/popnet/popnet
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Project Target=
+Use External Terminal=false
+Working Directory=
+isExecutable=true

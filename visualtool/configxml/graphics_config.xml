@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graphicsconfiguration>
+    <Item name="Component">
+        <Style Style="Normal">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>2</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Selected">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>3</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="Light">
+        <Style Style="Empty">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Hit">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4278255360</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Miss">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294901760</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="Router">
+        <Style Style="Normal">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>3</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Selected">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>3</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Faulty">
+            <PenColor>4294901760</PenColor>
+            <PenWidth>5</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="Port">
+        <Style Style="Normal">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Faulty">
+            <PenColor>4294901760</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="Require">
+        <Style Style="Normal">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>2</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Faulty">
+            <PenColor>4294901760</PenColor>
+            <PenWidth>10</PenWidth>
+            <PenStyle>2</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="Assign">
+        <Style Style="Normal">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>3</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Faulty">
+            <PenColor>4294901760</PenColor>
+            <PenWidth>10</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="NI">
+        <Style Style="Normal">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Faulty">
+            <PenColor>4294901760</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="Link">
+        <Style Style="Normal">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>2</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Faulty">
+            <PenColor>4294901760</PenColor>
+            <PenWidth>10</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="Path">
+        <Style Style="Normal">
+            <PenColor>4278190335</PenColor>
+            <PenWidth>3</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Faulty">
+            <PenColor>4294901760</PenColor>
+            <PenWidth>10</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967295</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+    <Item name="Flit">
+        <Style Style="Head">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4278255360</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Body">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4278255615</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Tail">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4278190335</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Ack">
+            <PenColor>4278190080</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294967040</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+        <Style Style="Drop">
+            <PenColor>4294901760</PenColor>
+            <PenWidth>1</PenWidth>
+            <PenStyle>1</PenStyle>
+            <BrushColor>4294901760</BrushColor>
+            <BrushStyle>1</BrushStyle>
+        </Style>
+    </Item>
+</Graphicsconfiguration>
