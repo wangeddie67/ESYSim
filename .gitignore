@@ -1,0 +1,7 @@
+moc/
+obj/
+doc/
+
+*.o
+*.obj
+moc_*
