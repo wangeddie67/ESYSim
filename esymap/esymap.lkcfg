@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Argumentconfiguration name="ESYMap Evaluator" version="3.0" exec="./esymap" compile="make">
+    <Argu argument="-network_cfg_file_enable" loop="" value="0" note="enable network configuration file" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-router_cfg_file_name" loop="" value="../example/routercfg.txt" note="router configuration file name" type="8" darg="-network_cfg_file_enable" dval="1" extension="netcfg" />
+    <Argu argument="-router_num" loop="" value="64" note="Total number of routers" type="1" darg="-!network_cfg_file_enable" dval="1" extension="" />
+    <Argu argument="-array_size" loop="" value="8 8" note="k-ary network" type="5" darg="-!network_cfg_file_enable" dval="1" extension="" />
+    <Argu argument="-phy_number" loop="" value="7" note="number of physical port of a router" type="1" darg="-!network_cfg_file_enable" dval="1" extension="" />
+    <Argu argument="-vc_number" loop="" value="1" note="VC per physical port" type="1" darg="-!network_cfg_file_enable" dval="1" extension="" />
+    <Argu argument="-in_buffer_size" loop="" value="12" note="buffer size of each VC" type="1" darg="-!network_cfg_file_enable" dval="1" extension="" />
+    <Argu argument="-out_buffer_size" loop="" value="12" note="output buffer size" type="1" darg="-!network_cfg_file_enable" dval="1" extension="" />
+    <Argu argument="-data_path_width" loop="" value="32" note="width of data path, i.e. num. of bits" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-link_length" loop="" value="1000" note="link length #num" type="2" darg="" dval="0" extension="" />
+    <Argu argument="-routing_alg" loop="" value="XY" note="Code of chosen routing algorithm&#x0A;Options: XY, TXY, DyXY, FTLR, HiPFaR, CoreRescuer, ERescuer, AlterTest, NonBlock, " type="11" darg="" dval="0" extension="" />
+    <Argu argument="-random_seed" loop="" value="1" note="random seed used for generate random number" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-simulation_period" loop="" value="1" note="simulation period, #cycle" type="2" darg="" dval="0" extension="" />
+    <Argu argument="-ni_buffer_size" loop="" value="1" note="Buffer size of NI, #unit" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-ni_read_delay" loop="" value="0" note="Read delay of NI, #cycle" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-sim_length" loop="" value="10000" note="simulation length, i.e. 10,000,000 cycles" type="2" darg="" dval="0" extension="" />
+    <Argu argument="-output_trace_enable" loop="" value="0" note="enable output traffic trace" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-output_trace_file_text_enable" loop="" value="0" note="output trace file is text format" type="3" darg="-output_trace_enable" dval="1" extension="" />
+    <Argu argument="-output_trace_buffer_size" loop="" value="10000" note="buffer size of output trace interface" type="1" darg="-output_trace_enable" dval="1" extension="" />
+    <Argu argument="-output_trace_file_name" loop="" value="../example/benchmark" note="record information about packet injection" type="10" darg="-output_trace_enable" dval="1" extension="bench" />
+    <Argu argument="-event_trace_enable" loop="" value="0" note="enable event trace" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-event_trace_file_text_enable" loop="" value="0" note="event trace file is text format" type="3" darg="-event_trace_enable" dval="1" extension="" />
+    <Argu argument="-event_trace_buffer_size" loop="" value="10000" note="buffer size of event trace interface" type="1" darg="-event_trace_enable" dval="1" extension="" />
+    <Argu argument="-event_trace_file_name" loop="" value="../example/event" note="event trace file name" type="9" darg="-event_trace_enable" dval="1" extension="event" />
+    <Argu argument="-event_trace_cout_enable" loop="" value="0" note="enable event trace to cout" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-fault_inject_enable" loop="" value="0" note="enable fault injection" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-fault_inject_file_name" loop="" value="../example/faultinject" note="fault injection file name" type="10" darg="-fault_inject_enable" dval="1" extension="fcfg" />
+    <Argu argument="-fault_inject_inline" loop="" value="" note="fault injection items, in line format" type="4" darg="-fault_inject_enable" dval="1" extension="" />
+    <Argu argument="-ecc_enable" loop="" value="0" note="Enable Error Correcting Code" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-ecc_fip_enable" loop="" value="0" note="Enable Fault Injection of ECC" type="3" darg="-ecc_enable" dval="1" extension="" />
+    <Argu argument="-ecc_name" loop="" value="HM74" note="name of Error Correcting Code&#x0A;Options: HM74, HM128, HM2116, HM3832, " type="11" darg="-ecc_enable" dval="1" extension="" />
+    <Argu argument="-ecc_strategy" loop="" value="H2H" note="strategy to place Error Correcting Code unit&#x0A;Options: H2H, E2E, COUNT, CROSS, SLOPE, SQUARE, " type="11" darg="-ecc_enable" dval="1" extension="" />
+    <Argu argument="-ecc_space" loop="" value="1" note="space for ecc strategy, invalid for E2E or H2H" type="1" darg="-ecc_enable" dval="1" extension="" />
+    <Argu argument="-sw_enable" loop="" value="0" note="Enable Spare Wire" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-sw_fip_enable" loop="" value="0" note="Enable Fault Injection of SW" type="3" darg="-sw_enable" dval="1" extension="" />
+    <Argu argument="-sw_capacity" loop="" value="" note="Capacity of SW. First is the size of group and second is the number of spare wires." type="5" darg="-sw_enable" dval="1" extension="" />
+    <Argu argument="-e2e_ack_enable" loop="" value="0" note="enable acknoledge packets" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-e2e_retrans_enable" loop="" value="0" note="enable retransmission mechanism" type="3" darg="-e2e_ack_enable" dval="1" extension="" />
+    <Argu argument="-e2e_retrans_timer_max" loop="" value="10000" note="maximum value for retransmission timer" type="2" darg="-e2e_ack_enable" dval="1" extension="" />
+    <Argu argument="-bist_enable" loop="" value="0" note="enable Build-in Self-Test" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-bist_type_code" loop="" value="TARRA" note="BIST type code&#x0A;Options: TARRA, Blocking, NonBlock, " type="11" darg="-bist_enable" dval="1" extension="" />
+    <Argu argument="-bist_interval" loop="" value="10000" note="time between BIST for two routers" type="1" darg="-bist_enable" dval="1" extension="" />
+    <Argu argument="-bist_timing" loop="" value="500" note="timing for Build-in Self-Test" type="5" darg="-bist_enable" dval="1" extension="" />
+    <Argu argument="-bist_flit" loop="" value="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" note="testing flit for Build-in Self-Test to one destination" type="5" darg="-bist_enable" dval="1" extension="" />
+    <Argu argument="-bist_offset" loop="" value="0" note="offset of testing sequence" type="1" darg="-bist_enable" dval="1" extension="" />
+    <Argu argument="&#x0A;-------&#x0A;ESYMAP Configure:&#x0A;-------&#x0A;" loop="" value="1" note="" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-app_size_min" loop="" value="4" note="the minimum application size, default: 4" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-app_size_max" loop="" value="20" note="the maximum application size, default: 20" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-packet_size_min" loop="" value="5" note="the minimum packet size, default: 5 (flits)" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-packet_size_max" loop="" value="5" note="the maximum packet size, default: 5 (flits)" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-period_min" loop="" value="2000" note="the minimum period, default: 2000 cycles" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-period_max" loop="" value="4000" note="the maximum period, default: 4000 cycles" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-period_exec_times_min" loop="" value="2" note="the minimum execution times, default: 2" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-period_exec_times_max" loop="" value="10" note="the maximum execution times, default: 10" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-total_app_num" loop="" value="500" note="total application number to be executed, default: 500" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-mapping_algs" loop="" value="cona" note="mapping algs, default: cona &#x0A;&#x09;&#x09;Options: FF, NN, CoNA, WeNA, CASqA, CAM (lowercase)" type="0" darg="" dval="0" extension="" />
+    <Argu argument="-tgff_file_name" loop="" value="./TGFF/simple.tgff" note="TGFF file name, default: ./TGFF/simple.tgff" type="8" darg="" dval="0" extension="" />
+    <Argu argument="-result_file_name" loop="" value="./result.txt" note='result log file name, default: &quot;&quot;, No result file.' type="7" darg="" dval="0" extension="" />
+    <Argu argument="-task_order_type" loop="" value="cona" note="task_order_type, default: cona" type="0" darg="" dval="0" extension="" />
+    <Argu argument="-pe_rate" loop="" value="5" note="the average PE send rate, default: 5 (full rate if 5 flits/packet)" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-app_inject_rate" loop="" value="1000" note="application injection rate, default: 1000" type="1" darg="" dval="0" extension="" />
+    <Argu argument="-system_usage_rate" loop="" value="1" note="the system occupancy rate, default: 1. Range from 0 to 1" type="2" darg="" dval="0" extension="" />
+    <Argu argument="-tools_matlab_enable" loop="" value="0" note="generate matlab script, default: false" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-tools_graph_enable" loop="" value="0" note="generate graph using graphviz, default: false" type="3" darg="" dval="0" extension="" />
+    <Argu argument="-tools_inject_enable" loop="" value="0" note="inject packets instead of application, default: false" type="3" darg="" dval="0" extension="" />
+</Argumentconfiguration>

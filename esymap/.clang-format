@@ -1,0 +1,7 @@
+UseTab: Never
+IndentWidth: 4
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false
+IndentCaseLabels: false
+ColumnLimit: 100
+Standard: Cpp03

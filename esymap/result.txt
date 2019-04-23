@@ -1,0 +1,15 @@
+ff	1	./TGFF/simple.tgff	25.4384	3.20262
+wena	1	./TGFF/simple.tgff	16.0392	2.14507
+cona	1	./TGFF/simple.tgff	12.1113	1.6395
+cona	1	./TGFF/simple.tgff	12.1113	1.6395
+cona	1	./TGFF/simple.tgff	12.1113	1.6395
+cona	1	./TGFF/simple.tgff	12.1113	1.6395
+cona	1	./TGFF/simple.tgff	12.1113	1.6395
+cona	1	./TGFF/simple.tgff	12.1113	1.6395
+cona	1	./TGFF/simple.tgff	12.1113	1.6395
+cona	1	./TGFF/simple.tgff	39.7235	1.59829
+cona	1	./TGFF/simple.tgff	43.8047	1.73424
+cona	1	./TGFF/simple.tgff	39.7235	1.59829
+cona	1	./TGFF/simple.tgff	39.7235	1.59829
+cona	1	./TGFF/simple.tgff	39.7235	1.59829
+cona	1	./TGFF/simple.tgff	39.7235	1.59829

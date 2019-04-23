@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Argumentconfiguration name="Task Graphics for Free" version="3.0" exec="./tgffsocket" compile="make">
+    <Argu argument="-option_file" loop="" value="TGFF/simple" note="file path of option file" type="8" darg="" dval="0" extension="" />
+</Argumentconfiguration>

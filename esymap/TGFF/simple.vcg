@@ -1,0 +1,4 @@
+graph: { label: "TGFF/simple.vcg"
+display_edge_labels: yes
+
+ } 

@@ -1,0 +1,40 @@
+
+seed 1
+# The number of task graphs
+tg_cnt 2000
+# the number of tasks in a task graph [6, 20],
+# Notice: the actual number is not [6,20]. please ref. manual of TGFF
+task_cnt 13 7 
+# in and out max degree of a task graph
+task_degree 3 2
+# task exec_time type number
+task_type_cnt 20
+# communication type number
+trans_type_cnt 100
+
+
+# the probability that a graph is periodic (default 1.0).
+prob_periodic 1
+# the probability that a graph has more than one start node (default 0.0).
+prob_multi_start_nodes 0
+# the number of start nodes for graphs which have multiple start nodes (average,multiplier).
+start_node 2 1 
+
+table_label COMMUN
+table_cnt 1
+# packets number [55-45, 55+45]
+type_attrib packets 10 5
+trans_write
+
+table_label PE
+table_cnt 1
+table_attrib price 20 10, power(w/unit_time) 0.8 0.5, idle_power 0.2 0.1
+# the time of each task on this PE [1000-500, 1000+500]
+type_attrib exec_time 50 10
+pe_write
+
+tg_write
+#eps_write
+#vcg_write
+
+
