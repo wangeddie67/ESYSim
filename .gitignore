@@ -1,6 +1,8 @@
 moc/
 obj/
 doc/
+esyarch/
+.kdev4/
 
 *.o
 *.obj
