@@ -116,12 +116,12 @@ private:
 	vector< EsynetFlit > m_eject_queue;
 
 	/* ejected flit queue */
-	vector< EsynetMessEvent > m_accept_list;
+	vector< EsynetEvent > m_accept_list;
 
 	EsynetNIStatistic m_statistic;
 
 	/* initial random number */
-	DataType m_init_data;
+	EsynetPayload m_init_data;
 	/* size of 64 bits */
 	long m_flit_size;
 
@@ -164,7 +164,7 @@ public:
 	/* flit traversal */
 	void flitTraversal();
 	
-	const vector< EsynetMessEvent > acceptList() const 
+	const vector< EsynetEvent > acceptList() const 
 		{ return m_accept_list; }
 	void clearAcceptList() { m_accept_list.clear(); }
 

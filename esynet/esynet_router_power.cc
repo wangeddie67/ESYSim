@@ -1,22 +1,25 @@
 /*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ * File name : esynet_router_power.h
+ * Function : Interface to Orion power model.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301, USA.
-
----
-Copyright (C) 2015, Junshi Wang <>
-*/
 
 #include "esynet_router_power.h"
 #include <iostream>
@@ -118,14 +121,13 @@ EsynetRouterPower::EsynetRouterPower(long phy, long vc, long flit_size, double l
                 long in_port  buffer read port
     const DataType & read_d   data to read
 *************************************************/
-void EsynetRouterPower::powerBufferRead(long in_port, const DataType & read_d)
+void EsynetRouterPower::powerBufferRead(long in_port, const EsynetPayload & read_d)
 {
     /* loop all long word */
     for( long l_flit = 0; l_flit < m_flit_size; l_flit ++ )
     {
         /* regist power */
-        FUNC(SIM_buf_power_data_read, &(m_router_info.in_buf_info),
-            &(m_router_power.in_buf), read_d[l_flit]);
+        FUNC(SIM_buf_power_data_read, &(m_router_info.in_buf_info), &(m_router_power.in_buf), read_d[l_flit]);
         /* record last data to read */
         m_buffer_read[ in_port ][ l_flit ] = read_d[ l_flit ];
     } /* for( long l_flit = 0; l_flit < m_flit_size; l_flit ++ ) */
@@ -142,14 +144,13 @@ void EsynetRouterPower::powerBufferRead(long in_port, const DataType & read_d)
                 long in_port  buffer read port
     const DataType & read_d   data to read
 *************************************************/
-void EsynetRouterPower::powerLinkTraversal(long in_port, const DataType & read_d)
+void EsynetRouterPower::powerLinkTraversal(long in_port, const EsynetPayload & read_d)
 {
     /* loop all long word */
     for(long l_flit = 0; l_flit < m_flit_size; l_flit++)
     {
         /* regist power */
-        SIM_bus_record( &m_link_power, m_link_traversal[ in_port ][ l_flit ],
-            read_d[ l_flit ] );
+        SIM_bus_record( &m_link_power, m_link_traversal[ in_port ][ l_flit ], read_d[ l_flit ] );
         /* record last data to traversal */
         m_link_traversal[ in_port ][ l_flit ] = read_d[ l_flit ];
     } /* for( long l_flit = 0; l_flit < m_flit_size; l_flit ++ ) */
@@ -168,7 +169,7 @@ void EsynetRouterPower::powerLinkTraversal(long in_port, const DataType & read_d
                 long in_port  buffer write port
     const DataType & write_d  data to write
 *************************************************/
-void EsynetRouterPower::powerBufferWrite(long in_port, const DataType & write_d)
+void EsynetRouterPower::powerBufferWrite(long in_port, const EsynetPayload & write_d)
 {
     /* loop all long word */
     for ( long l_flit = 0; l_flit < m_flit_size; l_flit ++ )
@@ -196,15 +197,13 @@ void EsynetRouterPower::powerBufferWrite(long in_port, const DataType & write_d)
                 long out_port  output port
     const DataType & trav_d    data to traversal
 *************************************************/
-void EsynetRouterPower::powerCrossbarTraversal(long in_port, long out_port,
-    const DataType & trav_d)
+void EsynetRouterPower::powerCrossbarTraversal(long in_port, long out_port, const EsynetPayload & trav_d)
 {
     /* loop all long word */
     for ( long l_flit = 0; l_flit < m_flit_size; l_flit ++ )
     {
         /* regist power */
-        SIM_crossbar_record( &(m_router_power.crossbar), 1, trav_d[ l_flit ],
-                m_crossbar_read[ in_port ][ l_flit ], 1, 1 );
+        SIM_crossbar_record( &(m_router_power.crossbar), 1, trav_d[ l_flit ], m_crossbar_read[ in_port ][ l_flit ], 1, 1 );
         SIM_crossbar_record( &(m_router_power.crossbar), 0, trav_d[ l_flit ],
                 m_crossbar_write[ out_port ][ l_flit ], m_crossbar_input[ out_port ],
                 in_port );
@@ -229,12 +228,10 @@ void EsynetRouterPower::powerCrossbarTraversal(long in_port, long out_port,
          AtomType req  request word
     unsigned long gra  grant
 *************************************************/
-void EsynetRouterPower::powerVCArbiter(long pc, long vc, AtomType req,
-    unsigned long gra )
+void EsynetRouterPower::powerVCArbiter(long pc, long vc, EsynetAtomType req, unsigned long gra )
 {
     /* regist power */
-    SIM_arbiter_record( &m_arbiter_vc_power, req, m_arbiter_vc_req[ pc ][ vc ],
-            gra, m_arbiter_vc_grant[ pc ][ vc ]);
+    SIM_arbiter_record( &m_arbiter_vc_power, req, m_arbiter_vc_req[ pc ][ vc ], gra, m_arbiter_vc_grant[ pc ][ vc ]);
     /* record last data to arbiter */
     m_arbiter_vc_req[ pc ][ vc ] = req;
     m_arbiter_vc_grant[ pc ][ vc ] = gra;
@@ -271,8 +268,7 @@ double EsynetRouterPower::powerArbiterReport( unsigned long long sim_cycle, int 
 *************************************************/
 double EsynetRouterPower::powerBufferReport( unsigned long long sim_cycle, int telem)
 {
-    return SIM_array_power_report( sim_cycle, &(m_router_info.in_buf_info),
-            &(m_router_power.in_buf), telem );
+    return SIM_array_power_report( sim_cycle, &(m_router_info.in_buf_info), &(m_router_power.in_buf), telem );
 }
 
 /*************************************************

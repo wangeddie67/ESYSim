@@ -1,120 +1,121 @@
-/*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301, USA.
-
----
-Copyright (C) 2015, Junshi Wang <>
-*/
+/**
+ * File name : esynet_routing_xy.cc
+ * Function : Routing algorithm XY, TXY, and DyXY.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2015, Junshi Wang <wangeddie67@gmail.com>
+ */
 
 #include "esynet_router_unit.h"
 
 #define AX_X EsyNetworkCfg::AX_X
 #define AX_Y EsyNetworkCfg::AX_Y
 
-#define VCLOCAL		VCType(0,0)
-#define VCNORTH		VCType(1,0)
-#define VCSOUTH		VCType(2,0)
-#define VCWEST		VCType(3,0)
-#define VCEAST		VCType(4,0)
+#define VCLOCAL esynet::EsynetVC(0,0)
+#define VCNORTH esynet::EsynetVC(1,0)
+#define VCSOUTH esynet::EsynetVC(2,0)
+#define VCWEST  esynet::EsynetVC(3,0)
+#define VCEAST  esynet::EsynetVC(4,0)
+
 void EsynetRouter::algorithmTXY(long des, long src, long s_ph, long s_vc)
 {
-	AddrType des_t = m_network_cfg->seq2Coord( des );
-	AddrType sor_t = m_network_cfg->seq2Coord( src );
-	long xoffset = des_t[ AX_X ] - m_router_addr[ AX_X ];
-	long yoffset = des_t[ AX_Y ] - m_router_addr[ AX_Y ];
-	bool xdirection = ( abs( static_cast<int>( xoffset ) ) * 2 
-		<= m_network_cfg->size( AX_X ) ) ? true: false;
-	bool ydirection = ( abs( static_cast<int>( yoffset ) ) * 2 
-		<= m_network_cfg->size( AX_Y ) ) ? true: false;
+    EsynetAddr des_t = m_network_cfg->seq2Coord( des );
+    EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    long xoffset = des_t[ AX_X ] - m_router_addr[ AX_X ];
+    long yoffset = des_t[ AX_Y ] - m_router_addr[ AX_Y ];
+    bool xdirection = ( abs( static_cast<int>( xoffset ) ) * 2 <= m_network_cfg->size( AX_X ) ) ? true: false;
+    bool ydirection = ( abs( static_cast<int>( yoffset ) ) * 2 <= m_network_cfg->size( AX_Y ) ) ? true: false;
 
-	if ( xoffset == 0 && yoffset == 0 )
-	{
-		m_input_port[ s_ph ][ s_vc ].addRouting( VCLOCAL );
-	}
-	if ( xdirection )
-	{
-		if ( xoffset < 0 )
-		{
-			m_input_port[ s_ph ][ s_vc ].addRouting( VCWEST );
-		}
-		else if ( xoffset > 0 )
-		{
-			m_input_port[ s_ph ][ s_vc ].addRouting( VCEAST );
-		}
-		else
-		{
-			if ( ydirection )
-			{
-				if ( yoffset < 0 )
-				{
-					m_input_port[ s_ph ][ s_vc ].addRouting( VCNORTH );
-				}
-				else if ( yoffset > 0 )
-				{
-					m_input_port[ s_ph ][ s_vc ].addRouting( VCSOUTH );
-				}
-			}
-			else
-			{
-				if ( yoffset < 0 )
-				{
-					m_input_port[ s_ph ][ s_vc ].addRouting( VCSOUTH );
-				}
-				else if ( yoffset > 0 )
-				{
-					m_input_port[ s_ph ][ s_vc ].addRouting( VCNORTH );
-				}
-			}
-		}
-	}
-	else
-	{
-		if ( xoffset < 0 )
-		{
-			m_input_port[ s_ph ][ s_vc ].addRouting( VCEAST );
-		}
-		else if ( xoffset > 0 )
-		{
-			m_input_port[ s_ph ][ s_vc ].addRouting( VCWEST );
-		}
-		else
-		{
-			if ( ydirection )
-			{
-				if ( yoffset < 0 )
-				{
-					m_input_port[ s_ph ][ s_vc ].addRouting( VCNORTH );
-				}
-				else if ( yoffset > 0 )
-				{
-					m_input_port[ s_ph ][ s_vc ].addRouting( VCSOUTH );
-				}
-			}
-			else
-			{
-				if ( yoffset < 0 )
-				{
-					m_input_port[ s_ph ][ s_vc ].addRouting( VCSOUTH );
-				}
-				else if ( yoffset > 0 )
-				{
-					m_input_port[ s_ph ][ s_vc ].addRouting( VCNORTH );
-				}
-			}
-		}
-	}
+    if ( xoffset == 0 && yoffset == 0 )
+    {
+        m_input_port[ s_ph ][ s_vc ].addRouting( VCLOCAL );
+    }
+    if ( xdirection )
+    {
+        if ( xoffset < 0 )
+        {
+            m_input_port[ s_ph ][ s_vc ].addRouting( VCWEST );
+        }
+        else if ( xoffset > 0 )
+        {
+            m_input_port[ s_ph ][ s_vc ].addRouting( VCEAST );
+        }
+        else
+        {
+            if ( ydirection )
+            {
+                if ( yoffset < 0 )
+                {
+                    m_input_port[ s_ph ][ s_vc ].addRouting( VCNORTH );
+                }
+                else if ( yoffset > 0 )
+                {
+                    m_input_port[ s_ph ][ s_vc ].addRouting( VCSOUTH );
+                }
+            }
+            else
+            {
+                if ( yoffset < 0 )
+                {
+                    m_input_port[ s_ph ][ s_vc ].addRouting( VCSOUTH );
+                }
+                else if ( yoffset > 0 )
+                {
+                    m_input_port[ s_ph ][ s_vc ].addRouting( VCNORTH );
+                }
+            }
+        }
+    }
+    else
+    {
+        if ( xoffset < 0 )
+        {
+            m_input_port[ s_ph ][ s_vc ].addRouting( VCEAST );
+        }
+        else if ( xoffset > 0 )
+        {
+            m_input_port[ s_ph ][ s_vc ].addRouting( VCWEST );
+        }
+        else
+        {
+            if ( ydirection )
+            {
+                if ( yoffset < 0 )
+                {
+                    m_input_port[ s_ph ][ s_vc ].addRouting( VCNORTH );
+                }
+                else if ( yoffset > 0 )
+                {
+                    m_input_port[ s_ph ][ s_vc ].addRouting( VCSOUTH );
+                }
+            }
+            else
+            {
+                if ( yoffset < 0 )
+                {
+                    m_input_port[ s_ph ][ s_vc ].addRouting( VCSOUTH );
+                }
+                else if ( yoffset > 0 )
+                {
+                    m_input_port[ s_ph ][ s_vc ].addRouting( VCNORTH );
+                }
+            }
+        }
+    }
 }
 #undef VCLOCAL
 #undef VCNORTH
@@ -122,16 +123,17 @@ void EsynetRouter::algorithmTXY(long des, long src, long s_ph, long s_vc)
 #undef VCWEST
 #undef VCEAST
 
-#define PLOCAL		0
-#define PNORTH		1
-#define PSOUTH		2
-#define PWEST		3
-#define PEAST		4
+#define PLOCAL  0
+#define PNORTH  1
+#define PSOUTH  2
+#define PWEST   3
+#define PEAST   4
+
 void EsynetRouter::algorithmXY(long des, long src, long s_ph, long s_vc)
 {
-    AddrType des_t = m_network_cfg->seq2Coord( des );
-    AddrType sor_t = m_network_cfg->seq2Coord( src );
-    
+    EsynetAddr des_t = m_network_cfg->seq2Coord( des );
+    EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+
     long dir = PLOCAL;
 
     if(m_router_addr[AX_X] > des_t[AX_X])
@@ -160,8 +162,8 @@ void EsynetRouter::algorithmXY(long des, long src, long s_ph, long s_vc)
 
     for (int i = 0; i < (int)m_input_port[ dir ].size(); i ++)
     {
-        m_input_port[ s_ph ][ s_vc ].addRouting( VCType(dir, i) );
-    }    
+        m_input_port[ s_ph ][ s_vc ].addRouting( esynet::EsynetVC(dir, i) );
+    }
 }
 #undef PLOCAL
 #undef PNORTH
@@ -169,39 +171,36 @@ void EsynetRouter::algorithmXY(long des, long src, long s_ph, long s_vc)
 #undef PWEST
 #undef PEAST
 
-#define VCLOCAL		VCType(0,0)
-#define VCNORTH1	VCType(1,0)
-#define VCSOUTH1	VCType(2,0)
-#define VCWEST		VCType(3,0)
-#define VCEAST		VCType(4,0)
-#define VCNORTH2	VCType(1,1)
-#define VCSOUTH2	VCType(2,1)
+#define VCLOCAL     esynet::EsynetVC(0,0)
+#define VCNORTH1    esynet::EsynetVC(1,0)
+#define VCSOUTH1    esynet::EsynetVC(2,0)
+#define VCWEST      esynet::EsynetVC(3,0)
+#define VCEAST      esynet::EsynetVC(4,0)
+#define VCNORTH2    esynet::EsynetVC(1,1)
+#define VCSOUTH2    esynet::EsynetVC(2,1)
+
 void EsynetRouter::algorithmDyXY(long des, long src, long s_ph, long s_vc)
 {
-    AddrType des_t = m_network_cfg->seq2Coord( des );
-    AddrType sor_t = m_network_cfg->seq2Coord( src );
+    EsynetAddr des_t = m_network_cfg->seq2Coord( des );
+    EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
     // IF D=Local then Select <= Local;
-    if ( m_router_addr[ AX_Y ] == des_t[ AX_Y ] && 
-        m_router_addr[ AX_X ] == des_t[ AX_X ] )
+    if ( m_router_addr[ AX_Y ] == des_t[ AX_Y ] && m_router_addr[ AX_X ] == des_t[ AX_X ] )
     {
         m_input_port[ s_ph ][ s_vc ].addRouting( VCLOCAL );
     }
     // ***
     // Elsif D=East then Select <= E;
-    else if ( m_router_addr[ AX_Y ] == des_t[ AX_Y ] && 
-        m_router_addr[ AX_X ] < des_t[ AX_X ] )
+    else if ( m_router_addr[ AX_Y ] == des_t[ AX_Y ] && m_router_addr[ AX_X ] < des_t[ AX_X ] )
     {
         m_input_port[ s_ph ][ s_vc ].addRouting( VCEAST );
     }
     // Elsif D=West then Select <= W;
-    else if ( m_router_addr[ AX_Y ] == des_t[ AX_Y ] && 
-        m_router_addr[ AX_X ] > des_t[ AX_X ] )
+    else if ( m_router_addr[ AX_Y ] == des_t[ AX_Y ] && m_router_addr[ AX_X ] > des_t[ AX_X ] )
     {
         m_input_port[ s_ph ][ s_vc ].addRouting( VCWEST );
     }
     // Elsif D=North then Select <= N(VC1);
-    else if ( m_router_addr[ AX_Y ] > des_t[ AX_Y ] && 
-        m_router_addr[ AX_X ] == des_t[ AX_X ] )
+    else if ( m_router_addr[ AX_Y ] > des_t[ AX_Y ] && m_router_addr[ AX_X ] == des_t[ AX_X ] )
     {
         // If Packet=eastward then Select<=N(VC1);
         if (des_t[ AX_X ] > sor_t[ AX_X ])
@@ -215,8 +214,7 @@ void EsynetRouter::algorithmDyXY(long des, long src, long s_ph, long s_vc)
         }
     }
     // Elsif D=South then Select <= S(VC2);
-    else if ( m_router_addr[ AX_Y ] < des_t[ AX_Y ] && 
-        m_router_addr[ AX_X ] == des_t[ AX_X ] )
+    else if ( m_router_addr[ AX_Y ] < des_t[ AX_Y ] && m_router_addr[ AX_X ] == des_t[ AX_X ] )
     {
         // If Packet=westward then Select<=S(VC2)
         if (des_t[ AX_X ] < sor_t[ AX_X ])
@@ -230,8 +228,7 @@ void EsynetRouter::algorithmDyXY(long des, long src, long s_ph, long s_vc)
         }
     }
     // Elsif D=NorthEast then
-    else if ( m_router_addr[ AX_Y ] > des_t[ AX_Y ] && 
-        m_router_addr[ AX_X ] < des_t[ AX_X ] )
+    else if ( m_router_addr[ AX_Y ] > des_t[ AX_Y ] && m_router_addr[ AX_X ] < des_t[ AX_X ] )
     {
         // If E=free then Select <= E;
         // Else Select <= N(VC1);
@@ -245,8 +242,7 @@ void EsynetRouter::algorithmDyXY(long des, long src, long s_ph, long s_vc)
         }
     }
     // Elsif D=NorthWest then
-    else if ( m_router_addr[ AX_Y ] > des_t[ AX_Y ] && 
-        m_router_addr[ AX_X ] > des_t[ AX_X ] )
+    else if ( m_router_addr[ AX_Y ] > des_t[ AX_Y ] && m_router_addr[ AX_X ] > des_t[ AX_X ] )
     {
         // If W=free then Select <= W;
         // Else Select <= N(VC2);
@@ -260,8 +256,7 @@ void EsynetRouter::algorithmDyXY(long des, long src, long s_ph, long s_vc)
         }
     }
     // Elsif D=SouthEast then
-    else if (m_router_addr[ AX_Y ] < des_t[ AX_Y ] && 
-        m_router_addr[ AX_X ] < des_t[ AX_X ])
+    else if (m_router_addr[ AX_Y ] < des_t[ AX_Y ] && m_router_addr[ AX_X ] < des_t[ AX_X ])
     {
         // If S(VC1) = free then Select <= S(VC1);
         // Else Select <= E;

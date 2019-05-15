@@ -1,22 +1,30 @@
 /*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ * File name : esynet_foundation.h
+ * Function : Define network platform.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301, USA.
-
----
-Copyright (C) 2015, Junshi Wang <>
-*/
+/**
+ * @ingroup ESYNET_NETWORK
+ * @file esynet_foundation.h
+ * @brief Declare network platform
+ */
 
 #ifndef ESYNET_FOUNDATION_H
 #define ESYNET_FOUNDATION_H
@@ -26,8 +34,8 @@ Copyright (C) 2015, Junshi Wang <>
 #include "esynet_router_unit.h"
 #include "esynet_packet_generator.h"
 
-/*!
- * \brief Simulation platform.
+/**
+ * @brief Simulation platform.
  *
  * The duty of simulation platform includes:
  * - generate the routers and PEs for simulation.
@@ -39,42 +47,36 @@ Copyright (C) 2015, Junshi Wang <>
 class EsynetFoundation : public EsynetSimBaseUnit
 {
 public:
-    /*!
-     * \brief State of measurement.
+    /**
+     * @brief State of measurement.
      */
     enum MeasureState
     {
-        MEASURE_INIT,  /**< Measurement has not start. */
-        MEASURE_PRE,   /**< Prepare phase for measurement, e.g. latency */
-        MEASURE_ING,   /**< Measurement is running. */
-        MEASURE_END    /**< Measurement has finished. */
+        MEASURE_INIT,  /*!< Measurement has not start. */
+        MEASURE_PRE,   /*!< Prepare phase for measurement, e.g. latency */
+        MEASURE_ING,   /*!< Measurement is running. */
+        MEASURE_END    /*!< Measurement has finished. */
     };
 
 protected:
-    EsyNetworkCfg * m_network_cfg;  /**< \brief Pointer to network
-        configuration structure. */
-	EsynetConfig * m_argument_cfg;  /**< \brief Pointer to argument
-        configuration structure. */
-    
-	vector< EsynetRouter > m_router_list;  /**< \brief Vector of router component. */
-	vector< EsynetNI > m_ni_list;  /**< \brief Vector of process
-        element componenet. */
+    EsyNetworkCfg * m_network_cfg;  /*!< @brief Pointer to network configuration structure. */
+    EsynetConfig * m_argument_cfg;  /*!< @brief Pointer to argument configuration structure. */
 
-    EsynetPacketGenerator m_packet_generator; /**< \brief packet generator */
-	EsynetFoundationStatistic m_statistic;  /**< \brief Global statistic unit. */
-    MeasureState m_latency_measure_state;  /**< \brief State of measurement of
-        average latency. */
-    MeasureState m_throughput_measure_state;  /**< \brief State of measurement
-        of throughput. */
-    MeasureState m_injection_state; /**< \brief State of injection and 
-        acception if the number of packet is limited. */
-        
-    vector< bool > m_received_id;
-	long m_received_id_offset;
+    std::vector< EsynetRouter > m_router_list;  /*!< @brief Vector of router component. */
+    std::vector< EsynetNI > m_ni_list;  /*!< @brief Vector of process element componenet. */
+
+    EsynetPacketGenerator m_packet_generator; /*!< @brief packet generator */
+    EsynetFoundationStatistic m_statistic;  /*!< @brief Global statistic unit. */
+    MeasureState m_latency_measure_state;  /*!< @brief State of measurement of average latency. */
+    MeasureState m_throughput_measure_state;  /*!< @brief State of measurement of throughput. */
+    MeasureState m_injection_state; /*!< @brief State of injection and acception if the number of packet is limited. */
+
+    std::vector< bool > m_received_id;
+    long m_received_id_offset;
 
 public:
-    /*!
-     * \brief Create a simulation based on network configuration and argument
+    /**
+     * @brief Create a simulation based on network configuration and argument
      * configuration.
      *
      * - Create and configure simulation components, including routers and PEs.
@@ -82,44 +84,40 @@ public:
      * - Initializate the period events for the frequency scaled routers.
      * - Configure fault injection units in each router.
      *
-     * \param network_cfg  pointer to network configuration structure.
-     * \param argument_cfg pointer to argument configuration structure.
+     * @param network_cfg  pointer to network configuration structure.
+     * @param argument_cfg pointer to argument configuration structure.
      */
-	EsynetFoundation(EsyNetworkCfg * network_cfg,
-		EsynetConfig * argument_cfg);
+    EsynetFoundation(EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg);
     
     /** @name Functions to access variables */
     ///@{
-    /*!
-     * \brief Access state of latency measurement #m_latency_measure_state.
-     * \return stat of latency measurement #m_latency_measure_state.
+    /**
+     * @brief Access state of latency measurement #m_latency_measure_state.
+     * @return stat of latency measurement #m_latency_measure_state.
      */
-    MeasureState latencyMeasureState() const 
-        { return m_latency_measure_state; }
-    /*!
-     * \brief Access state of throughput measurement #m_throughput_measure_state.
-     * \return stat of throughput measurement #m_throughput_measure_state.
+    MeasureState latencyMeasureState() const { return m_latency_measure_state; }
+    /**
+     * @brief Access state of throughput measurement #m_throughput_measure_state.
+     * @return stat of throughput measurement #m_throughput_measure_state.
      */
-    MeasureState throughputMeasureState() const
-        { return m_throughput_measure_state; }
-    /*!
-     * \brief Access state of throughput measurement # m_injection_state*.
-     * \return stat of throughput measurement #m_injection_state.
+    MeasureState throughputMeasureState() const { return m_throughput_measure_state; }
+    /**
+     * @brief Access state of throughput measurement # m_injection_state*.
+     * @return stat of throughput measurement #m_injection_state.
      */
-    MeasureState limitedInjectionState() const
-        { return m_injection_state; }
-    /*!
-     * \brief Access the specified router.
-     * \param id  id of specified router.
-     * \return  reference to this router entity.
+    MeasureState limitedInjectionState() const { return m_injection_state; }
+    /**
+     * @brief Access the specified router.
+     * @param id  id of specified router.
+     * @return  reference to this router entity.
      */
-	EsynetRouter & router(long id) { return m_router_list[id]; }
-	
-	vector< EsynetMessEvent > acceptList();
+    EsynetRouter & router(long id) { return m_router_list[id]; }
+    
+    vector< EsynetEvent > acceptList();
     ///@}
 
-    /*!
-     * \brief Collect the statistic variables and control the simulation.
+    /**
+     * @brief Collect the statistic variables and control the simulation.
      *
      * This function implements three functions:
      * - If the number of injected packets is larger than user-specified number
@@ -140,10 +138,10 @@ public:
      * recorded for measurement. Record the time of start and end of this
      * measurement.
      */
-    void updateStatistic(const vector< EsynetMessEvent > & accepted);
+    void updateStatistic(const vector< EsynetEvent > & accepted);
     
-    /*!
-     * \brief Synchronize the signals between routers and PEs.
+    /**
+     * @brief Synchronize the signals between routers and PEs.
      *
      * This function is used to share informations between routers and PEs.
      * Until now only one function has implemented:
@@ -152,82 +150,82 @@ public:
      */
     void informationPropagate();
     
-    /*! Functions to handle simulation event */
+    /** Functions to handle simulation event */
     ///@{
-    /*!
-     * \brief Message injection event handler.
+    /**
+     * @brief Message injection event handler.
      *
      * - Fill in the field of packet id and flit flag.
      * - Generate a new packet and inject the packet into PE.
      *
-     * \param mesg  including the packet to inject.
+     * @param mesg  including the packet to inject.
      * \sa #eventHandler()
      */
-	void receiveEvgMessage(const EsynetMessEvent & mesg);
-    /*!
-     * \brief Router period event handler.
+    void receiveEvgMessage(const EsynetEvent & mesg);
+    /**
+     * @brief Router period event handler.
      *
      * - insert next router period event into message queue.
      * - run router pipeline.
      * - collect the statistic variable.
      * - propagate information between routers and PEs.
      *
-     * \param mesg  including the router and the period.
+     * @param mesg  including the router and the period.
      * \sa #eventHandler()
      */
-	void receiveRouterMessage(const EsynetMessEvent & mesg);
-    /*!
-     * \brief Receive flit event handler.
+    void receiveRouterMessage(const EsynetEvent & mesg);
+    /**
+     * @brief Receive flit event handler.
      *
      * - injected the flit into the input buffer of router.
      * - clear the flag of flit on link.
      *
-     * \param mesg  including the flit to receive.
+     * @param mesg  including the flit to receive.
      * \sa #eventHandler()
      */
-	void receiveWireMessage(const EsynetMessEvent & mesg);
-    /*!
-     * \brief Receive credit event handler.
-     * \param mesg  including the credit to receive.
+    void receiveWireMessage(const EsynetEvent & mesg);
+    /**
+     * @brief Receive credit event handler.
+     * @param mesg  including the credit to receive.
      * \sa #eventHandler()
      */
-	void receiveCreditMessage(const EsynetMessEvent & mesg);
-    /*!
-     * \brief Receive NI read event handler.
-     * \param mesg  including the ni read to receive.
+    void receiveCreditMessage(const EsynetEvent & mesg);
+    /**
+     * @brief Receive NI read event handler.
+     * @param mesg  including the ni read to receive.
      * \sa #eventHandler()
      */
-	void receiveNiReadMessage(const EsynetMessEvent & mesg);
+    void receiveNiReadMessage(const EsynetEvent & mesg);
     ///@}
 
-    /*!
-     * \brief Collect simulation results and print them out through standard
+    /**
+     * @brief Collect simulation results and print them out through standard
      * error and link tool interface.
      */
     void simulationResults();
 
-    /*!
-     * \brief Overwrite the handler to simulation event.
+    /**
+     * @brief Overwrite the handler to simulation event.
      *
      * - set the simulation period of routers and PEs.
      * - handle the simulation event by calling corresponding functions.
      * - collect new generated events.
      *
-     * \param time  current simulation time.
-     * \param mess  message to handle.
+     * @param time  current simulation time.
+     * @param mess  message to handle.
      * \sa #receiveEvgMessage(), #receiveRouterMessage(),
      * #receiveWireMessage(), #receiveCreditMessage()
      */
-	void eventHandler(double time, const EsynetMessEvent & mess);
+    void eventHandler(double time, const EsynetEvent & mess);
 
 public:
-    /*!
-     * \brief print configuration of routers to ostream os
-     * \param os  output stream.
-     * \param sf  the simulation to print.
-     * \return  output stream.
+    /**
+     * @brief print configuration of routers to ostream os
+     * @param os  output stream.
+     * @param sf  the simulation to print.
+     * @return  output stream.
      */
-	friend ostream& operator<<(ostream& os, const EsynetFoundation& sf);
+    friend ostream& operator<<(ostream& os, const EsynetFoundation& sf);
 };
 
 #endif

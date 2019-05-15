@@ -2,7 +2,7 @@
 
 using namespace esynet;
 
-vector< EsynetMessEvent > g_esynet_accept_list;
+vector< EsynetEvent > g_esynet_accept_list;
 
 void esynetConfigInit( EsynetConfig * config, char * command )
 {
@@ -148,7 +148,7 @@ void esynetNetworkInit( EsyNetworkCfg * network, EsynetConfig * config )
     }
 }
 
-void esynetMessQueueInit( EsynetMessQueue * messq, EsynetConfig * config )
+void esynetMessQueueInit( EsynetEventQueue * messq, EsynetConfig * config )
 {
 	/* open event trace */
 	if ( config->eventTraceEnable() )
@@ -161,7 +161,12 @@ void esynetMessQueueInit( EsynetMessQueue * messq, EsynetConfig * config )
     } /* if ( argu_list.outputTraceEnable() ) */
 }
 
-void esynetMessQueueFinish( EsynetMessQueue* messq, EsynetConfig* config )
+void esynetInjectPacket( EsynetEventQueue* messq, int src, int dest, long long int sim_cycle, long packetSize, long int msgNo, long long addr, long vc )
+{
+    messq->insertEvent( EsynetEvent::generateEvgEvent( sim_cycle, src, dest, packetSize, msgNo, (double)sim_cycle ) );
+}
+
+void esynetMessQueueFinish( EsynetEventQueue* messq, EsynetConfig* config )
 {
 	/* open event trace */
 	if ( config->eventTraceEnable() )
@@ -174,12 +179,12 @@ void esynetMessQueueFinish( EsynetMessQueue* messq, EsynetConfig* config )
     } /* if ( argu_list.outputTraceEnable() ) */
 }
 
-int esynetRunSim( EsynetMessQueue * messq, EsynetFoundation * found, 
+int esynetRunSim( EsynetEventQueue * messq, EsynetFoundation * found, 
 				  long long int sim_cycle)
 {
 	messq->simulator(sim_cycle);
 	
-	vector< EsynetMessEvent > accept_list = found->acceptList();
+	vector< EsynetEvent > accept_list = found->acceptList();
 	for ( int i = 0; i < accept_list.size(); i ++ )
 	{
 		g_esynet_accept_list.push_back( accept_list[ i ] );
@@ -188,7 +193,7 @@ int esynetRunSim( EsynetMessQueue * messq, EsynetFoundation * found,
 	return 0;
 }
 
-vector< EsynetMessEvent > esynetAcceptList()
+vector< EsynetEvent > esynetAcceptList()
 {
 	return g_esynet_accept_list;
 }

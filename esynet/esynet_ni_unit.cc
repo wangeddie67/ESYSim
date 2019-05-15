@@ -223,18 +223,18 @@ void EsynetNI::receiveFlit(long vc, const EsynetFlit & flit)
 	if (m_argu_cfg->niReadDelay() > 0)
 	{
 		m_eject_queue.push_back(flit_t);
-		addEvent(EsynetMessEvent::generateCreditMessage(
+		addEvent( EsynetEvent::generateCreditEvent (
 			m_current_time + CREDIT_DELAY_, m_id + m_network_cfg->routerCount(), 
 			0, 0, m_id, 0, vc, m_argu_cfg->niBufferSize() - m_eject_queue.size()));
 		if (flit.flitType() == EsynetFlit::FLIT_TAIL)
 		{
-			addEvent(EsynetMessEvent::generateNIReadMessage(
+			addEvent( EsynetEvent::generateNIReadEvent (
 				m_current_time + m_argu_cfg->niReadDelay(), m_id));
 		}
 	}
 	else
 	{
-		addEvent(EsynetMessEvent::generateCreditMessage(
+		addEvent( EsynetEvent::generateCreditEvent (
 			m_current_time + CREDIT_DELAY_, m_id + m_network_cfg->routerCount(), 
 			0, 0, m_id, 0, vc, 10));
 		receivePacket(flit_t);
@@ -253,7 +253,7 @@ void EsynetNI::receivePacketHandler()
 			break;
 		}
 	}
-	addEvent(EsynetMessEvent::generateCreditMessage(
+	addEvent( EsynetEvent::generateCreditEvent (
 		m_current_time + CREDIT_DELAY_, m_id + m_network_cfg->routerCount(), 
 		0, 0, m_id, 0, 0, m_argu_cfg->niBufferSize() - m_eject_queue.size()));
 }
@@ -321,11 +321,11 @@ void EsynetNI::receivePacket(const EsynetFlit & flit)
 				
 				m_statistic.incNonDropPacket();
 
-				addEvent(EsynetMessEvent(m_current_time, ET_PACKET_ACCEPT,
+				addEvent( EsynetEvent (m_current_time, ET_PACKET_ACCEPT,
 					flit.sorAddr(), -1, -1, flit.desAddr(), -1, -1, 
 					flit ) );
 				m_accept_list.push_back( 
-					EsynetMessEvent(m_current_time, ET_PACKET_ACCEPT,
+					EsynetEvent (m_current_time, ET_PACKET_ACCEPT,
 					flit.sorAddr(), -1, -1, flit.desAddr(), -1, -1, 
 					flit )
 				);
@@ -384,11 +384,11 @@ void EsynetNI::receivePacket(const EsynetFlit & flit)
 						} /* if ( m_ack_packet ) */
 						m_statistic.incNonDropPacket();
 
-						addEvent(EsynetMessEvent(
+						addEvent( EsynetEvent (
 							m_current_time, ET_PACKET_ACCEPT,
 							flit.sorAddr(), -1, -1, flit.desAddr(), -1, -1, 
 							flit ) );
-						m_accept_list.push_back( EsynetMessEvent(
+						m_accept_list.push_back( EsynetEvent (
 							m_current_time, ET_PACKET_ACCEPT,
 							flit.sorAddr(), -1, -1, flit.desAddr(), -1, -1, 
 							flit ) );
@@ -452,17 +452,17 @@ void EsynetNI::injectPacket(const EsynetFlit& t_flit)
 	/* inject flits */
 	long pac_size = t_flit.flitSize();
 
-	VCType vc_t;
+	EsynetVC vc_t;
 	/* loop all flits in packet */
 	for (long l = 0; l < pac_size; l ++)
 	{
-		DataType flit_data;
+		EsynetPayload flit_data;
 		/* set flit data */
 		for(long i = 0; i < m_flit_size; i ++)
 		{
 			/* set data, the next data is the previous data * 0.8 +a reandom 
 				* number */
-			m_init_data[i] = static_cast<AtomType>( m_init_data[i] * CORR_EFF_ 
+			m_init_data[i] = static_cast<EsynetAtomType>( m_init_data[i] * CORR_EFF_ 
 				+ EsynetSRGenFlatUnsignedLongLong(0, MAX_64_));
 			/* set data in flit */
 			flit_data.push_back(m_init_data[i]);
@@ -500,7 +500,7 @@ void EsynetNI::injectPacket(const EsynetFlit& t_flit)
 					t_flit.ackPacket() ) );
 		} /* end of  else */
 	}
-	addEvent(EsynetMessEvent(m_current_time, ET_PACKET_INJECT,
+	addEvent( EsynetEvent (m_current_time, ET_PACKET_INJECT,
 		t_flit.sorAddr(), -1, -1, t_flit.desAddr(), -1, -1, t_flit ) );
 	m_statistic.incInjectPacket(m_current_time);
 
@@ -536,7 +536,7 @@ void EsynetNI::flitTraversal()
 			}
 			else
 			{
-				addEvent(EsynetMessEvent::generateWireMessage(
+				addEvent( EsynetEvent::generateWireEvent (
 					m_current_time + WIRE_DELAY_, 
 					m_id + m_network_cfg->routerCount(), 0, 0, m_id, 0, vs, 
 					flit_t) );
@@ -560,7 +560,7 @@ void EsynetNI::flitTraversal()
 long EsynetNI::suggestVC()
 {
 	/* check the inject vc with least flits in */
-	VCType vc_t = pair<long, long> (0, m_vc_counter[ 0 ] );
+	EsynetVC vc_t = pair<long, long> (0, m_vc_counter[ 0 ] );
 	for (size_t i = 1; i < m_vc_counter.size(); i ++)
 	{
 		long t = m_vc_counter[ i ];
@@ -612,7 +612,7 @@ void EsynetNI::eccBuffer()
 	if ( m_ecc_encoder.eccEnable() && m_ecc_encoder.bufferState() )
 	{
 		EsynetFlit flit_t = m_ecc_encoder.getFlit();
-		addEvent(EsynetMessEvent::generateWireMessage(
+		addEvent( EsynetEvent::generateWireEvent (
 			m_current_time + WIRE_DELAY_, 
 			m_id + m_network_cfg->routerCount(), 0, 0, m_id, 0, 
 			m_ecc_decoder.vcToGo(), flit_t) );

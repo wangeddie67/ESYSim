@@ -1,27 +1,34 @@
 /*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ * File name : esynet_router_power.h
+ * Function : Interface to Orion power model.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301, USA.
-
----
-Copyright (C) 2015, Junshi Wang <>
-*/
+/**
+ * @ingroup ESYNET_POWER
+ * @file esynet_router_power.h
+ * @brief Define interface to power model
+ */
 
 #ifndef ESYNET_ROUTER_POWER_H
 #define ESYNET_ROUTER_POWER_H
 
-/* include head file */
 #include "esynet_global.h"
 extern "C" {
 #include "SIM_power.h"
@@ -29,12 +36,7 @@ extern "C" {
 #include "SIM_power_router.h"
 }
 
-/* include library file */
 #include <cstdio>
-
-/* namespace */
-using namespace esynet;
-using namespace std;
 
 /*************************************************
   Class Name :
@@ -91,38 +93,38 @@ private:
 
     /* last data for each port */
     /* buffer write */
-    vector< DataType > m_buffer_write;
+    std::vector< esynet::EsynetPayload > m_buffer_write;
     /* buffer read */
-    vector< DataType > m_buffer_read;
+    std::vector< esynet::EsynetPayload > m_buffer_read;
     /* crossbar read */
-    vector< DataType > m_crossbar_read;
+    std::vector< esynet::EsynetPayload > m_crossbar_read;
     /* crossbar write */
-    vector< DataType > m_crossbar_write;
+    std::vector< esynet::EsynetPayload > m_crossbar_write;
     /* link traversal */
-    vector< DataType > m_link_traversal;
-    
+    std::vector< esynet::EsynetPayload > m_link_traversal;
+
     /* crossbar input */
-    vector< long > m_crossbar_input;
+    std::vector< long > m_crossbar_input;
     /* arbiter request */
-    vector< vector< AtomType > > m_arbiter_vc_req;
+    std::vector< std::vector< esynet::EsynetAtomType > > m_arbiter_vc_req;
     /* arbiter grant */
-    vector< vector< unsigned long > > m_arbiter_vc_grant;
+    std::vector< std::vector< unsigned long > > m_arbiter_vc_grant;
 
 public:
     /* constructor */
-	EsynetRouterPower();
-	EsynetRouterPower(long a, long b, long c, double l);
+    EsynetRouterPower();
+    EsynetRouterPower(long a, long b, long c, double l);
     /* register power once */
     /* buffer read power */
-    void powerBufferRead( long in_port, const DataType & read_d );
+    void powerBufferRead( long in_port, const esynet::EsynetPayload & read_d );
     /* buffer write power */
-    void powerBufferWrite( long in_port, const DataType & write_d );
+    void powerBufferWrite( long in_port, const esynet::EsynetPayload & write_d );
     /* crossbar traversal power */
-    void powerCrossbarTraversal( long in_port, long out_port, const DataType & trav_d );
+    void powerCrossbarTraversal( long in_port, long out_port, const esynet::EsynetPayload & trav_d );
     /* vc arbiter power */
-    void powerVCArbiter( long pc, long vc, AtomType req, unsigned long gra );
+    void powerVCArbiter( long pc, long vc, esynet::EsynetAtomType req, unsigned long gra );
     /* link traversal power */
-    void powerLinkTraversal( long in_port, const DataType & read_d );
+    void powerLinkTraversal( long in_port, const esynet::EsynetPayload & read_d );
     /* report power */
     /* report buffer power */
     double powerBufferReport( unsigned long long sim_cycle, int telem );

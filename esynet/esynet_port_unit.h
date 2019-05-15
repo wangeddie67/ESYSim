@@ -1,213 +1,490 @@
 /*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ * File name : esynet_port_unit.h
+ * Function : Define port structure.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301, USA.
-
----
-Copyright (C) 2015, Junshi Wang <>
-*/
+/**
+ * @ingroup ESYNET_PORT
+ * @file esynet_port_unit.h
+ * @brief Define port structure.
+ */
 
 #ifndef ESYNET_PORT_UNIT_H
-#define ESYNET_RORT_UNIT_H
+#define ESYNET_PORT_UNIT_H
 
-/* including head file */
 #include "esy_networkcfg.h"
 #include "esynet_flit.h"
 
-
+/**
+ * @ingroup ESYNET_PORT
+ * @brief Input virtual channel structure.
+ */
 class EsynetInputVirtualChannel
 {
-/* Properties */
 private:
-    /* input buffers: [unit] */
-	vector< EsynetFlit > m_input_buffer;
-    /* the state of each input vc */
-    VCStateType m_vc_state;
-    /* routing requirement, insert by routing determine: [require] */
-    vector< VCType > m_routing;
-    /* the chosen routing vc */
-    VCType m_connection;
-    
-/* Public functions */
+    std::vector< EsynetFlit > m_input_buffer;  /*!< @brief input buffer, each entry is one flit. */
+    esynet::EsynetVCStatus m_vc_state; /*!< @brief the state of each input VC. */
+    std::vector< esynet::EsynetVC > m_routing;  /*!< @brief routing requirement, insert by routing algorithm. Each entry is one requiment. */
+    esynet::EsynetVC m_connection;  /*!< @brief the chosen virtual channel. */
+
 public:
-    /* constructor */
-	EsynetInputVirtualChannel();
-	EsynetInputVirtualChannel(EsyNetworkCfgPort * port_cfg);
+    /**
+     * @name constructor functions
+     * @{
+     */
+    /**
+     * @brief Construct one port with default value.
+     */
+    EsynetInputVirtualChannel()
+        : m_input_buffer()
+        , m_vc_state( esynet::VCS_INIT )
+        , m_routing()
+        , m_connection( esynet::VC_NULL )
+    {}
+    /**
+     * @}
+     */
 
-    /* function to access m_input_buffer */
-    long flitCount() const { return (long)m_input_buffer.size(); }
-    /* return the first flit in physical port phy and virtual channel vc */
-	const EsynetFlit & getFlit() const { return m_input_buffer[0]; }
-	EsynetFlit & getFlit() { return m_input_buffer[0]; }
-    /* add a flit flit to phyiscal port phy virtual channel vc */
-	void addFlit(const EsynetFlit & flit) { m_input_buffer.push_back(flit); }
-    /* remove first flit from phyiscal port phy virtual channel vc */
-    void removeFlit() { m_input_buffer.erase( m_input_buffer.begin() ); }
+    /**
+     * @name Functions to access and set input buffer
+     * @{
+     */
+    /**
+     * @brief Return the number of flits in buffer.
+     */
+    inline long flitCount() const { return (long)m_input_buffer.size(); }
+    /**
+     * @brief Return constant reference of the first flit in buffer.
+     */
+    inline const EsynetFlit& getFlit() const { return m_input_buffer[ 0 ]; }
+    /**
+     * @brief Return reference of the first flit in buffer.
+     */
+    inline EsynetFlit& getFlit() { return m_input_buffer[ 0 ]; }
+    /**
+     * @brief Add a flit to buffer.
+     */
+    inline void addFlit(const EsynetFlit & flit) { m_input_buffer.push_back(flit); }
+    /**
+     * @brief Remove first flit from buffer.
+     */
+    inline void removeFlit() { m_input_buffer.erase( m_input_buffer.begin() ); }
+    /**
+     * @}
+     */
 
-    /* function to access states_ */
-    /* return states for all virtual channel */
-    VCStateType state() const { return m_vc_state; }
-    /* set state of physical port phy and virtual channel vc */
-    void updateState( VCStateType state ) { m_vc_state = state; }
+    /**
+     * @name Functions to access and set virtual status.
+     * @{
+     */
+    /**
+     * @brief Return states for virtual channel.
+     */
+    inline esynet::EsynetVCStatus state() const { return m_vc_state; }
+    /**
+     * @brief Set state of virtual channel.
+     */
+    inline void updateState( esynet::EsynetVCStatus state ) { m_vc_state = state; }
+    /**
+     * @}
+     */
 
-    /* function to access crouting_ */
-    /* return crouitng for physical port phy virtual channel vc */
-    const VCType & connection() const { return m_connection; }
-    /* set crouting for physical port phy and virtual channel vc */
-    void assignConnection( VCType crouting ) { m_connection = crouting; }
-    /* clear crouting for physical port phy and virtual channel vc */
-    void clearConnection() { m_connection = VC_NULL; }
+    /**
+     * @name Functions to access and set routing requirement.
+     * @{
+     */
+    /**
+     * @brief Return constant reference of routing requirement.
+     */
+    inline const std::vector< esynet::EsynetVC > & routing() const { return m_routing; }
+    /**
+     * @brief Insert routing requirement.
+     */
+    inline void addRouting( const esynet::EsynetVC& routing ) { m_routing.push_back( routing ); }
+    /**
+     * @brief Clear routing requirement.
+     */
+    inline void clearRouting() { m_routing.clear(); }
 
-    /* function to access routing_ */
-    /* return routing requirement for physical port phy virtual channel vc */
-    const vector< VCType > & routing() const { return m_routing; }
-    /* insert routing requirement routing to physical port phy virtual channel
-     * vc */
-    void addRouting( const VCType& routing ) { m_routing.push_back( routing ); }
-    /* clear routing requirement for physical port phy and virtual channel vc */
-    void clearRouting() { m_routing.clear(); }
+    /**
+     * @name Functions to access and set chosen virtual channel.
+     * @{
+     */
+    /**
+     * @brief Return chosen virtual channel.
+     */
+    const esynet::EsynetVC & connection() const { return m_connection; }
+    /**
+     * @brief Set chosen virtual channel.
+     */
+    void assignConnection( esynet::EsynetVC crouting ) { m_connection = crouting; }
+    /**
+     * @brief Clear chosen virtual channel.
+     */
+    void clearConnection() { m_connection = esynet::VC_NULL; }
+    /**
+     * @}
+     */
 };
 
-class EsynetInputPort : public vector< EsynetInputVirtualChannel >
+/**
+ * @ingroup ESYNET_PORT
+ * @brief Input physical port structure.
+ */
+class EsynetInputPort : public std::vector< EsynetInputVirtualChannel >
 {
-/* Properties */
 private:
-    /* input neithbor */
-    VCType m_neighbor_addr;
-    /* each vc buffer size */
-    long m_input_buffer_size; 
-    
-/* Public functions */
-public:
-    /* constructor */
-	EsynetInputPort();
-	EsynetInputPort(EsyNetworkCfgPort * port_cfg);
-    
-    long vcNumber() const { return (long)size(); }
+    esynet::EsynetVC m_neighbor_addr;   /*!< @brief Connected physical port and router. First is router id, second is physical port id. */
+    long m_input_buffer_size;   /*!< @brief Size of input buffer. */
 
-    /* function to access inputNeighborAddr */
-    const VCType & inputNeighborAddr() const { return m_neighbor_addr; }
-    long inputNeighborAddrId() const { return m_neighbor_addr.first; }
-    long inputNeighborAddrPort() const { return m_neighbor_addr.second; }
-    void setInputNeighborAddr( const VCType & addr ) { m_neighbor_addr = addr; }
-        
-    long inputBufferSize() { return m_input_buffer_size; }
-   
-    bool isEmpty();
-    
-/* Related Non-Members */
 public:
-    /* print input model information to stream */
-	friend ostream& operator<<(ostream& os, const EsynetInputPort & Ri);
+    /**
+     * @name constructor functions
+     * @{
+     */
+    /**
+     * @brief Construct one empty port.
+     */
+    EsynetInputPort()
+        : m_neighbor_addr( esynet::VC_NULL )
+        , m_input_buffer_size( 0 )
+    {}
+    /**
+     * @brief Construct one port with specified configuration.
+     * @param port_cfg Port configuration structure.
+     */
+    EsynetInputPort(EsyNetworkCfgPort * port_cfg)
+        : m_neighbor_addr( esynet::VC_NULL )
+        , m_input_buffer_size( port_cfg->inputBuffer() )
+    {
+        // generate virtual channel
+        for ( int i = 0; i < port_cfg->inputVcNumber(); i ++ ) 
+        {
+            push_back( EsynetInputVirtualChannel() );
+        }
+    }
+    /**
+     * @}
+     */
+
+    /**
+     * @name Function to access neighbor router and port.
+     * @{
+     */
+    /**
+     * @brief Return pair of input neighbor id and port id.
+     */
+    inline const esynet::EsynetVC & inputNeighbor() const { return m_neighbor_addr; }
+    /**
+     * @brief Return neighbor router id.
+     */
+    inline long inputNeighborRouter() const { return m_neighbor_addr.first; }
+    /**
+     * @brief Return neighbor port id.
+     */
+    inline long inputNeighborPort() const { return m_neighbor_addr.second; }
+    /**
+     * @brief Set pair of input neighbor id and port id.
+     */
+    inline void setInputNeighbor( const esynet::EsynetVC & addr ) { m_neighbor_addr = addr; }
+    /**
+     * @}
+     */
+
+    /**
+     * @brief Return number of virtual channel.
+     */
+    inline long vcNumber() const { return (long)size(); }
+    /**
+     * @brief Return input buffer size.
+     */
+    inline long inputBufferSize() const { return m_input_buffer_size; }
+    /**
+     * @brief Return true is all virtual channels are empty.
+     */
+    inline bool isEmpty() const
+    {
+        for ( size_t i = 0; i < size(); i ++ )
+        {
+            if ( at( i ).flitCount() > 0 )
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 };
 
+/**
+ * @ingroup ESYNET_PORT
+ * @brief Output virtual channel structure.
+ */
 class EsynetOutputVirtualChannel
 {
-/* Properties */
 private:
-    /* assigned for the input [vc], default is VC_NULL */
-    VCType m_vc_assign;
-    /* virtual channel usage type, USED_ or FREE_ [vc], default is FREE_ */
-    VCUsageType m_vc_usage;
-    /* credit counter */
-    long m_credit_counter;
-    
-/* Public Functions */
+    esynet::EsynetVC m_vc_assign;   /*!< @brief Assigned input virtual channel. */
+    esynet::EsynetVCUsage m_vc_usage;   /*!< @brief Virtual channel usage type. */
+    long m_credit_counter;  /*!< @brief Credit counter. */
+
 public:
-    /* constructor */
-	EsynetOutputVirtualChannel();
-	EsynetOutputVirtualChannel(EsyNetworkCfgPort * port_cfg);
+    /**
+     * @name constructor functions
+     * @{
+     */
+    /**
+     * @brief Construct one port with default value.
+     */
+    EsynetOutputVirtualChannel()
+        : m_vc_assign( esynet::VC_NULL )
+        , m_vc_usage( esynet::VC_FREE )
+        , m_credit_counter( 0 )
+    {}
+    /**
+     * @brief Construct one port with specified configuration.
+     * @param port_cfg Port configuration structure.
+     */
+    EsynetOutputVirtualChannel(EsyNetworkCfgPort * port_cfg)
+        : m_vc_assign( esynet::VC_NULL )
+        , m_vc_usage( esynet::VC_FREE )
+        , m_credit_counter( port_cfg->inputBuffer() )
+    {}
+    /**
+     * @}
+     */
 
-    long creditCounter() const { return m_credit_counter; }
-    void incCreditCounter() { m_credit_counter ++; }
-    void decCreditCounter() { m_credit_counter --; }
-    void setCreditCounter( long credit ) { m_credit_counter = credit; }
+    /**
+     * @name Function to access and set assigned virtual channel and usage type
+     * @{
+     */
+    /**
+     * @brief Return usage state.
+     */
+    inline esynet::EsynetVCUsage usage() const { return m_vc_usage; }
+    /**
+     * @brief Return assigned input virtual channel.
+     */
+    inline const esynet::EsynetVC & assign() const { return m_vc_assign; }
+    /**
+     * @brief Assigned input virtual channel with this virtual channel.
+     */
+    void acquire( const esynet::EsynetVC & channel ) { m_vc_usage = esynet::VC_USED; m_vc_assign = channel; }
+    /**
+     * @brief Release assignment of this virtual channel.
+     */
+    void release() { m_vc_usage = esynet::VC_FREE; m_vc_assign = esynet::VC_NULL; }
+    /**
+     * @}
+     */
 
-    /* function to access usage_ */
-    /* return usage state for physical port phy virtual channel vc */
-    VCUsageType usage() const { return m_vc_usage; }
-
-    /* function to access usage_ */
-    /* return assign for physical port phy virtual channel vc */
-    const VCType & assign() const { return m_vc_assign; }
-
-    /* assign output port a and virual channel b with channel c */
-    void acquire( const VCType & channel )
-        { m_vc_usage = VC_USED; m_vc_assign = channel; }
-    /* release assignment of output port a and virual channel b */
-    void release()
-        { m_vc_usage = VC_FREE; m_vc_assign = VC_NULL; }
+    /**
+     * @name Function to access and set credit counter.
+     * @{
+     */
+    /**
+     * @brief Return credit counter.
+     */
+    inline long creditCounter() const { return m_credit_counter; }
+    /**
+     * @brief Increase credit counter by 1.
+     */
+    inline void incCreditCounter() { m_credit_counter ++; }
+    /**
+     * @brief Decrease credit counter by 1.
+     */
+    inline void decCreditCounter() { m_credit_counter --; }
+    /**
+     * @brief Set credict counter.
+     */
+    inline void setCreditCounter( long credit ) { m_credit_counter = credit; }
+    /**
+     * @}
+     */
 };
 
-class EsynetOutputPort : public vector< EsynetOutputVirtualChannel >
+/**
+ * @ingroup ESYNET_PORT
+ * @brief Output physical port structure.
+ */
+class EsynetOutputPort : public std::vector< EsynetOutputVirtualChannel >
 {
-/* Properties */
 private:
-    /* local output buffers [unit]*/
-	vector< EsynetFlit > m_output_buffer;
-    /* output address [unit] */
-    vector< VCType > m_out_add;
-    /* output neighbor address */
-    VCType m_neighbor_addr;
-    /* each vc buffer size */
-    long m_output_buffer_size;    
-    /* one flit on the link */
-    bool m_flit_on_link;
-    
-/* Public Functions */
+    std::vector< EsynetFlit > m_output_buffer;  /*!< @brief Output buffer. Each entry is one flit. */
+    std::vector< esynet::EsynetVC > m_out_add;  /*!< @brief Output address of packets in output buffer. */
+    esynet::EsynetVC m_neighbor_addr;   /*!< @brief Connected physical port and router. First is router id, second is physical port id. */
+    long m_output_buffer_size;   /*!< @brief Size of output buffer. */
+    bool m_flit_on_link;    /*!< @brief True if there is one flit on the link. */
+
 public:
-    /* constructor */
-	EsynetOutputPort();
-	EsynetOutputPort(EsyNetworkCfgPort * port_cfg);
+    /**
+     * @name constructor functions
+     * @{
+     */
+    /**
+     * @brief Construct one empty port.
+     */
+    EsynetOutputPort()
+        : m_output_buffer()
+        , m_out_add()
+        , m_neighbor_addr( esynet::VC_NULL )
+        , m_output_buffer_size( 0 )
+        , m_flit_on_link( false )
+    {}
+    /**
+     * @brief Construct one port with specified configuration.
+     * @param port_cfg Port configuration structure.
+     */
+    EsynetOutputPort(EsyNetworkCfgPort * port_cfg)
+        : m_output_buffer()
+        , m_out_add()
+        , m_neighbor_addr( esynet::VC_NULL )
+        , m_output_buffer_size( port_cfg->outputBuffer() )
+        , m_flit_on_link( false )
+    {
+        for ( int i = 0; i < port_cfg->outputVcNumber(); i ++ )
+        {
+            push_back( EsynetOutputVirtualChannel(port_cfg) );
+        }
+    }
 
-    long vcNumber() const { return size(); }
+    /**
+     * @name Functions to access and set output buffer
+     * @{
+     */
+    /**
+     * @brief Return the number of flits in buffer.
+     */
+    inline long flitCount() const { return (long)m_output_buffer.size(); }
+    /**
+     * @brief Return constant reference of the first flit in buffer.
+     */
+    inline const EsynetFlit& getFlit() const { return m_output_buffer[ 0 ]; }
+    /**
+     * @brief Return reference of the first flit in buffer.
+     */
+    inline EsynetFlit& getFlit() { return m_output_buffer[ 0 ]; }
+    /**
+     * @brief Add a flit to buffer.
+     */
+    inline void addFlit(const EsynetFlit & flit) { m_output_buffer.push_back(flit); }
+    /**
+     * @brief Remove first flit from buffer.
+     */
+    inline void removeFlit() { m_output_buffer.erase( m_output_buffer.begin() ); }
+    /**
+     * @}
+     */
 
-    /* function to access outbuffers_ */
-    long flitCount() const { return (long)m_output_buffer.size(); }
-    /* return the first flit in buffer of physical port phy */
-	const EsynetFlit & getFlit() const { return m_output_buffer[0]; }
-    /* add flit into buffer of physical port phy */
-	void addFlit(const EsynetFlit& flit) { m_output_buffer.push_back(flit); }
-    /* remove the first flit in buffer of physical port phy */
-    void removeFlit() { m_output_buffer.erase( m_output_buffer.begin() ); }
+    /**
+     * @name Functions to access and set output address
+     * @{
+     */
+    /**
+     * @brief Return the output address of first flit in buffer.
+     */
+    inline const esynet::EsynetVC & getAdd() const { return m_out_add[ 0 ]; }
+    /**
+     * @brief Remove the output address of first flit in buffer.
+     */
+    inline void removeAdd() { m_out_add.erase( m_out_add.begin() ); }
+    /**
+     * @brief Add the output address of last flit in buffer.
+     */
+    inline void addAdd( const esynet::EsynetVC & vc ) { m_out_add.push_back( vc ); }
+    /**
+     * @}
+     */
 
-    /* function to access outadd_ */
-    /* return the first address of port phy */
-    const VCType & getAdd() const { return m_out_add[ 0 ]; }
-    /* remove the first address of port phy */
-    void removeAdd() { m_out_add.erase( m_out_add.begin() ); }
-    /* insert address vc to queue of port phy */
-    void addAdd( const VCType & vc ) { m_out_add.push_back( vc ); }
+    /**
+     * @name Function to access neighbor router and port.
+     * @{
+     */
+    /**
+     * @brief Return pair of output neighbor id and port id.
+     */
+    inline const esynet::EsynetVC & outputNeighbor() const { return m_neighbor_addr; }
+    /**
+     * @brief Return neighbor router id.
+     */
+    inline long outputNeighborRouter() const { return m_neighbor_addr.first; }
+    /**
+     * @brief Return neighbor port id.
+     */
+    inline long outputNeighborPort() const { return m_neighbor_addr.second; }
+    /**
+     * @brief Set pair of output neighbor id and port id.
+     */
+    inline void setOutputNeighbor( const esynet::EsynetVC & addr ) { m_neighbor_addr = addr; }
+    /**
+     * @}
+     */
 
-    /* function to access outputNeighborAddr */
-    const VCType & outputNeighborAddr() const { return m_neighbor_addr; }
-    long outputNeighborAddrId() const { return m_neighbor_addr.first; }
-    long outputNeighborAddrPort() const { return m_neighbor_addr.second; }
-    void setOutputNeighborAddr( const VCType & addr ) 
-        { m_neighbor_addr = addr; }
+    /**
+     * @name Function to access flit on link
+     * @{
+     */
+    /**
+     * @brief Return true if there is flit on link.
+     */
+    inline bool flitOnLink() const { return m_flit_on_link; }
+    /**
+     * @brief Set flit on link.
+     */
+    inline void setFlitOnLink() { m_flit_on_link = true; }
+    /**
+     * @brief Clear flit on link.
+     */
+    inline void clearFlitOnLink() { m_flit_on_link = false; }
+    /**
+     * @}
+     */
 
-    /* function to access m_flit_on_link */
-    bool flitOnLink() { return m_flit_on_link; }
-    void setFlitOnLink() { m_flit_on_link = true; }
-    void clearFlitOnLink() { m_flit_on_link = false; }
-    
-    bool isEmpty();
-
-/* Related Non-Members */
-public:
-    /* print input model information to stream */
-	friend ostream& operator<<(ostream& os, const EsynetOutputPort & Ri);
+    /**
+     * @brief Return number of virtual channel.
+     */
+    inline long vcNumber() const { return (long)size(); }
+    /**
+     * @brief Return input buffer size.
+     */
+    inline long outputBufferSize() const { return m_output_buffer_size; }
+    /**
+     * @brief Return true is all virtual channels are empty.
+     */
+    inline bool isEmpty() const
+    {
+        if ( m_flit_on_link )
+        {
+            return false;
+        }
+        if ( flitCount() > 0 )
+        {
+            return false;
+        }
+        for ( size_t i = 0; i < size(); i ++ )
+        {
+            if ( at( i ).usage() != esynet::VC_FREE )
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 };
 
 #endif

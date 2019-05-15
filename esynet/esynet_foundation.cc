@@ -1,28 +1,34 @@
 /*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ * File name : esynet_foundation.cc
+ * Function : Implement network platform.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301, USA.
-
----
-Copyright (C) 2015, Junshi Wang <>
-*/
+/**
+ * @ingroup ESYNET_NETWORK
+ * @file esynet_foundation.cc
+ * @brief Implement network platform
+ */
 
 #include "esynet_foundation.h"
 
-EsynetFoundation::EsynetFoundation(
-	EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg
-) :
+EsynetFoundation::EsynetFoundation( EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg ):
     m_network_cfg( network_cfg ),
     m_argument_cfg( argument_cfg ),
     m_statistic(),
@@ -37,50 +43,29 @@ EsynetFoundation::EsynetFoundation(
     for ( int router_id = 0; router_id < router_num; router_id ++ )
     {
         EsyNetworkCfgRouter router_cfg = m_network_cfg->router( router_id );
-        m_router_list.push_back( 
-			EsynetRouter(m_network_cfg, router_id, m_argument_cfg));
+        m_router_list.push_back( EsynetRouter(m_network_cfg, router_id, m_argument_cfg));
         bool has_ni = false;
-		for ( int l_port = 0; l_port < router_cfg.portNum(); l_port ++ )
-		{
-			if ( router_cfg.port( l_port ).networkInterface() )
-			{
-				m_ni_list.push_back(
-					EsynetNI(m_network_cfg, router_id, m_argument_cfg));
-				m_router_list[ router_id ].setInputNeighborAddr( l_port,
-					VCType( m_ni_list.size() + router_num - 1, 0 ) );
-				m_router_list[ router_id ].setOutputNeighborAddr( l_port, 
-					VCType( m_ni_list.size() + router_num - 1, 0 ) );
+        for ( int l_port = 0; l_port < router_cfg.portNum(); l_port ++ )
+        {
+            if ( router_cfg.port( l_port ).networkInterface() )
+            {
+                m_ni_list.push_back( EsynetNI(m_network_cfg, router_id, m_argument_cfg));
+                m_router_list[ router_id ].setInputNeighborAddr( l_port, EsynetVC ( m_ni_list.size() + router_num - 1, 0 ) );
+                m_router_list[ router_id ].setOutputNeighborAddr( l_port, EsynetVC ( m_ni_list.size() + router_num - 1, 0 ) );
                 has_ni = true;
-			}
-		}
+            }
+        }
         if (!has_ni)
         {
             m_ni_list.push_back(
                 EsynetNI(m_network_cfg, router_id, m_argument_cfg));
-            m_router_list[ router_id ].setInputNeighborAddr( 0,
-                VCType( m_ni_list.size() + router_num - 1, 0 ) );
-            m_router_list[ router_id ].setOutputNeighborAddr( 0, 
-                VCType( m_ni_list.size() + router_num - 1, 0 ) );
+            m_router_list[ router_id ].setInputNeighborAddr( 0, EsynetVC ( m_ni_list.size() + router_num - 1, 0 ) );
+            m_router_list[ router_id ].setOutputNeighborAddr( 0, EsynetVC ( m_ni_list.size() + router_num - 1, 0 ) );
         }
 
-        if ( m_network_cfg->router( router_cfg.routerId() ).pipeCycle() != 
-            PIPE_DELAY_ )
+        if ( m_network_cfg->router( router_cfg.routerId() ).pipeCycle() != PIPE_DELAY_ )
         {
-			addEvent(EsynetMessEvent::generateRouterMessage(0.0,
-                m_network_cfg->router( router_cfg.routerId() ).pipeCycle(), 
-                router_cfg.routerId() ) );
-        }
-    }
-
-    if ( m_argument_cfg->faultInjectEnable() )
-    {
-        EsyFaultConfigList fault_list;
-        fault_list.readFile( m_argument_cfg->faultInjectFileName() );
-        fault_list.addInLine( m_argument_cfg->faultInjectLine() );
-        for ( long l_router = 0; l_router < router_num; l_router ++ )
-        {
-            m_router_list[ l_router ].configFault( fault_list );
-            m_ni_list[ l_router ].configFault( fault_list );
+            addEvent( EsynetEvent::generateRouterEvent( 0.0, m_network_cfg->router( router_cfg.routerId() ).pipeCycle(), router_cfg.routerId() ) );
         }
     }
 }
@@ -88,8 +73,7 @@ EsynetFoundation::EsynetFoundation(
 ostream& operator<<(ostream& os, const EsynetFoundation& sf)
 {
     os << "************Router list*************" << endl;
-	for (vector< EsynetRouter >::const_iterator first = 
-sf.m_router_list.begin();
+    for (vector< EsynetRouter >::const_iterator first = sf.m_router_list.begin();
         first != sf.m_router_list.end(); first ++ ) 
     {
         os << ( *first );
@@ -97,17 +81,8 @@ sf.m_router_list.begin();
     return os;
 }
 
-void EsynetFoundation::receiveEvgMessage(const EsynetMessEvent & mesg)
+void EsynetFoundation::receiveEvgMessage(const EsynetEvent & mesg)
 {
-	if ( !m_argument_cfg->bistEnable() )
-	{
-		if ( !( m_router_list[ mesg.srcId() ].isWorking() ) ||
-			!( m_router_list[ mesg.desId() ].isWorking() ) )
-		{
-			return;
-		}
-	}
-    
     long mesg_id = mesg.flit().flitId();
     if ( mesg_id < 0 )
     {
@@ -117,33 +92,28 @@ void EsynetFoundation::receiveEvgMessage(const EsynetMessEvent & mesg)
     long flag = mesg.flit().flitFlag();
     if ( m_latency_measure_state == MEASURE_PRE )
     {
-		flag = flag | EsynetFlit::FLIT_MARK;
+        flag = flag | EsynetFlit::FLIT_MARK;
     }
 
-	EsynetFlit t_flit = mesg.flit();
-    m_ni_list[ mesg.srcId() ].injectPacket( 
-		EsynetFlit(mesg_id, t_flit.flitSize(), EsynetFlit::FLIT_HEAD, 
-		t_flit.sorAddr(), t_flit.desAddr(), m_current_time, 
-		t_flit.e2eStartTime(), DataType(), flag, t_flit.ackPacket() ) );
-	m_statistic.incInjectPacket(m_current_time);
+    EsynetFlit t_flit = mesg.flit();
+    m_ni_list[ mesg.srcId() ].injectPacket( EsynetFlit(mesg_id, t_flit.flitSize(), EsynetFlit::FLIT_HEAD, 
+        _flit.srcAddr(), t_flit.desAddr(), m_current_time, esynet::EsynetPayload(), flag ) );
+    m_statistic.incInjectPacket(m_current_time);
 }
 
-void EsynetFoundation::receiveRouterMessage(const EsynetMessEvent & mesg)
+void EsynetFoundation::receiveRouterMessage(const EsynetEvent & mesg)
 {
-	addEvent(EsynetMessEvent::generateRouterMessage(
-        mesg.eventStart() + mesg.pipeTime(), mesg.pipeTime(), mesg.srcId() ) );
+    addEvent(EsynetEvent::generateRouterEvent( mesg.eventStart() + mesg.pipeTime(), mesg.pipeTime(), mesg.srcId() ) );
             
     if ( mesg.pipeTime() == PIPE_DELAY_  )
     {
-		vector< EsynetFlit > pac_list = m_packet_generator.generatePacket();
-		for (size_t i = 0; i < pac_list.size(); i ++)
-		{
-			EsynetFlit flit_t = pac_list[i];
-			addEvent(EsynetMessEvent::generateEvgMessage(m_current_time, 
-				flit_t.sorAddr(), flit_t.desAddr(), flit_t.flitSize(), 
-				flit_t.flitId(), m_current_time));
-		}
-		
+        vector< EsynetFlit > pac_list = m_packet_generator.generatePacket();
+        for (size_t i = 0; i < pac_list.size(); i ++)
+        {
+            EsynetFlit flit_t = pac_list[i];
+            addEvent( EsynetEvent::generateEvgEvent(m_current_time, flit_t.srcAddr(), flit_t.desAddr(), flit_t.flitSize(), flit_t.flitId(), m_current_time));
+        }
+        
         for ( long i = 0; i < m_network_cfg->routerCount(); i ++ ) 
         {
             if ( m_network_cfg->router( i ).pipeCycle() == PIPE_DELAY_  )
@@ -151,25 +121,25 @@ void EsynetFoundation::receiveRouterMessage(const EsynetMessEvent & mesg)
                 m_ni_list[ i ].runBeforeRouter();
                 m_router_list[ i ].routerSimPipeline();
                 m_ni_list[ i ].runAfterRouter();
-				updateStatistic(m_ni_list[i].acceptList());
+                updateStatistic(m_ni_list[i].acceptList());
 #ifndef ESYNETINTERFACE
-				m_ni_list[i].clearAcceptList();
+                m_ni_list[i].clearAcceptList();
 #endif
             }
         }
         
-		while (m_received_id.size() > 0)
-		{
-			if (m_received_id[0])
-			{
-				m_received_id_offset ++;
-				m_received_id.erase(m_received_id.begin());
-			}
-			else
-			{
-				break;
-			}
-		}
+        while (m_received_id.size() > 0)
+        {
+            if (m_received_id[0])
+            {
+                m_received_id_offset ++;
+                m_received_id.erase(m_received_id.begin());
+            }
+            else
+            {
+                break;
+            }
+        }
         informationPropagate();
     }
     else
@@ -177,55 +147,49 @@ void EsynetFoundation::receiveRouterMessage(const EsynetMessEvent & mesg)
         m_ni_list[ mesg.srcId() ].runBeforeRouter();
         m_router_list[ mesg.srcId() ].routerSimPipeline();
         m_ni_list[ mesg.srcId() ].runAfterRouter();
-		updateStatistic(m_ni_list[ mesg.srcId() ].acceptList());
+        updateStatistic(m_ni_list[ mesg.srcId() ].acceptList());
 #ifndef ESYNETINTERFACE
-		m_ni_list[ mesg.srcId() ].clearAcceptList();
+        m_ni_list[ mesg.srcId() ].clearAcceptList();
 #endif
     }
 }
 
-void EsynetFoundation::receiveWireMessage(const EsynetMessEvent & mesg)
+void EsynetFoundation::receiveWireMessage(const EsynetEvent & mesg)
 {
     if ( mesg.srcId() >= m_network_cfg->routerCount() )
     {
-        m_ni_list[ mesg.srcId() - m_network_cfg->routerCount() ].
-            clearFlitOnLink();
+        m_ni_list[ mesg.srcId() - m_network_cfg->routerCount() ].clearFlitOnLink();
     }
     else
     {
-        m_router_list[ mesg.srcId() ].outputPort( mesg.srcPc() ).
-            clearFlitOnLink();
+        m_router_list[ mesg.srcId() ].outputPort( mesg.srcPc() ).clearFlitOnLink();
     }
     
     if ( mesg.desId() >= m_network_cfg->routerCount() )
     {
-        m_ni_list[ mesg.desId() - m_network_cfg->routerCount() ].
-            receiveFlit( mesg.desVc(), mesg.flit() );
+        m_ni_list[ mesg.desId() - m_network_cfg->routerCount() ].receiveFlit( mesg.desVc(), mesg.flit() );
     }
     else
     {
-        m_router_list[ mesg.desId() ].receiveFlit( mesg.desPc(), mesg.desVc(), 
-            mesg.flit() );
+        m_router_list[ mesg.desId() ].receiveFlit( mesg.desPc(), mesg.desVc(), mesg.flit() );
     }
 }
 
-void EsynetFoundation::receiveCreditMessage(const EsynetMessEvent & mesg)
+void EsynetFoundation::receiveCreditMessage(const EsynetEvent & mesg)
 {
     if ( mesg.desId() >= m_network_cfg->routerCount() )
     {
-        m_ni_list[ mesg.desId() - m_network_cfg->routerCount() ].
-            receiveCredit( mesg.desVc(), mesg.flit().flitId() );
+        m_ni_list[ mesg.desId() - m_network_cfg->routerCount() ].receiveCredit( mesg.desVc(), mesg.flit().flitId() );
     }
     else
     {
-        m_router_list[ mesg.desId() ].receiveCredit( 
-            mesg.desPc(), mesg.desVc(), mesg.flit().flitId() );
+        m_router_list[ mesg.desId() ].receiveCredit( mesg.desPc(), mesg.desVc(), mesg.flit().flitId() );
     }
 }
 
-void EsynetFoundation::receiveNiReadMessage(const EsynetMessEvent& mesg)
+void EsynetFoundation::receiveNiReadMessage(const EsynetEvent& mesg)
 {
-	m_ni_list[ mesg.srcId() ].receivePacketHandler();
+    m_ni_list[ mesg.srcId() ].receivePacketHandler();
 }
 
 
@@ -234,12 +198,12 @@ void EsynetFoundation::simulationResults()
     double curr_time = m_current_time;
     long router_num = m_network_cfg->routerCount();
 
-	EsynetRouterStatistic statistics_unit;
+    EsynetRouterStatistic statistics_unit;
     for( size_t i = 0; i < m_router_list.size(); i ++ )
     {
         statistics_unit.add( m_router_list[ i ].statistics() );
     }
-	EsynetNIStatistic ni_statistic;
+    EsynetNIStatistic ni_statistic;
     for( size_t i = 0; i < m_ni_list.size(); i ++ )
     {
         ni_statistic.add( m_ni_list[ i ].statistic() );
@@ -253,58 +217,44 @@ void EsynetFoundation::simulationResults()
 
     for( size_t i = 0; i < m_router_list.size(); i ++ )
     {
-        total_mem_power += m_router_list[ i ].powerUnit().
-            powerBufferReport( curr_time, router_num );
-        total_crossbar_power += m_router_list[ i ].powerUnit().
-            powerCrossbarReport( curr_time, router_num );
-        total_arbiter_power += m_router_list[ i ].powerUnit().
-            powerArbiterReport( curr_time, router_num );
-        total_link_power += m_router_list[ i ].powerUnit().
-            powerLinkReport( curr_time, router_num );
+        total_mem_power += m_router_list[ i ].powerUnit().powerBufferReport( curr_time, router_num );
+        total_crossbar_power += m_router_list[ i ].powerUnit().powerCrossbarReport( curr_time, router_num );
+        total_arbiter_power += m_router_list[ i ].powerUnit().powerArbiterReport( curr_time, router_num );
+        total_link_power += m_router_list[ i ].powerUnit().powerLinkReport( curr_time, router_num );
     }
     total_mem_power /= curr_time;
     total_crossbar_power /= curr_time;
     total_link_power /= curr_time;
     total_arbiter_power /= curr_time;
-    total_power = total_mem_power + total_crossbar_power + 
-        total_arbiter_power + total_link_power;
+    total_power = total_mem_power + total_crossbar_power + total_arbiter_power + total_link_power;
  
-    double throughput_measure_cycle = 
-        m_statistic.throughputMeasureStopTime() - 
-        m_statistic.throughputMeasureStartTime();
-    long throughput_measure_packet = 
-        m_statistic.throughputMeasureStopPacket() - 
-        m_statistic.throughputMeasureStartPacket();
+    double throughput_measure_cycle = m_statistic.throughputMeasureStopTime() - m_statistic.throughputMeasureStartTime();
+    long throughput_measure_packet = m_statistic.throughputMeasureStopPacket() - m_statistic.throughputMeasureStartPacket();
     double throughput_measure = 0.0;
     if ( throughput_measure_cycle > 0 )
     {
-        throughput_measure = 
-            throughput_measure_packet / throughput_measure_cycle;
+        throughput_measure = throughput_measure_packet / throughput_measure_cycle;
     }
-        
+
     double average_latency = 0.0;
     if ( m_statistic.acceptMarkPacket() > 0 )
     {
-        average_latency =
-            m_statistic.totalMarkDelay() / m_statistic.acceptMarkPacket();
+        average_latency = m_statistic.totalMarkDelay() / m_statistic.acceptMarkPacket();
     }
     double deliver_rate = 0.0;
     if ( ni_statistic.injectedPacket() > 0 )
     {
-        deliver_rate = (double)ni_statistic.nonDropPacket() / 
-            (double)ni_statistic.injectedPacket();
+        deliver_rate = (double)ni_statistic.nonDropPacket() / (double)ni_statistic.injectedPacket();
     }
     double average_e2e_delay = 0.0;
     if ( ni_statistic.acceptedPacket() > 0 )
     {
-        average_e2e_delay = m_statistic.totalE2EDelay() / 
-            (double)m_statistic.acceptedPacket(); 
+        average_e2e_delay = m_statistic.totalE2EDelay() / (double)m_statistic.acceptedPacket(); 
     }
     double packet_inject_rate = 0.0;
     if ( m_statistic.injectStopTime() - m_statistic.injectStartTime() > 0 )
     {
-        packet_inject_rate = ni_statistic.injectedPacket() / 
-            ( m_statistic.injectStopTime() - m_statistic.injectStartTime() );
+        packet_inject_rate = ni_statistic.injectedPacket() / ( m_statistic.injectStopTime() - m_statistic.injectStartTime() );
     }
 
     cout.precision(6);
@@ -313,16 +263,11 @@ void EsynetFoundation::simulationResults()
     cout << "total finished:       " << ni_statistic.acceptedPacket() << endl;
     cout << "average Delay:        " << average_latency << endl;
     cout << "**** Power Consumption ***************************" << endl;
-    cout << "total mem power:      " << 
-        total_mem_power * POWER_NOM_ << endl;
-    cout << "total crossbar power: " <<
-        total_crossbar_power * POWER_NOM_ << endl;
-    cout << "total arbiter power:  " <<
-        total_arbiter_power * POWER_NOM_ << endl;
-    cout << "total link power:     " << 
-        total_link_power * POWER_NOM_ << endl;
-    cout << "total power:          " << 
-        total_power * POWER_NOM_ << endl;
+    cout << "total mem power:      " << total_mem_power * POWER_NOM_ << endl;
+    cout << "total crossbar power: " << total_crossbar_power * POWER_NOM_ << endl;
+    cout << "total arbiter power:  " << total_arbiter_power * POWER_NOM_ << endl;
+    cout << "total link power:     " << total_link_power * POWER_NOM_ << endl;
+    cout << "total power:          " << total_power * POWER_NOM_ << endl;
     cout << "**** Latency/Throughput Measurement **************" << endl;
     cout << "measured delay:       " << m_statistic.totalMarkDelay() << endl;
     cout << "marked packet:        " << m_statistic.acceptMarkPacket() << endl;
@@ -335,8 +280,7 @@ void EsynetFoundation::simulationResults()
     cout << "total non-drop packet:" << ni_statistic.nonDropPacket() << endl;
     cout << "deliver rate:         " << deliver_rate << endl;
     cout << "total acknowledge :   " << ni_statistic.injectAckPacket() << endl;
-    cout << "total retransmission: " <<
-        ni_statistic.retransmissionPacket()  << endl;
+    cout << "total retransmission: " << ni_statistic.retransmissionPacket()  << endl;
     cout << "average e2e delay:    " << average_e2e_delay << endl;
     cout << "**************************************************" << endl;
 
@@ -350,15 +294,15 @@ void EsynetFoundation::simulationResults()
         (double)statistics_unit.bistRecoverCounter(),
         (double)statistics_unit.bistRecoverCycle(),
         average_e2e_delay,
-		(double)ni_statistic.retransmissionPacket(),
-		(double)m_statistic.acceptedPacket()
+        (double)ni_statistic.retransmissionPacket(),
+        (double)m_statistic.acceptedPacket()
     )
     LINK_RESULT_OUT
 }
 
-void EsynetFoundation::eventHandler(double time, const EsynetMessEvent& mess)
+void EsynetFoundation::eventHandler(double time, const EsynetEvent& mess)
 {
-	EsynetSimBaseUnit::eventHandler(time, mess);
+    EsynetSimBaseUnit::eventHandler(time, mess);
     for ( size_t i = 0; i < m_router_list.size(); i ++ )
     {
         m_router_list[ i ].setTime( time );
@@ -370,21 +314,17 @@ void EsynetFoundation::eventHandler(double time, const EsynetMessEvent& mess)
     
     switch( mess.eventType() ) 
     {
-	case EsynetMessEvent::EVG: receiveEvgMessage(mess); break;
-	case EsynetMessEvent::ROUTER: receiveRouterMessage(mess); break;
-	case EsynetMessEvent::WIRE: receiveWireMessage(mess); break;
-	case EsynetMessEvent::CREDIT: receiveCreditMessage(mess); break;
-	case EsynetMessEvent::NIREAD: receiveNiReadMessage(mess); break;
-        default:
-            cout << "This message type " << mess.eventType() << 
-                    " is not supported.\n";
-            break;
+    case EsynetEvent::EVG:    receiveEvgMessage(mess); break;
+    case EsynetEvent::ROUTER: receiveRouterMessage(mess); break;
+    case EsynetEvent::WIRE:   receiveWireMessage(mess); break;
+    case EsynetEvent::CREDIT: receiveCreditMessage(mess); break;
+    case EsynetEvent::NIREAD: receiveNiReadMessage(mess); break;
+    default: cout << "This message type " << mess.eventType() << " is not supported.\n"; break;
     }
     
     for ( size_t i = 0; i < m_router_list.size(); i ++ )
     {
-		const vector< EsynetMessEvent > & mess_list = 
-			m_router_list[i].eventQueue();
+        const std::vector< EsynetEvent > & mess_list = m_router_list[i].eventQueue();
         for ( size_t j = 0; j < mess_list.size(); j ++ )
         {
             addEvent( mess_list[ j ] );
@@ -393,7 +333,7 @@ void EsynetFoundation::eventHandler(double time, const EsynetMessEvent& mess)
     }
     for ( size_t i = 0; i < m_ni_list.size(); i ++ )
     {
-		const vector< EsynetMessEvent > & mess_list = m_ni_list[i].eventQueue();
+        const std::vector< EsynetEvent > & mess_list = m_ni_list[i].eventQueue();
         for ( size_t j = 0; j < mess_list.size(); j ++ )
         {
             addEvent( mess_list[ j ] );
@@ -402,46 +342,45 @@ void EsynetFoundation::eventHandler(double time, const EsynetMessEvent& mess)
     }
 }
 
-void EsynetFoundation::updateStatistic(const vector< EsynetMessEvent > & accepted)
+void EsynetFoundation::updateStatistic(const vector< EsynetEvent > & accepted)
 {
-	for (size_t i = 0; i < accepted.size(); i ++)
-	{
-		long flit_id = accepted[i].flit().flitId();
-		if (flit_id < m_received_id_offset)
-		{
-			continue;
-		}
-		long flit_id_offset = flit_id - m_received_id_offset;
-		if (flit_id_offset < m_received_id.size())
-		{
-			if (m_received_id[flit_id_offset])
-			{
-				continue;
-			}
-		}
-		
-		m_statistic.incAcceptPacket(m_current_time, 
-			m_current_time - accepted[i].flit().e2eStartTime() );
-		if (accepted[i].flit().marked())
-		{
-			m_statistic.incAcceptMarkPacket(
-				m_current_time - accepted[i].flit().e2eStartTime() );
-		}
-		
-		if (m_received_id.size() <= flit_id_offset)
-		{
-			for (int i = m_received_id.size(); i < flit_id_offset; i ++)
-			{
-				m_received_id.push_back(false);
-			}
-			m_received_id.push_back(true);
-		}
-		else
-		{
-			m_received_id[flit_id_offset] = true;
-		}
-	}
-	
+    for (size_t i = 0; i < accepted.size(); i ++)
+    {
+        long flit_id = accepted[i].flit().flitId();
+        if (flit_id < m_received_id_offset)
+        {
+            continue;
+        }
+        long flit_id_offset = flit_id - m_received_id_offset;
+        if (flit_id_offset < m_received_id.size())
+        {
+            if (m_received_id[flit_id_offset])
+            {
+                continue;
+            }
+        }
+        
+        m_statistic.incAcceptPacket(m_current_time, 
+            m_current_time - accepted[i].flit().e2eStartTime() );
+        if (accepted[i].flit().marked())
+        {
+            m_statistic.incAcceptMarkPacket(m_current_time - accepted[i].flit().e2eStartTime() );
+        }
+        
+        if (m_received_id.size() <= flit_id_offset)
+        {
+            for (int i = m_received_id.size(); i < flit_id_offset; i ++)
+            {
+                m_received_id.push_back(false);
+            }
+            m_received_id.push_back(true);
+        }
+        else
+        {
+            m_received_id[flit_id_offset] = true;
+        }
+    }
+    
     if ( m_argument_cfg->injectedPacket() >= 0 &&
          m_statistic.acceptedPacket() >= m_argument_cfg->injectedPacket() )
     {
@@ -502,8 +441,7 @@ void EsynetFoundation::informationPropagate()
 {
     for ( long id = 0; id < m_network_cfg->routerCount(); id ++ )
     {
-        m_ni_list[ id ].setEmptyReqire( (m_router_list[ id ].
-            bistPortState( 0 ) == BIST_PORT_EMPTY) );
+        m_ni_list[ id ].setEmptyReqire( (m_router_list[ id ].bistPortState( 0 ) == BIST_PORT_EMPTY) );
         m_router_list[ id ].setPortEmptyAck( 0, m_ni_list[ id ].isEmpty() );
         for ( long phy = 1; phy < m_network_cfg->router( id ).portNum(); 
              phy ++ )
@@ -553,20 +491,20 @@ void EsynetFoundation::informationPropagate()
     }
 }
 
-vector< EsynetMessEvent > EsynetFoundation::acceptList()
+vector< EsynetEvent > EsynetFoundation::acceptList()
 {
-	vector< EsynetMessEvent > accept_list;
+    vector< EsynetEvent > accept_list;
 
-	for ( int ni = 0; ni < m_ni_list.size(); ni ++ )
-	{
-		vector< EsynetMessEvent > ni_accept_list = 
-			m_ni_list[ ni ].acceptList();
-		m_ni_list[ ni ].clearAcceptList();
-		for ( int i = 0; i < ni_accept_list.size(); i ++ )
-		{
-			accept_list.push_back( ni_accept_list[ i ] );
-		}
-	}
+    for ( int ni = 0; ni < m_ni_list.size(); ni ++ )
+    {
+        vector< EsynetEvent > ni_accept_list = 
+            m_ni_list[ ni ].acceptList();
+        m_ni_list[ ni ].clearAcceptList();
+        for ( int i = 0; i < ni_accept_list.size(); i ++ )
+        {
+            accept_list.push_back( ni_accept_list[ i ] );
+        }
+    }
 
-	return accept_list;
+    return accept_list;
 }

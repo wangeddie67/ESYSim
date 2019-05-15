@@ -22,9 +22,6 @@ PATH_SRCS = esynet_path.cc
 INTER_SRC = esynet_interface.cc
 SIM_SRCS = \
 	esynet_config.cc \
-	esynet_ecc_unit.cc \
-	esynet_fault_unit.cc \
-	esynet_flit.cc \
 	esynet_foundation.cc \
 	esynet_mess_event.cc \
 	esynet_mess_queue.cc \
@@ -50,9 +47,6 @@ PATH_OBJS = esynet_path.$(OEXT)
 INTER_OBJS = esynet_interface.$(OEXT)
 SIM_OBJS = \
 	esynet_config.$(OEXT) \
-	esynet_ecc_unit.$(OEXT) \
-	esynet_fault_unit.$(OEXT) \
-	esynet_flit.$(OEXT) \
 	esynet_foundation.$(OEXT) \
 	esynet_mess_event.$(OEXT) \
 	esynet_mess_queue.$(OEXT) \

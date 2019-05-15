@@ -14,7 +14,7 @@
 #include "esynet_random_unit.h"
 #include "esynet_config.h"
 #include "esynet_foundation.h"
-#include "esynet_mess_queue.h"
+#include "esynet_event_queue.h"
 
 #include "esy_interdata.h"
 #include "esy_linktool.h"
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     /* network simulation platform */
     EsynetFoundation sim_net( &network_cfg, &argu_list );
     /* message queue */
-    EsynetMessQueue network_mess_queue( 0.0, &sim_net, &argu_list );
+    EsynetEventQueue network_mess_queue( 0.0, &sim_net, &argu_list );
 
     /* maximum number of source-destination pair */
     /* taken 2 from router number */    
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
                 routing().size() > 0 )
             {
                 /* register a new step in path vector */
-                VCType selrouting = sim_net.router( addr ).
+                EsynetVC selrouting = sim_net.router( addr ).
                     inputVirtualChannel( port, vc ).routing()[ 0 ];
                 path.push_back( EsyDataItemHop( (char)addr, (char)port, 
                     (char)vc, (char)selrouting.first, (char)selrouting.second ) );
