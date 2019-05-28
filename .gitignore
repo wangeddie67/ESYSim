@@ -4,6 +4,7 @@ docs/
 esyarch/
 .kdev4/
 
+*.d
 *.o
 *.obj
 *.kdev4
