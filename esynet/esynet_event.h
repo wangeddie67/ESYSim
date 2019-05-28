@@ -208,8 +208,8 @@ public:
     /**
      * @brief Return an packet generation event with specified value.
      * @param time Event time.
-     * @param src Source address of new packet.
-     * @param des Destination address of new packet.
+     * @param src Source NI of new packet.
+     * @param des Destination NI of new packet.
      * @param pac_size Size of new packet.
      * @param msgno Message number of new packet.
      * @param flag Flags of new packet. Default is 0.
@@ -221,7 +221,7 @@ public:
         e.m_event_type = EVG;
         e.m_src_id = src;
         e.m_des_id = des;
-        e.m_flit = EsynetFlit(msgno, pac_size, EsynetFlit::FLIT_HEAD, src, des, time, esynet::EsynetPayload(), flag );
+        e.m_flit = EsynetFlit( msgno, pac_size, EsynetFlit::FLIT_HEAD, src, des, time, esynet::EsynetPayload(), flag );
         return e;
     }
     /**

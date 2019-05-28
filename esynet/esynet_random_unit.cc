@@ -1,22 +1,24 @@
 /*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301, USA.
-
----
-Copyright (C) 2015, Junshi Wang <>
-*/
+ * File name : esynet_random_unit.cc
+ * Function : Implement random number generator.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
 
 #include "esynet_random_unit.h"
 
@@ -24,14 +26,14 @@ EsynetSRGen * EsynetSRGen::mp_global_pointer = 0;
 
 double EsynetSRGen::PI = 3.141592658979323846;
 
-EsynetSRGen::EsynetSRGen() :
-    m_idum( 1 )
+EsynetSRGen::EsynetSRGen()
+    : m_idum( 1 )
 {
     mp_global_pointer = this;
 }
 
-EsynetSRGen::EsynetSRGen( long a ) :
-    m_idum( a )
+EsynetSRGen::EsynetSRGen( long a )
+    : m_idum( a )
 {
     mp_global_pointer = this;
 }
@@ -49,10 +51,10 @@ double EsynetSRGen::sflat01()
     const long NDIV = 1 + IMM1 / NTAB;
     const double EPS = 3.0e-16, RNMX = 1.0 - EPS, AM = 1.0 / double( IM1 );
     static int idum2 = 123456789, iy = 0;
-    static vector<int> iv( NTAB );
+    static std::vector< int > iv( NTAB );
     int j, k;
     double temp;
-    
+
     if ( m_idum <= 0 )
     {
         m_idum = (m_idum == 0 ? 1 : - m_idum );
@@ -125,8 +127,7 @@ unsigned long EsynetSRGen::flatUnsignedLong( unsigned long low, unsigned long hi
     return val;
 }
 
-unsigned long long EsynetSRGen::flatUnsignedLongLong(
-        unsigned long long low, unsigned long long high )
+unsigned long long EsynetSRGen::flatUnsignedLongLong( unsigned long long low, unsigned long long high )
 {
     assert( low < high );
     unsigned long long val = (unsigned long long)( ( high - low ) * sflat01() + low );
@@ -178,8 +179,7 @@ unsigned long EsynetSRGen::gaussUnsignedLong( unsigned long mean, double varianc
     return (unsigned long)( gauss01() * variance + mean );
 }
 
-unsigned long long EsynetSRGen::gaussUnsignedLongLong(
-        unsigned long long mean, double variance )
+unsigned long long EsynetSRGen::gaussUnsignedLongLong( unsigned long long mean, double variance )
 {
     return (unsigned long long)( gauss01() * variance + mean );
 }

@@ -9,6 +9,7 @@ AROPT =
 RANLIB = ranlib
 RM = rm -rvf
 RMDIR = rm -rvf
+MKDIR = mkdir -p
 LN = ln -s
 LNDIR = ln -s
 DIFF = diff
@@ -41,3 +42,6 @@ TINYXML_LIB = $(TINYXML_DIR)$(X)*.$(OEXT)
 
 .c.o:
 	$(CC) -c $(CFLAGS) $< -I$(INTERFACE_DIR) -I$(TINYXML_DIR)
+
+%.d:%.cc
+	$(CCPP) -MM $(CFLAGS) $< > $@

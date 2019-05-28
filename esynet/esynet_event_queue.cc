@@ -107,8 +107,8 @@ void EsynetEventQueue::simulator( long long int sim_cycle )
                     current_message.flit().flitId(), 
                     (short)current_message.flit().flitSize(), 
                     current_message.flit().flitType(),
-                    (short)current_message.flit().srcAddr(), 
-                    (short)current_message.flit().desAddr(),
+                    (short)current_message.flit().srcRouter(), 
+                    (short)current_message.flit().desRouter(),
                     (char)current_message.flit().flitFlag(),
                     current_message.flit().startTime()
                 );
@@ -131,8 +131,8 @@ void EsynetEventQueue::simulator( long long int sim_cycle )
                     current_message.flit().flitId(), 
                     (short)current_message.flit().flitSize(), 
                     current_message.flit().flitType(),
-                    (short)current_message.flit().srcAddr(), 
-                    (short)current_message.flit().desAddr(),
+                    (short)current_message.flit().srcRouter(), 
+                    (short)current_message.flit().desRouter(),
                     (char)current_message.flit().flitFlag(),
                     current_message.flit().startTime()
                 );

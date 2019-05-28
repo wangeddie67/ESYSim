@@ -1,4 +1,4 @@
-/**
+/*
  * File name : esynet_routing_xy.cc
  * Function : Routing algorithm XY, TXY, and DyXY.
  *
@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA.
  *
- * Copyright (C) 2015, Junshi Wang <wangeddie67@gmail.com>
+ * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
 #include "esynet_router_unit.h"
@@ -33,8 +33,8 @@
 
 void EsynetRouter::algorithmTXY(long des, long src, long s_ph, long s_vc)
 {
-    EsynetAddr des_t = m_network_cfg->seq2Coord( des );
-    EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    esynet::EsynetAddr des_t = m_network_cfg->seq2Coord( des );
+    esynet::EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
     long xoffset = des_t[ AX_X ] - m_router_addr[ AX_X ];
     long yoffset = des_t[ AX_Y ] - m_router_addr[ AX_Y ];
     bool xdirection = ( abs( static_cast<int>( xoffset ) ) * 2 <= m_network_cfg->size( AX_X ) ) ? true: false;
@@ -131,8 +131,8 @@ void EsynetRouter::algorithmTXY(long des, long src, long s_ph, long s_vc)
 
 void EsynetRouter::algorithmXY(long des, long src, long s_ph, long s_vc)
 {
-    EsynetAddr des_t = m_network_cfg->seq2Coord( des );
-    EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    esynet::EsynetAddr des_t = m_network_cfg->seq2Coord( des );
+    esynet::EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
 
     long dir = PLOCAL;
 
@@ -181,8 +181,8 @@ void EsynetRouter::algorithmXY(long des, long src, long s_ph, long s_vc)
 
 void EsynetRouter::algorithmDyXY(long des, long src, long s_ph, long s_vc)
 {
-    EsynetAddr des_t = m_network_cfg->seq2Coord( des );
-    EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    esynet::EsynetAddr des_t = m_network_cfg->seq2Coord( des );
+    esynet::EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
     // IF D=Local then Select <= Local;
     if ( m_router_addr[ AX_Y ] == des_t[ AX_Y ] && m_router_addr[ AX_X ] == des_t[ AX_X ] )
     {

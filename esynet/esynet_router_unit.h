@@ -31,101 +31,211 @@
 #include "esynet_statistics.h"
 #include "esynet_arbiter.h"
 
-#include <map>
-#include <sstream>
-#include <cmath>
-#include <cstdlib>
-
+/**
+ * @brief Router module.
+ */
 class EsynetRouter : public EsynetSimBaseUnit
 {
-/* Properties */
 private:
-    EsyNetworkCfg * m_network_cfg;
-    EsyNetworkCfgRouter * m_router_cfg;
-    EsynetConfig * m_argu_cfg;
+    EsyNetworkCfg * m_network_cfg;      /*!< @brief Pointer to network configuration structure. */
+    EsyNetworkCfgRouter * m_router_cfg; /*!< @brief Pointer to router configuration structure. */
+    EsynetConfig * m_argu_cfg;          /*!< @brief Pointer to argument list. */
 
-    /* router id */
-    long m_router_id;
-    EsynetAddr m_router_addr;
+    long m_router_id;   /*!< @brief Router id. */
+    esynet::EsynetAddr m_router_addr;   /*!< @brief Router address in axis. */
 
     std::vector< EsynetInputPort > m_input_port;    /*!< @brief Input ports. */
     std::vector< EsynetOutputPort > m_output_port;  /*!< @brief Output ports. */
+    EsynetRouterPower m_power_unit;             /*!< @brief Power module. */
+    EsynetRouterStatistic m_statistics_unit;    /*!< @brief Statistic module. */
 
-    /* Stastics parameters */
-    /* power module */
-    EsynetRouterPower m_power_unit;
-    /* statics module */
-    EsynetRouterStatistic m_statistics_unit;
+    std::vector< std::vector< EsynetArbiter > > m_vc_input_arbiter;     /*!< @brief Virtual channel arbiter at output virtual channels. */
+    std::vector< std::vector< EsynetArbiter > > m_vc_output_arbiter;    /*!< @brief Virtual channel arbiter at input virtual channels. */
+    std::vector< EsynetArbiter > m_port_input_arbiter;  /*!< @brief Port arbiter at output ports. */
+    std::vector< EsynetArbiter > m_port_output_arbiter; /*!< @brief Port arbiter at input ports. */
 
-    /* arbiter */
-    std::vector< std::vector< EsynetArbiter > > m_vc_input_arbiter;
-    std::vector< std::vector< EsynetArbiter > > m_vc_output_arbiter;
-    std::vector< EsynetArbiter > m_port_input_arbiter;
-    std::vector< EsynetArbiter > m_port_output_arbiter;
+    void (EsynetRouter::*m_curr_algorithm)(long, long, long, long); /*!< @brief Routing algorithm function. */
 
-    /* the routing algorithm is now used, this is a pointer, points to
-        * the routing procedure */
-    void (EsynetRouter::*m_curr_algorithm)(long, long, long, long);
-/* Public Functions */
+    std::vector< std::vector< std::pair< long, esynet::EsynetVC > > > m_routing_table; /*!< @brief Routing table. First item is source address, second item is routing decision. */
+
 public:
-    /* constructor */
+    /**
+     * @brief Constructor Function.
+     */
     EsynetRouter();
+    /**
+     * @brief Constructor a router.
+     * @param network_cfg Pointer to network configurations structure.
+     * @param router_id Router id.
+     * @param argument_cfg Pointer to argument list.
+     */
     EsynetRouter( EsyNetworkCfg * network_cfg, long router_id, EsynetConfig * argument_cfg );
 
-    inline long creditCounter( long phy, long vc ) const { return m_output_port[ phy ][ vc ].creditCounter(); }
-    inline long creditCounter( const EsynetVC port ) const { return m_output_port[ port.first ][ port.second ].creditCounter(); }
-
-    /* function to access m_input_port */
-    inline EsynetInputVirtualChannel & inputVirtualChannel( long phy, long vc ) { return m_input_port[ phy ][ vc ]; }
-    inline const EsynetInputVirtualChannel & inputVirtualChannel( long phy, long vc ) const { return m_input_port[ phy ][ vc ]; }
-    /* function to access m_input_port */
+    /**
+     * @brief Return reference to specified output port.
+     */
     inline EsynetOutputPort & outputPort( long phy ) { return m_output_port[ phy ]; }
+    /**
+     * @brief Return constant reference to specified output port.
+     */
     inline const EsynetOutputPort & outputPort( long phy ) const { return m_output_port[ phy ]; }
-    /* function to access m_statistics_unit */
+    /**
+     * @brief Return constant reference to statistics unit.
+     */
     inline const EsynetRouterStatistic & statistics() const { return m_statistics_unit; }
-    /* function to access m_power_unit */
+    /**
+     * @brief Return reference to power unit.
+     */
     inline EsynetRouterPower & powerUnit() { return m_power_unit; }
 
-    inline void setInputNeighbor( long port, const EsynetVC & addr )  { m_input_port[ port ].setInputNeighbor( addr ); }
-    inline void setOutputNeighbor( long port, const EsynetVC & addr ) { m_output_port[ port ].setOutputNeighbor( addr ); }
-
-
-    /* event handler function */
-    /* receive flit */
-    void receiveFlit(long a, long b, const EsynetFlit & c);
-    void receiveFlitInBuffer(long a, long b, const EsynetFlit & c);
-    /* receive credit processing of physical port phy and virtual channel vc */
+    /**
+     * @brief Set neighbor of input port.
+     * @param port input port.
+     * @param addr pair (router id, port id) of connected port.
+     */
+    inline void setInputNeighbor( long port, const esynet::EsynetVC & addr )  { m_input_port[ port ].setInputNeighbor( addr ); }
+    /**
+     * @brief Set neighbor of output port.
+     * @param port output port.
+     * @param addr pair (router id, port id) of connected port.
+     */
+    inline void setOutputNeighbor( long port, const esynet::EsynetVC & addr ) { m_output_port[ port ].setOutputNeighbor( addr ); }
+    /**
+     * @brief Add one item in routing table.
+     * @param dst   Destination router.
+     * @param src   Source router.
+     * @param routing_vc    Routing decision < port, vc >
+     */
+    inline void appendRoutingTable( long dst, long src, const esynet::EsynetVC& routing_vc )
+    {
+        m_routing_table[ dst ].push_back( std::pair< long, esynet::EsynetVC >( src, routing_vc ) );
+    }
+    /**
+     * @brief Check the valid of routing table. Return False if there is missing item
+     */
+    bool routingTableCheck();
+    /**
+     * @name Event handler function.
+     * @{
+     */
+    /**
+     * @brief Receive flit.
+     * @param phy physical port.
+     * @param vc virtual channel.
+     * @param flit constant reference to flit.
+     */
+    void receiveFlit( long phy, long vc, const EsynetFlit & flit );
+    /**
+     * @brief Receive credit of physical port phy and virtual channel vc.
+     * @param phy physical port.
+     * @param vc Virtual channel.
+     * @param credit Credit value.
+     */
     void receiveCredit( long phy, long vc, long credit );
+    /**
+     * @}
+     */
+
+    /**
+     * @brief Simulate pipeline.
+     */
+    void routerSimPipeline();
+
+private:
+    /**
+     * @brief Return credit of connected port to specified output physical port and virtual channel.
+     */
+    inline long creditCounter( long phy, long vc ) const { return m_output_port[ phy ][ vc ].creditCounter(); }
+    /**
+     * @brief Return credit of connected port of specified output virtual channel.
+     */
+    inline long creditCounter( const esynet::EsynetVC port ) const { return m_output_port[ port.first ][ port.second ].creditCounter(); }
+    /**
+     * @brief Return reference to specified input physical port and virtual channel.
+     */
+    inline EsynetInputVirtualChannel & inputVirtualChannel( long phy, long vc ) { return m_input_port[ phy ][ vc ]; }
+    /**
+     * @brief Return constant reference to specified input physical port and virtual channel.
+     */
+    inline const EsynetInputVirtualChannel & inputVirtualChannel( long phy, long vc ) const { return m_input_port[ phy ][ vc ]; }
+
 
     /* operate function of vc */
     /* get vc */
-    EsynetVC vcSelection( long a, long b );
+    esynet::EsynetVC vcSelection( long a, long b );
 
-    /* pipeline functions */
-    /* simulate pipeline */
-    void routerSimPipeline();
-    /* routing decision */
+    /**
+     * @name Pipeline functions
+     * @{
+     */
+    /**
+     * @brief routing decision.
+     */
     void routingDecision();
-    /* virtual channel arbitration */
+    /**
+     * @brief virtual channel arbitration
+     */
     void vcArbitration();
-    /* switch arbitration */
+    /**
+     * @brief switch arbitration
+     */
     void swArbitration();
-    /* flit cross switch */
+    /**
+     * @brief flit cross switch
+     */
     void flitOutbuffer();
-    /* flit traversal */
+    /**
+     * @brief flit traversal
+     */
     void flitTraversal();
+    /**
+     * @}
+     */
 
-    /* routing algorithm */
+    /**
+     * @name Routing algorithm function
+     * @{
+     */
     /* XY, TXY, DyXY in sim_routing_xy.cc */
+    /**
+     * @brief XY routing algorithm.
+     * @param des_t Destination router of packet.
+     * @param sor_t Source router of packet.
+     * @param s_ph input physical channel.
+     * @param s_vc input virtual channel.
+     */
     void algorithmXY( long des_t, long sor_t,long s_ph, long s_vc );
+    /**
+     * @brief TXY routing algorithm.
+     * @param des_t Destination router of packet.
+     * @param sor_t Source router of packet.
+     * @param s_ph input physical channel.
+     * @param s_vc input virtual channel.
+     */
     void algorithmTXY( long des_t, long sor_t, long s_ph, long s_vc );
+    /**
+     * @brief DyXY routing algorithm.
+     * @param des_t Destination router of packet.
+     * @param sor_t Source router of packet.
+     * @param s_ph input physical channel.
+     * @param s_vc input virtual channel.
+     */
     void algorithmDyXY( long des_t, long sor_t, long s_ph, long s_vc );
+    /**
+     * @brief Table based routing algorithm.
+     * @param des_t Destination router of packet.
+     * @param sor_t Source router of packet.
+     * @param s_ph input physical channel.
+     * @param s_vc input virtual channel.
+     */
     void algorithmTable( long des_t, long sor_t, long s_ph, long s_vc );
+    /**
+     * @}
+     */
 
-    /* routing function called path execution */
-    void routingAlgorithm( long des_t, long sor_t, long s_ph, long s_vc ) { (this->*m_curr_algorithm)( des_t, sor_t, s_ph, s_vc ); }
-
-    /* print configuration of router to stream */
+    /**
+     * @brief print configuration of router to stream
+     */
     friend ostream& operator<<(ostream& os, const EsynetRouter & sr);
 };
 

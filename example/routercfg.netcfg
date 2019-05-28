@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<networkcfg>
+    <topology>5</topology>
+    <size size="3">
+        <data index="0">2</data>
+        <data index="1">2</data>
+        <data index="2">2</data>
+    </size>
+    <data_width>32</data_width>
+    <template_router_cfg>
+        <id>0</id>
+        <position>
+            <x>0</x>
+            <y>0</y>
+        </position>
+        <port_cfg size="7">
+            <data index="0">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>6</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>12</input_buffer>
+                <output_buffer>12</output_buffer>
+                <ni>1</ni>
+            </data>
+            <data index="1">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>2</port_dir>
+                <port_axis>2</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>12</input_buffer>
+                <output_buffer>12</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="2">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>3</port_dir>
+                <port_axis>2</port_axis>
+                <port_axis_dir>0</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>12</input_buffer>
+                <output_buffer>12</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="3">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>4</port_dir>
+                <port_axis>1</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>12</input_buffer>
+                <output_buffer>12</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="4">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>7</port_dir>
+                <port_axis>1</port_axis>
+                <port_axis_dir>0</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>12</input_buffer>
+                <output_buffer>12</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="5">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>0</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>12</input_buffer>
+                <output_buffer>12</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="6">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>1</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>0</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>12</input_buffer>
+                <output_buffer>12</output_buffer>
+                <ni>0</ni>
+            </data>
+        </port_cfg>
+        <pipe_cycle>1</pipe_cycle>
+    </template_router_cfg>
+    <router_cfg size="8" />
+</networkcfg>

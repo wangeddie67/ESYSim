@@ -62,6 +62,10 @@ public:
      * @param argument_cfg Pointer to option list.
      */
     EsynetEventQueue( double start_time, EsynetSimBaseUnit * sim_platform, EsynetConfig * argument_cfg );
+    /**
+     * @brief Destruction function.
+     */
+    ~EsynetEventQueue();
 
     /**
      * @brief Insert new event into the event queue.

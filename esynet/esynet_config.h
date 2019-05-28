@@ -30,9 +30,8 @@
 #define ESYNET_CONFIG_H
 
 #include "esy_argument.h"
+#include "esy_networkcfg.h"
 #include "esynet_global.h"
-
-#include <cstdlib>
 
 /**
  * @ingroup ESYNET_OPTIONS
@@ -45,17 +44,16 @@ public:
      * @brief Enable option groups
      */
     enum ConfigType {
-        CONFIG_NETWORK_CFG = 0x001L,    /*!< @brief Network configuration options, as well as network confguration options. */
-        CONFIG_SIM_CONTROL = 0x002L,     /*!< @brief Simulation control. */
-        CONFIG_TRAFFIC_INJECTION = 0x004L,  /*!< @brief Traffic generation options, as well as input benchmark options. */
+        CONFIG_NETWORK_CFG = 0x001L,            /*!< @brief Network configuration options. */
+        CONFIG_SIM_CONTROL = 0x002L,            /*!< @brief Simulation control. */
+        CONFIG_SIM_LENGTH = 0x080L,             /*!< @brief Simulation length. Not used if interface. */
+        CONFIG_TRAFFIC_INJECTION = 0x004L,      /*!< @brief Traffic generation options. Not used if interface. */
         CONFIG_OUTPUT_TRAFFIC_FILE = 0x008L,    /*!< @brief Output benchmark options. */
-        CONFIG_PATH_PAIR_FILE = 0x010L, /*!< @brief Path pair options. */
-        CONFIG_EVENT_TRACE_FILE = 0x020L,   /*!< @brief Event trace options. */
-        CONFIG_PATH_EVENT_FILE = 0x040L,    /*!< @brief Path trace options. */
-        CONFIG_MAX_HOP = 0x1000L,   /*!< @brief Maximum hop. */
-        CONFIG_NETWORK = CONFIG_NETWORK_CFG | CONFIG_SIM_CONTROL | CONFIG_TRAFFIC_INJECTION | CONFIG_OUTPUT_TRAFFIC_FILE | CONFIG_EVENT_TRACE_FILE, /*!< @brief Default combination for ESYNet. */
-        CONFIG_PATH = CONFIG_NETWORK_CFG | CONFIG_MAX_HOP | CONFIG_PATH_PAIR_FILE | CONFIG_PATH_EVENT_FILE, /*!< @brief Default combination for ESYNetPath. */
-        CONFIG_INTERFACE = CONFIG_NETWORK_CFG | CONFIG_SIM_CONTROL | CONFIG_OUTPUT_TRAFFIC_FILE | CONFIG_EVENT_TRACE_FILE,  /*!< @brief Default combination for integration APIs. */
+        CONFIG_EVENT_TRACE_FILE = 0x020L,       /*!< @brief Event trace options. */
+        CONFIG_NETWORK = CONFIG_NETWORK_CFG | CONFIG_SIM_CONTROL | CONFIG_SIM_LENGTH
+            | CONFIG_TRAFFIC_INJECTION | CONFIG_OUTPUT_TRAFFIC_FILE | CONFIG_EVENT_TRACE_FILE, /*!< @brief Default combination for ESYNet. */
+        CONFIG_INTERFACE = CONFIG_NETWORK_CFG | CONFIG_SIM_CONTROL
+            | CONFIG_OUTPUT_TRAFFIC_FILE | CONFIG_EVENT_TRACE_FILE,  /*!< @brief Default combination for integration APIs. */
     };
 
 private:
@@ -64,7 +62,6 @@ private:
      * @{
      */
     EsyArgumentEnum m_topology;             /**< @brief Network topology. */
-    long m_router_num;                      /**< @brief Total number of router in network. */
     std::vector< long > m_ary_number;       /**< @brief Size of network in each dimension. */
     long m_physical_port_number;            /**< @brief The number of physical ports in each router. */
     long m_virtual_channel_number;          /**< @brief The number of virtual channels in each physical port. */
@@ -73,11 +70,13 @@ private:
     long m_data_width;                      /**< @brief Data path width, bits */
     double m_link_length;                   /**< @brief Link length in um */
     EsyArgumentEnum m_routing_alg;          /**< @brief Routing algorithms. */
+    std::string m_routing_table;            /**< @brief Routing table file name. */
     EsyArgumentEnum m_arbiter;              /**< @brief Arbiter type. */
     long m_ni_buffer_size;                  /**< @brief Size of buffer in ni. */
     long m_ni_read_delay;                   /**< @brief Delay of ni read. */
-    bool m_network_cfg_file_enable;         /**< @brief Enable network configuration */
-    std::string m_network_cfg_file_name;    /**< @brief Network configuration file name */
+    bool m_network_cfg_file_enable;         /**< @brief Enable network configuration. */
+    bool m_network_cfg_file_out_enable;     /**< @brief Enable output network configuration. */
+    std::string m_network_cfg_file_name;    /**< @brief Network configuration file name. */
     /**
      * @}
      */
@@ -172,11 +171,7 @@ public:
     /**
      * @brief Return enumerate of network topology.
      */
-    inline esynet::EsynetTopology topology() const { return ( esynet::EsynetTopology )( long )m_topology; }
-    /**
-     * @brief Return total number of router in network.
-     */
-    inline long routerNum() const { return m_router_num; }
+    inline EsyNetworkCfg::NoCTopology topology() const { return ( EsyNetworkCfg::NoCTopology )( long )m_topology; }
     /**
      * @brief Return the size of the network in diamensions.
      */
@@ -214,6 +209,10 @@ public:
      */
     inline esynet::EsynetRoutingAlg routingAlg() const { return ( esynet::EsynetRoutingAlg )( long )m_routing_alg; }
     /**
+     * @brief Return routing table file name.
+     */
+    inline const std::string & routingTable() const { return m_routing_table; }
+    /**
      * @brief Return enumerate for arbiter.
      */
     inline esynet::EsynetArbiterType arbiter() const { return ( esynet::EsynetArbiterType )( long )m_arbiter; }
@@ -226,7 +225,11 @@ public:
      */
     inline long niReadDelay() const { return m_ni_read_delay; }
     /**
-     * @brief Return TRUE is network configuration is used.
+     * @brief Return TRUE if network configuration is generated.
+     */
+    inline bool networkCfgOutputFileEnable() const { return m_network_cfg_file_out_enable; }
+    /**
+     * @brief Return TRUE if network configuration is used.
      */
     inline bool networkCfgFileEnable() const { return m_network_cfg_file_enable; }
     /**

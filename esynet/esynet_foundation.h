@@ -71,9 +71,6 @@ protected:
     MeasureState m_throughput_measure_state;  /*!< @brief State of measurement of throughput. */
     MeasureState m_injection_state; /*!< @brief State of injection and acception if the number of packet is limited. */
 
-    std::vector< bool > m_received_id;
-    long m_received_id_offset;
-
 public:
     /**
      * @brief Create a simulation based on network configuration and argument

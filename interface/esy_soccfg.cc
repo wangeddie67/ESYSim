@@ -535,7 +535,7 @@ void EsySoCCfgNetwork::writeXml(TiXmlElement* root)
 EsySoCCfg::EsySoCCfg() :
 	m_tile( 0, EsySoCCfgTile() ), m_network()
 {
-	m_network.setTopology( EsyNetworkCfg::NOC_TOPOLOGY_IRREGULAR );
+	m_network.setTopology( EsyNetworkCfg::NT_IRREGULAR );
 	m_network.setSize( 0, 1 );
 	m_network.templateRouter().appendPort( EsyNetworkCfgPort() );
 	m_network.templateRouter().port( 0 ).setNetworkInterface( true );

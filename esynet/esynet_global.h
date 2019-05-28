@@ -52,6 +52,14 @@
  * @ingroup ESYNET_ROUTER
  * @defgroup ESYNET_PORT Port structure
  */
+/**
+ * @ingroup ESYNET_NETWORK
+ * @defgroup ESYNET_POWER Power model
+ */
+/**
+ * @ingroup ESYNET_NETWORK
+ * @defgroup ESYNET_STATISTICS Statistics unit
+ */
 
 /**
  * @ingroup ESYNET_GLOBAL
@@ -87,19 +95,6 @@ enum EsynetVCUsage
 {
     VC_USED,    /*!< @brief assigned. */
     VC_FREE     /*!< @brief free. */
-};
-/**
- * @brief Network topology.
- */
-enum EsynetTopology
-{
-    NT_SWITCH,      /*!< @brief Switch matrix. */
-    NT_SINGLE_RING, /*!< @brief Single ring. */
-    NT_DOUBLE_RING, /*!< @brief Double ring. */
-    NT_MESH_2D,     /*!< @brief 2-D mesh. */
-    NT_TORUS_2D,    /*!< @brief 2-D torus. */
-    NT_MESH_DIA,    /*!< @brief Diamension mesh. */
-    NT_TORUS_DIA,   /*!< @brief Diamension torus. */
 };
 /**
  * @brief Routing algorithm.

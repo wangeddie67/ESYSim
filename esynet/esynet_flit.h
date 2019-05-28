@@ -61,8 +61,12 @@ private:
     long m_id;          /*!< @brief Flit unique id. */
     long m_pac_size;    /*!< @brief Size of packet. */
     FlitType m_type;    /*!< @brief Flit type. */
-    long m_src;         /*!< @brief Source address. */
-    long m_des;         /*!< @brief Destination address. */
+    long m_src_ni;      /*!< @brief Source NI. */
+    long m_src_router;  /*!< @brief Source router. */
+    long m_src_port;    /*!< @brief Source port. */
+    long m_des_ni;      /*!< @brief Destination NI. */
+    long m_des_router;  /*!< @brief Destination router. */
+    long m_des_port;    /*!< @brief Destination port. */
     uint16_t m_flag;    /*!< @brief Flit flags. */
     double m_flit_start_time;   /*!< @brief Start time of flit since NI. */
 
@@ -80,29 +84,70 @@ public:
         : m_id( 0 )
         , m_pac_size( 1 )
         , m_type( FLIT_HEAD )
-        , m_src( 0 )
-        , m_des( 0 )
+        , m_src_ni( 0 )
+        , m_src_router( 0 )
+        , m_src_port( 0 )
+        , m_des_ni( 0 )
+        , m_des_router( 0 )
+        , m_des_port( 0 )
         , m_flag( 0 )
         , m_flit_start_time( 0 )
         , m_payload()
+    {}
+    /**
+     * @brief Construct a flit with specified field. Specify source and destination NI.
+     * @param id Unique id.
+     * @param size Packet size.
+     * @param type Flit type.
+     * @param src Source NI.
+     * @param des Destination NI.
+     * @param st Start time.
+     * @param data Payload data.
+     * @param flag Flit flags.
+     */
+    EsynetFlit( long id, long size, FlitType type, long src, long des
+        , double st, const esynet::EsynetPayload & data, long flag = 0
+    )
+        : m_id( id )
+        , m_pac_size( size )
+        , m_type( type )
+        , m_src_ni( src )
+        , m_src_router( 0 )
+        , m_src_port( 0 )
+        , m_des_ni( des )
+        , m_des_router( 0 )
+        , m_des_port( 0 )
+        , m_flag( flag )
+        , m_flit_start_time( st )
+        , m_payload ( data )
     {}
     /**
      * @brief Construct a flit with specified field.
      * @param id Unique id.
      * @param size Packet size.
      * @param type Flit type.
-     * @param src Source address.
-     * @param des Destination address.
+     * @param src_ni Source NI.
+     * @param src_router Source router.
+     * @param src_port Source port.
+     * @param des_ni Destination NI.
+     * @param des_router Destination router.
+     * @param des_port Destination port.
      * @param st Start time.
      * @param data Payload data.
      * @param flag Flit flags.
      */
-    EsynetFlit( long id, long size, FlitType type, long src, long des, double st, const esynet::EsynetPayload & data, long flag = 0 )
+    EsynetFlit( long id, long size, FlitType type, long src_ni, long src_router, long src_port, long des_ni, long des_router, long des_port
+        , double st, const esynet::EsynetPayload & data, long flag = 0
+    )
         : m_id( id )
         , m_pac_size( size )
         , m_type( type )
-        , m_src( src )
-        , m_des( des )
+        , m_src_ni( src_ni )
+        , m_src_router( src_router )
+        , m_src_port( src_port )
+        , m_des_ni( des_ni )
+        , m_des_router( des_router )
+        , m_des_port( des_port )
         , m_flag( flag )
         , m_flit_start_time( st )
         , m_payload ( data )
@@ -115,8 +160,12 @@ public:
         : m_id( a.m_id )
         , m_pac_size( a.m_pac_size )
         , m_type( a.m_type )
-        , m_src( a.m_src )
-        , m_des( a.m_des )
+        , m_src_ni( a.m_src_ni )
+        , m_src_router( a.m_src_router )
+        , m_src_port( a.m_src_port )
+        , m_des_ni( a.m_des_ni )
+        , m_des_router( a.m_des_router )
+        , m_des_port( a.m_des_port )
         , m_flag( a.m_flag )
         , m_flit_start_time( a.m_flit_start_time )
         , m_payload( a.m_payload )
@@ -142,13 +191,29 @@ public:
      */
     inline FlitType flitType() const { return m_type; }
     /**
+     * @brief Return source NI.
+     */
+    inline long srcNi() const { return m_src_ni; }
+    /**
      * @brief Return source router id.
      */
-    inline long srcAddr() const { return m_src; }
+    inline long srcRouter() const { return m_src_router; }
+    /**
+     * @brief Return source port.
+     */
+    inline long srcPort() const { return m_src_port; }
+    /**
+     * @brief Return destination NI.
+     */
+    inline long desNi() const { return m_des_ni; }
     /**
      * @brief Return destination router id.
      */
-    inline long desAddr() const { return m_des; }
+    inline long desRouter() const { return m_des_ni; }
+    /**
+     * @brief Return destination port.
+     */
+    inline long desPort() const { return m_des_port; }
     /**
      * @brief Return flit start time.
      */
@@ -168,7 +233,6 @@ public:
     /**
      * @}
      */
-
 
     /**
      * @name Function to set variables
@@ -197,7 +261,7 @@ public:
         case EsynetFlit::FLIT_BODY: os << "FLIT_BODY "; break;
         case EsynetFlit::FLIT_TAIL: os << "FLIT_TAIL "; break;
         }
-        os << "addr=" << ft.srcAddr() << ">" << ft.desAddr() << " ";
+        os << "addr=" << ft.srcRouter() << "(" << ft.srcPort() << ")" << "-->" << ft.desRouter() << "(" << ft.desPort() << ")" << " ";
         os << "data={";
         for ( size_t i = 0; i < ft.data().size(); i ++ )
         {
@@ -208,7 +272,6 @@ public:
 
         return os;
     }
-
 
 };
 

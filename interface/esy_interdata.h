@@ -65,8 +65,7 @@ class EsyDataItemBenchmark : public EsyDataListItem
 {
 	#define BENCHMARK_EXTENSION "bench"
 protected:
-    double m_time;  /**< \brief Packet injection time, unit in simulation
-        cycle. */
+    double m_time;  /**< \brief Packet injection time, unit in simulation cycle. */
     short m_src;  /**< \brief Source router id. */
     short m_dst;  /**< \brief Destination router id. */
     short m_size;  /**< \brief Packet size, unit in flit. */

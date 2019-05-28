@@ -35,14 +35,14 @@
 class EsynetArbiter
 {
 private:
-    ArbiterType m_type; /*!< @brief Type of arbiter. */
-    int m_size; /*!< @brief Number of request signals. */
+    esynet::EsynetArbiterType m_type;   /*!< @brief Type of arbiter. */
+    int m_size;                         /*!< @brief Number of request signals. */
 
-    std::vector< vector< bool > > m_state_matrix;    /*!< @brief Matrix D-FF for matrix arbiter. */
-    std::vector< bool > m_state_vector;  /*!< @brief Vector D-FF for Round-robin arbiter. */
+    std::vector< vector< bool > > m_state_matrix;   /*!< @brief Matrix D-FF for matrix arbiter. */
+    std::vector< bool > m_state_vector;             /*!< @brief Vector D-FF for Round-robin arbiter. */
 
-    std::map< int, esynet::EsynetVC > m_vc_map;   /*!< @brief Mapping between request signals and virtual channel. */
-    std::vector< bool > m_request;  /*!< @brief Request signals. */
+    std::map< int, esynet::EsynetVC > m_vc_map; /*!< @brief Mapping between request signals and virtual channel. */
+    std::vector< bool > m_request;              /*!< @brief Request signals. */
 
 public:
     /**

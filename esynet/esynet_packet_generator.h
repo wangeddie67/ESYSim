@@ -38,6 +38,7 @@ private:
     /* Unique identification number */
     EsyNetworkCfg * m_network_cfg;  /*!< @brief Pointer to network configuration structure. */
     EsynetConfig * m_argu_cfg;  /*!< @brief Pointer to argument list .*/
+    long m_ni_count;    /*!< @brief The number of NI in the network. */
 
     EsyDataFileIStream< EsyDataItemBenchmark > * m_tracein; /*!< @brief Pointer to benchmark trace interface. */
 
@@ -52,7 +53,7 @@ public:
      * @param network_cfg Pointer to network configuration structure.
      * @param argument_cfg Pointer to option list.
      */
-    EsynetPacketGenerator(EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg);
+    EsynetPacketGenerator( EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg );
 
     /**
      * @brief Generate packet for one cycle
