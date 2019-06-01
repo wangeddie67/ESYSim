@@ -1,6 +1,7 @@
 moc/
 obj/
 docs/
+bin/
 esyarch/
 .kdev4/
 

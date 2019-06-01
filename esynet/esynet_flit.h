@@ -33,6 +33,7 @@
 
 #include <vector>
 #include <iostream>
+#include <stdint.h>
 
 /**
  * @ingroup ESYNET_NETWORK
@@ -175,6 +176,28 @@ public:
      */
 
     /**
+     * @brief Copy flit structure.
+     * @param t Instance to copy.
+     */
+    EsynetFlit& operator=( const EsynetFlit& t )
+    {
+        m_id = t.m_id;
+        m_pac_size = t.m_pac_size;
+        m_type = t.m_type;
+        m_src_ni = t.m_src_ni;
+        m_src_router = t.m_src_router;
+        m_src_port = t.m_src_port;
+        m_des_ni = t.m_des_ni;
+        m_des_router = t.m_des_router;
+        m_des_port = t.m_des_port;
+        m_flag = t.m_flag;
+        m_flit_start_time = t.m_flit_start_time;
+        m_payload = t.m_payload;
+
+        return (*this);
+    }
+
+    /**
      * @name Function to access variables
      * @{
      */
@@ -241,7 +264,7 @@ public:
     /**
      * @brief Set flit flags.
      */
-    void setFlitFlag( long flag ) { m_flag = flag; }
+    void setFlitFlag( uint16_t flag ) { m_flag = flag; }
     /**
      * @}
      */

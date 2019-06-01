@@ -457,7 +457,7 @@ EsyNetworkCfg::EsyNetworkCfg( NoCTopology topology, const std::vector< long >& s
         port.setOutputBuffer( output_buffer );
 
         // NI port
-        if ( t_port == 0 )
+        if ( t_port == 0 || m_topology == NT_SWITCH )
         {
             port.setPortAxis( 0 );
             port.setPortAxisDir( EsyNetworkCfgPort::AXDIR_DEC );

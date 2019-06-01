@@ -135,7 +135,7 @@ EsynetRouter::EsynetRouter(EsyNetworkCfg * network_cfg, long router_id,
     case esynet::RA_DYXY:  m_curr_algorithm = &EsynetRouter::algorithmDyXY;  break;
     case esynet::RA_TABLE: m_curr_algorithm = &EsynetRouter::algorithmTable; break;
     }
-    m_routing_table.resize( m_network_cfg->routerCount() );
+    m_routing_table.resize( m_network_cfg->setNiCount() );
 
     for ( long l_port = 0; l_port < m_router_cfg->portNum(); l_port ++ )
     {

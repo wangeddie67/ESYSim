@@ -97,8 +97,8 @@ int main( int argc, char *argv[] )
     EsynetEventQueue network_mess_queue( 0.0, &sim_net, &argu_list );
 
     // begin simulation
-    LINK_PROGRESS_INIT
     cout << "**** simulation begin ****" << endl;
+    LINK_PROGRESS_INIT
 
     // loop simulation cycle
     for ( sim_cycle = 0; sim_cycle <= argu_list.simLength(); sim_cycle = sim_cycle + argu_list.simulationPeriod() )
