@@ -72,6 +72,7 @@ private:
     EsyArgumentEnum m_routing_alg;          /**< @brief Routing algorithms. */
     std::string m_routing_table;            /**< @brief Routing table file name. */
     EsyArgumentEnum m_arbiter;              /**< @brief Arbiter type. */
+    EsyArgumentEnum m_flow_control;         /**< @brief Flow control method. */
     long m_ni_buffer_size;                  /**< @brief Size of buffer in ni. */
     long m_ni_read_delay;                   /**< @brief Delay of ni read. */
     bool m_network_cfg_file_enable;         /**< @brief Enable network configuration. */
@@ -216,6 +217,10 @@ public:
      * @brief Return enumerate for arbiter.
      */
     inline esynet::EsynetArbiterType arbiter() const { return ( esynet::EsynetArbiterType )( long )m_arbiter; }
+    /**
+     * @brief Return enumerate for flow control method.
+     */
+    inline esynet::EsynetFlowControlType flowControl() const { return ( esynet::EsynetFlowControlType )( long )m_flow_control; }
     /**
      * @brief Return size of NI buffer.
      */

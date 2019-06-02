@@ -26,6 +26,7 @@ SIM_SRCS = \
 	esynet_random_unit.cc \
 	esynet_arbiter.cc \
 	esynet_router_unit.cc \
+	esynet_routing_ring.cc \
 	esynet_routing_xy.cc \
 	esynet_routing_table.cc
 
@@ -40,6 +41,7 @@ SIM_OBJS = \
 	esynet_random_unit.$(OEXT) \
 	esynet_arbiter.$(OEXT) \
 	esynet_router_unit.$(OEXT) \
+	esynet_routing_ring.$(OEXT) \
 	esynet_routing_xy.$(OEXT) \
 	esynet_routing_table.$(OEXT)
 

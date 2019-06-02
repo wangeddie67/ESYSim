@@ -43,6 +43,7 @@ EsynetConfig::EsynetConfig( EsynetConfig::ConfigType type )
     , m_routing_alg( esynet::RA_XY )
     , m_routing_table( "../example/routing" )
     , m_arbiter( esynet::AR_MATRIX )
+    , m_flow_control( esynet::FC_WORMWHOLE )
     , m_ni_buffer_size( 1 )
     , m_ni_read_delay( 0 )
     , m_network_cfg_file_enable( false )
@@ -88,6 +89,7 @@ EsynetConfig::EsynetConfig( int argc, char * const argv[], ConfigType type )
     , m_routing_alg( esynet::RA_XY )
     , m_routing_table( "../example/routing" )
     , m_arbiter( esynet::AR_MATRIX )
+    , m_flow_control( esynet::FC_WORMWHOLE )
     , m_ni_buffer_size( 1 )
     , m_ni_read_delay( 0 )
     , m_network_cfg_file_enable( false )
@@ -149,9 +151,14 @@ bool EsynetConfig::preDefineCheck()
         case EsyNetworkCfg::NT_RING :
             {
                 m_ary_number.resize( 1 );
-                if ( m_routing_alg != esynet::RA_XY )
+                if ( m_physical_port_number != 3 )
                 {
-                    std::cout << "Only extended XY routing algorithm works on the single ring NoC." << std::endl;
+                    std::cout << "The router of ring NoC must have 3 physical channels." << std::endl;
+                    m_physical_port_number = 3;
+                }
+                if ( m_routing_alg != esynet::RA_SINGLERING && m_routing_alg != esynet::RA_DOUBLERING )
+                {
+                    std::cout << "Only single/double ring routing algorithm works on the ring NoC." << std::endl;
                     return false;
                 }
             }
@@ -243,6 +250,8 @@ void EsynetConfig::insertVariables(ConfigType type)
         // Link length
         insertDouble( "-link_length", "link length #num", &m_link_length );
         // Routing algorithm
+        m_routing_alg.addOption(esynet::RA_SINGLERING, "SingleRing" );
+        m_routing_alg.addOption(esynet::RA_DOUBLERING, "DoubleRing" );
         m_routing_alg.addOption(esynet::RA_XY, "XY");
         m_routing_alg.addOption(esynet::RA_TXY, "TXY");
         m_routing_alg.addOption(esynet::RA_DYXY, "DyXY");
@@ -255,6 +264,10 @@ void EsynetConfig::insertVariables(ConfigType type)
         m_arbiter.addOption(esynet::AR_RR, "RR");
         m_arbiter.addOption(esynet::AR_MATRIX, "Matrix");
         insertEnum("-arbiter", "Code of aribiter", &m_arbiter );
+        // Flow control
+        m_flow_control.addOption(esynet::FC_WORMWHOLE, "WormWhole");
+        m_flow_control.addOption(esynet::FC_RING, "Ring");
+        insertEnum("-flow_control", "Code of flow control", &m_flow_control );
         // NI buffer size
         insertLong( "-ni_buffer_size", "Buffer size of NI, #unit", &m_ni_buffer_size );
         // NI read delay

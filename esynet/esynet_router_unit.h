@@ -54,6 +54,7 @@ private:
     std::vector< EsynetArbiter > m_port_input_arbiter;  /*!< @brief Port arbiter at output ports. */
     std::vector< EsynetArbiter > m_port_output_arbiter; /*!< @brief Port arbiter at input ports. */
 
+    esynet::EsynetFlowControlType m_flow_control;   /*!< @brief Flow control method. */
     void (EsynetRouter::*m_curr_algorithm)(long, long, long, long); /*!< @brief Routing algorithm function. */
 
     std::vector< std::vector< std::pair< long, esynet::EsynetVC > > > m_routing_table; /*!< @brief Routing table. First item is source address, second item is routing decision. */
@@ -196,7 +197,22 @@ private:
      * @name Routing algorithm function
      * @{
      */
-    /* XY, TXY, DyXY in sim_routing_xy.cc */
+    /**
+     * @brief Single ring routing algorithm.
+     * @param des_t Destination router of packet.
+     * @param sor_t Source router of packet.
+     * @param s_ph input physical channel.
+     * @param s_vc input virtual channel.
+     */
+    void algorithmSingleRing( long des_t, long sor_t,long s_ph, long s_vc );
+    /**
+     * @brief Double ring routing algorithm.
+     * @param des_t Destination router of packet.
+     * @param sor_t Source router of packet.
+     * @param s_ph input physical channel.
+     * @param s_vc input virtual channel.
+     */
+    void algorithmDoubleRing( long des_t, long sor_t,long s_ph, long s_vc );
     /**
      * @brief XY routing algorithm.
      * @param des_t Destination router of packet.

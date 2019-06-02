@@ -66,63 +66,42 @@ ostream & operator<<(ostream& os, const EsynetRouter & sr)
     return os;
 }
 
-/*************************************************
-  Function : 
-    SimRouter::SimRouter()
-  Description: 
-    Construct an empty entity for router.
-*************************************************/
-EsynetRouter::EsynetRouter() :
-    m_network_cfg(),
-    m_router_cfg(),
-    m_argu_cfg(),
-    m_router_id(),
-    m_router_addr(),
-    m_input_port(),
-    m_output_port(),
-    m_power_unit(),
-    m_vc_input_arbiter(),
-    m_vc_output_arbiter(),
-    m_port_input_arbiter(),
-    m_port_output_arbiter(),
-    m_curr_algorithm()
+EsynetRouter::EsynetRouter()
+    : m_network_cfg()
+    , m_router_cfg()
+    , m_argu_cfg()
+    , m_router_id()
+    , m_router_addr()
+    , m_input_port()
+    , m_output_port()
+    , m_power_unit()
+    , m_vc_input_arbiter()
+    , m_vc_output_arbiter()
+    , m_port_input_arbiter()
+    , m_port_output_arbiter()
+    , m_flow_control()
+    , m_curr_algorithm()
 {
 }
 
-/*************************************************
- *  Function : 
- *    SimRouter::SimRouter(long phy, long vc, long inbuf, long outbuf, long id, 
- *        vector< long > ary, long flit)
- *  Description : 
- *    Construct an entity for router with specific argument.
- *  Inputs:
- *    long phy            number of physical port
- *    long vc             number of virtual channel
- *    long inbuf          size of input buffer
- *    long outbuf         size of output buffer
- *    long id             router id
- *    vector< long > ary  ary of network
- *    long flit           flit size
- *************************************************/
-EsynetRouter::EsynetRouter(EsyNetworkCfg * network_cfg, long router_id,
-    EsynetConfig * argument_cfg
-) :
-    m_network_cfg( network_cfg ),
-    m_router_cfg( &network_cfg->router( router_id ) ),
-    m_argu_cfg( argument_cfg ),
-    m_router_id( router_id ),
-    m_router_addr(),
-    m_input_port(),
-    m_output_port(),
-    m_power_unit( network_cfg->router( router_id ).portNum(), 
-                network_cfg->router( router_id ).maxVcNum(), 
-                network_cfg->flitSize( ATOM_WIDTH_ ), 0 ),
-    m_statistics_unit(),
-    m_vc_input_arbiter( network_cfg->router( router_id ).portNum() ),
-    m_vc_output_arbiter( network_cfg->router( router_id ).portNum() ),
-    m_port_input_arbiter(),
-    m_port_output_arbiter(),
-    m_curr_algorithm()
+EsynetRouter::EsynetRouter( EsyNetworkCfg * network_cfg, long router_id, EsynetConfig * argument_cfg )
+    : m_network_cfg( network_cfg )
+    , m_router_cfg( &network_cfg->router( router_id ) )
+    , m_argu_cfg( argument_cfg )
+    , m_router_id( router_id )
+    , m_router_addr()
+    , m_input_port()
+    , m_output_port()
+    , m_power_unit( network_cfg->router( router_id ).portNum()
+        , network_cfg->router( router_id ).maxVcNum()
+        , network_cfg->flitSize( ATOM_WIDTH_ ), 0 )
+    , m_statistics_unit()
+    , m_vc_input_arbiter( network_cfg->router( router_id ).portNum() )
+    , m_vc_output_arbiter( network_cfg->router( router_id ).portNum() )
+    , m_port_input_arbiter()
+    , m_port_output_arbiter()
+    , m_flow_control( argument_cfg->flowControl() )
+    , m_curr_algorithm()
 {
     // Router address.
     m_router_addr = m_network_cfg->seq2Coord( m_router_id );
@@ -134,6 +113,8 @@ EsynetRouter::EsynetRouter(EsyNetworkCfg * network_cfg, long router_id,
     case esynet::RA_TXY:   m_curr_algorithm = &EsynetRouter::algorithmTXY;   break;
     case esynet::RA_DYXY:  m_curr_algorithm = &EsynetRouter::algorithmDyXY;  break;
     case esynet::RA_TABLE: m_curr_algorithm = &EsynetRouter::algorithmTable; break;
+    case esynet::RA_SINGLERING: m_curr_algorithm = &EsynetRouter::algorithmSingleRing; break;
+    case esynet::RA_DOUBLERING: m_curr_algorithm = &EsynetRouter::algorithmDoubleRing; break;
     }
     m_routing_table.resize( m_network_cfg->setNiCount() );
 
@@ -292,9 +273,33 @@ pair< long, long > EsynetRouter::vcSelection(long a, long b)
     {
         esynet::EsynetVC v_t = vc_can_t[ i ];
         bool port_avail = false;
-        if ( ( m_output_port[ v_t.first ][ v_t.second ].usage() == esynet::VC_FREE ) )
+        if ( m_flow_control == esynet::FC_RING )
         {
-            port_avail = true;
+            // NI channel, only forward packet if there is enough space for how packet.
+            if ( m_router_cfg->port( a ).networkInterface() )
+            {
+                EsynetFlit& flit_t = m_input_port[ a ][ b ].getFlit();
+                if( m_output_port[ v_t.first ][ v_t.second ].usage() == esynet::VC_FREE &&
+                    m_output_port[ v_t.first ][ v_t.second ].creditCounter() > flit_t.flitSize() )
+                {
+                    port_avail = true;
+                }
+            }
+            // other channel forward packet if there is free space.
+            else
+            {
+                if( m_output_port[ v_t.first ][ v_t.second ].usage() == esynet::VC_FREE )
+                {
+                    port_avail = true;
+                }
+            }
+        }
+        else
+        {
+            if ( m_output_port[ v_t.first ][ v_t.second ].usage() == esynet::VC_FREE )
+            {
+                port_avail = true;
+            }
         }
 
         if ( port_avail )
@@ -302,7 +307,7 @@ pair< long, long > EsynetRouter::vcSelection(long a, long b)
             m_vc_input_arbiter[ a ][ b ].setRequest( vc_can_t[ i ] );
         }
     }
-    
+
     esynet::EsynetVC win = m_vc_input_arbiter[ a ][ b ].grantVc();
     if ( win.first >= 0 && win.second >= 0 )
     {
@@ -339,8 +344,7 @@ void EsynetRouter::vcArbitration()
     
     for ( size_t outphy = 0; outphy < m_output_port.size(); outphy ++ )
     {
-        for ( long outvc = 0; outvc < m_output_port[ outphy ].vcNumber();
-                outvc ++ )
+        for ( long outvc = 0; outvc < m_output_port[ outphy ].vcNumber(); outvc ++ )
         {
             if ( m_output_port[ outphy ][ outvc ].usage() == esynet::VC_FREE )
             {
@@ -435,10 +439,10 @@ void EsynetRouter::flitOutbuffer()
                         m_router_cfg->port( phy ).inputBuffer() - m_input_port[ phy ][ vc ].flitCount() - 1 ) );
                 }
                 long in_size_t = (long)m_input_port[ phy ][ vc ].flitCount();
-                EsynetFlit flit_t = m_input_port[phy][vc].getFlit();
+                EsynetFlit flit_t = m_input_port[ phy ][ vc ].getFlit();
                 m_input_port[ phy ][ vc ].removeFlit();
 
-                m_power_unit.powerBufferRead( phy, flit_t.data());
+                m_power_unit.powerBufferRead( phy, flit_t.data() );
                 m_power_unit.powerCrossbarTraversal( phy, out_t.first, flit_t.data() );
 
                 m_output_port[ out_t.first ].addFlit( flit_t );

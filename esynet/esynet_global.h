@@ -102,6 +102,8 @@ enum EsynetVCUsage
 enum EsynetRoutingAlg
 {
     RA_TABLE,   /*!< @brief Routing algorithm based on table. */
+    RA_SINGLERING,  /*!< @brief Routing algorithm for single ring. */
+    RA_DOUBLERING,  /*!< @brief Routing algorithm for double ring. */
     RA_XY,      /*!< @brief Extend XY routing algorithm (1D, 2D, multi-diamension). */
     RA_TXY,     /*!< @brief Extend Torus XY routing algorith (1D, 2D, multi-diamension). */
     RA_DYXY,    /*!< @brief DyXY routing algorithm (2D). */
@@ -114,6 +116,14 @@ enum EsynetArbiterType
     AR_RANDOM,     /*!< @brief Random arbiter. */
     AR_RR,         /*!< @brief Round-robin arbiter. */
     AR_MATRIX,    /*!< @brief Matrix arbiter. */
+};
+/**
+ * @brief Flow control method.
+ */
+enum EsynetFlowControlType
+{
+    FC_WORMWHOLE,       /*!< @brief Worm whole. */
+    FC_RING,    /*!< @brief Ring flow control. */
 };
 /**
  * @brief Traffic generation profiles.
