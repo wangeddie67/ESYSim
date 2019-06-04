@@ -35,7 +35,7 @@
  * @brief Main function for ESYNet.
  */
 
-// global define of double sim_cycle, used by power cacluation */
+// global define of double sim_cycle, used by power cacluation.
 extern "C" {
 double sim_cycle;
 }
@@ -127,7 +127,7 @@ int main( int argc, char *argv[] )
             }
         }
 
-        // synchronize
+        // synchronize for on-line visualization
         if ( argu_list.eventTraceCoutEnable() )
         {
             LINK_SYNCHORNOIZE( 'n' );

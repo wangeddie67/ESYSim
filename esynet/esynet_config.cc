@@ -151,9 +151,9 @@ bool EsynetConfig::preDefineCheck()
         case EsyNetworkCfg::NT_RING :
             {
                 m_ary_number.resize( 1 );
-                if ( m_physical_port_number != 3 )
+                if ( m_physical_port_number < 3 )
                 {
-                    std::cout << "The router of ring NoC must have 3 physical channels." << std::endl;
+                    std::cout << "The router of ring NoC must have at least 3 physical channels." << std::endl;
                     m_physical_port_number = 3;
                 }
                 if ( m_routing_alg != esynet::RA_SINGLERING && m_routing_alg != esynet::RA_DOUBLERING )
@@ -170,9 +170,15 @@ bool EsynetConfig::preDefineCheck()
                 {
                     m_ary_number[ 1 ] = m_ary_number[ 0 ];
                 }
-                if ( ( m_routing_alg != esynet::RA_XY ) && ( m_routing_alg != esynet::RA_DYXY ) )
+                if ( m_physical_port_number < 5 )
                 {
-                    std::cout << "Only XY and DyXY routing algorithm work on the Mesh NoC." << std::endl;
+                    std::cout << "The router of 2D mesh must have at least 5 physical channels." << std::endl;
+                    m_physical_port_number = 5;
+                }
+                if ( ( m_routing_alg != esynet::RA_XY ) && ( m_routing_alg != esynet::RA_DYXY ) && 
+                    ( m_routing_alg != esynet::RA_DIAMESH ) )
+                {
+                    std::cout << "Only XY, DyXY, Diamension mesh routing algorithm work on the Mesh NoC." << std::endl;
                     return false;
                 }
             }
@@ -184,27 +190,44 @@ bool EsynetConfig::preDefineCheck()
                 {
                     m_ary_number[ 1 ] = m_ary_number[ 0 ];
                 }
-                if ( m_routing_alg != esynet::RA_TXY )
+                if ( m_physical_port_number < 5 )
                 {
-                    std::cout << "Only Torus XY routing algorithm works on the Torus NoC." << std::endl;
+                    std::cout << "The router of 2D torus must have at least 5 physical channels." << std::endl;
+                    m_physical_port_number = 5;
+                }
+                if ( ( m_routing_alg != esynet::RA_TXY ) && ( m_routing_alg != esynet::RA_DIATORUS ) )
+                {
+                    std::cout << "Only Torus XY and diamension torus routing algorithm works on the Torus NoC." << std::endl;
                     return false;
                 }
             }
             break;
         case EsyNetworkCfg::NT_MESH_DIA :
             {
-                if ( m_routing_alg != esynet::RA_XY )
+                long idea_phy = m_ary_number.size() * 2 + 1;
+                if ( m_physical_port_number < idea_phy )
                 {
-                    std::cout << "Only extended XY routing algorithm works on the mult-dim Mesh NoC." << std::endl;
+                    std::cout << "The router must have at least " << idea_phy << " physical channels." << std::endl;
+                    m_physical_port_number = idea_phy;
+                }
+                if ( m_routing_alg != esynet::RA_DIAMESH )
+                {
+                    std::cout << "Only diamension mesh routing algorithm works on the mult-dim Mesh NoC." << std::endl;
                     return false;
                 }
             }
             break;
         case EsyNetworkCfg::NT_TORUS_DIA :
             {
-                if ( m_routing_alg != esynet::RA_TXY )
+                long idea_phy = m_ary_number.size() * 2 + 1;
+                if ( m_physical_port_number < idea_phy )
                 {
-                    std::cout << "Only extended Torus XY routing algorithm works on the mult-dim Torus NoC." << std::endl;
+                    std::cout << "The router must have at least " << idea_phy << " physical channels." << std::endl;
+                    m_physical_port_number = idea_phy;
+                }
+                if ( m_routing_alg != esynet::RA_DIATORUS )
+                {
+                    std::cout << "Only diamension torus routing algorithm works on the mult-dim Torus NoC." << std::endl;
                     return false;
                 }
             }
@@ -256,6 +279,8 @@ void EsynetConfig::insertVariables(ConfigType type)
         m_routing_alg.addOption(esynet::RA_TXY, "TXY");
         m_routing_alg.addOption(esynet::RA_DYXY, "DyXY");
         m_routing_alg.addOption(esynet::RA_TABLE, "Table");
+        m_routing_alg.addOption(esynet::RA_DIAMESH, "DiaMesh");
+        m_routing_alg.addOption(esynet::RA_DIATORUS, "DiaTorus");
         insertEnum("-routing_alg", "Code of chosen routing algorithm", &m_routing_alg );
         // Routing table
         insertOpenFile( "-routing_table", "Routing table file name", &m_routing_table, "", 1, "routing" );

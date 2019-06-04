@@ -230,6 +230,22 @@ private:
      */
     void algorithmTXY( long des_t, long sor_t, long s_ph, long s_vc );
     /**
+     * @brief Diamension mesh routing algorithm.
+     * @param des_t Destination router of packet.
+     * @param sor_t Source router of packet.
+     * @param s_ph input physical channel.
+     * @param s_vc input virtual channel.
+     */
+    void algorithmDiaMesh( long des_t, long sor_t,long s_ph, long s_vc );
+    /**
+     * @brief Diamension torus routing algorithm.
+     * @param des_t Destination router of packet.
+     * @param sor_t Source router of packet.
+     * @param s_ph input physical channel.
+     * @param s_vc input virtual channel.
+     */
+    void algorithmDiaTorus( long des_t, long sor_t, long s_ph, long s_vc );
+    /**
      * @brief DyXY routing algorithm.
      * @param des_t Destination router of packet.
      * @param sor_t Source router of packet.

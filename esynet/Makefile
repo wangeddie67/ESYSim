@@ -27,7 +27,8 @@ SIM_SRCS = \
 	esynet_arbiter.cc \
 	esynet_router_unit.cc \
 	esynet_routing_ring.cc \
-	esynet_routing_xy.cc \
+	esynet_routing_mesh.cc \
+	esynet_routing_dia.cc \
 	esynet_routing_table.cc
 
 ESYNET_OBJS = esynet_main.$(OEXT)
@@ -42,7 +43,8 @@ SIM_OBJS = \
 	esynet_arbiter.$(OEXT) \
 	esynet_router_unit.$(OEXT) \
 	esynet_routing_ring.$(OEXT) \
-	esynet_routing_xy.$(OEXT) \
+	esynet_routing_mesh.$(OEXT) \
+	esynet_routing_dia.$(OEXT) \
 	esynet_routing_table.$(OEXT)
 
 all: $(ESYNET_TARGET)

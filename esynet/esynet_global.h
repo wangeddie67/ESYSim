@@ -104,9 +104,11 @@ enum EsynetRoutingAlg
     RA_TABLE,   /*!< @brief Routing algorithm based on table. */
     RA_SINGLERING,  /*!< @brief Routing algorithm for single ring. */
     RA_DOUBLERING,  /*!< @brief Routing algorithm for double ring. */
-    RA_XY,      /*!< @brief Extend XY routing algorithm (1D, 2D, multi-diamension). */
-    RA_TXY,     /*!< @brief Extend Torus XY routing algorith (1D, 2D, multi-diamension). */
+    RA_XY,      /*!< @brief XY routing algorithm (2D) */
+    RA_TXY,     /*!< @brief Torus XY routing algorith (2D). */
     RA_DYXY,    /*!< @brief DyXY routing algorithm (2D). */
+    RA_DIAMESH,     /*!< @brief Routing algorithm for diamension mesh. */
+    RA_DIATORUS,    /*!< @brief Routing algorithm for diamension torus. */
 };
 /**
  * @brief Arbiter Type.
@@ -122,8 +124,8 @@ enum EsynetArbiterType
  */
 enum EsynetFlowControlType
 {
-    FC_WORMWHOLE,       /*!< @brief Worm whole. */
-    FC_RING,    /*!< @brief Ring flow control. */
+    FC_WORMWHOLE,   /*!< @brief Worm whole. */
+    FC_RING,        /*!< @brief Ring flow control. */
 };
 /**
  * @brief Traffic generation profiles.

@@ -31,6 +31,7 @@
 
 #include "esynet_router_power.h"
 #include "esynet_global.h"
+#include <iostream>
 
 /**
  * @ingroup ESYNET_STATISTICS
@@ -85,6 +86,16 @@ public:
     /**
      * @}
      */
+
+    /**
+     * @brief Print statistics to output stream
+     * @param os reference to output stream
+     * @param a constant reference to NI statistics unit.
+     */
+    friend std::ostream& operator<<( std::ostream& os, const EsynetRouterStatistic& a )
+    {
+        return os;
+    }
 };
 
 /**
@@ -295,6 +306,39 @@ public:
     /**
      * @}
      */
+
+    /**
+     * @brief Print statistics to output stream
+     * @param os reference to output stream
+     * @param a constant reference to NI statistics unit.
+     */
+    friend std::ostream& operator<<( std::ostream& os, const EsynetNIStatistic& a )
+    {
+        double average_latency = 0.0;
+        if ( a.acceptedPacket() > 0 )
+        {
+            average_latency = a.totalDelay() / a.acceptedPacket();
+        }
+        double packet_inject_rate = 0.0;
+        if ( a.injectStopTime() - a.injectStartTime() > 0 )
+        {
+            packet_inject_rate = (double)a.injectedPacket() / (double)( a.injectStopTime() - a.injectStartTime() );
+        }
+        double average_throughput = 0.0;
+        if ( a.acceptStopTime() - a.acceptStartTime() > 0 )
+        {
+            average_throughput = (double)a.acceptedPacket() / (double)( a.acceptStopTime() - a.acceptStartTime() );
+        }
+
+        os.precision(6);
+        os << "packet injected:       " << a.injectedPacket() << std::endl;
+        os << "packet injection rate: " << packet_inject_rate << std::endl;
+        os << "total finished:        " << a.acceptedPacket() << std::endl;
+        os << "average delay:         " << average_latency << std::endl;
+        os << "throughput:            " << average_throughput << std::endl;
+
+        return os;
+    }
 };
 
 /**
@@ -398,7 +442,7 @@ public:
      */
     double totalPower( double time ) const
     {
-        return ( m_total_mem_power + m_total_crossbar_power + m_total_arbiter_power + m_total_link_power ) / time;
+        return ( m_total_mem_power + m_total_crossbar_power + m_total_arbiter_power + m_total_link_power ) / time * POWER_NOM_;
     }
     /**
      * @brief Return buffer power.
@@ -511,6 +555,55 @@ public:
     /**
      * @}
      */
+
+    /**
+     * @brief Print statistics to output stream
+     * @param os reference to output stream
+     * @param a constant reference to foundation statistics unit.
+     * @param time current simulation time
+     * @param latency True if print latency measurement
+     * @param throughput True if print throughput measurement
+     */
+    void printStatistics( std::ostream& os, double time, bool latency = false, bool throughput = false )
+    {
+        os.precision( 6 );
+        os << "==== General information ====" << std::endl;
+        os << static_cast< EsynetNIStatistic >( *this );
+
+        os << "==== Power Consumption ====" << std::endl;
+        os << "total mem power:      " << memPower( time ) << std::endl;
+        os << "total crossbar power: " << crossbarPower( time ) << std::endl;
+        os << "total arbiter power:  " << arbiterPower( time ) << std::endl;
+        os << "total link power:     " << linkPower( time ) << std::endl;
+        os << "total power:          " << totalPower( time ) << std::endl;
+
+        if ( latency )
+        {
+            double latency_measure = 0.0;
+            if ( m_accept_mark_packet > 0 )
+            {
+                latency_measure = m_total_mark_delay / m_accept_mark_packet;
+            }
+            os << "==== Latency Measurement ====" << std::endl;
+            os << "delay:   " << m_total_mark_delay << std::endl;
+            os << "packet:  " << m_accept_mark_packet << std::endl;
+            os << "latency: " << latency_measure << std::endl;
+        }
+        if ( throughput )
+        {
+            double throughput_measure_cycle = m_throughput_measure_stop_time - m_throughput_measure_start_time;
+            long throughput_measure_packet = m_throughput_measure_stop_packet - m_throughput_measure_start_packet;
+            double throughput_measure = 0.0;
+            if ( throughput_measure_cycle > 0 )
+            {
+                throughput_measure = throughput_measure_packet / throughput_measure_cycle;
+            }
+            os << "==== Throughput Measurement ====" << std::endl;
+            os << "packet:     " << throughput_measure_packet << std::endl;
+            os << "cycle:      " << throughput_measure_cycle  << std::endl;
+            os << "throughput: " << throughput_measure << std::endl;
+        }
+    }
 };
 
 #endif

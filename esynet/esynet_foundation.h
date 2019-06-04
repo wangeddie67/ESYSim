@@ -135,7 +135,7 @@ public:
      * recorded for measurement. Record the time of start and end of this
      * measurement.
      */
-    void updateStatistic(const vector< EsynetEvent > & accepted);
+    void updateStatistic();
     
     /**
      * @brief Synchronize the signals between routers and PEs.

@@ -43,7 +43,10 @@ EsynetArbiter::EsynetArbiter( esynet::EsynetArbiterType type, int size )
     else if ( type == esynet::AR_RR )
     {
         m_state_vector.resize( m_size, false );
-        m_state_vector[ 0 ] = true;
+        if ( m_size > 0 )
+        {
+            m_state_vector[ 0 ] = true;
+        }
     }
 }
 

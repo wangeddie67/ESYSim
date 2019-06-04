@@ -163,7 +163,15 @@ void EsynetFoundation::receiveRouterMessage( const EsynetEvent & mesg )
         for ( long i = 0; i < m_ni_list.size(); i ++ )
         {
             m_ni_list[ i ].runAfterRouter();
-            updateStatistic( m_ni_list[ i ].acceptList() );
+            const std::vector< EsynetEvent >& accepted = m_ni_list[ i ].acceptList();
+            for ( int i = 0; i < accepted.size(); i ++ )
+            {
+                m_statistic.incAcceptPacket( m_current_time, m_current_time - accepted[ i ].flit().startTime() );
+                if ( accepted[ i ].flit().marked() )
+                {
+                    m_statistic.incAcceptMarkPacket( m_current_time - accepted[ i ].flit().startTime() );
+                }
+            }
 #ifndef ESYNETINTERFACE
             m_ni_list[ i ].clearAcceptList();
 #endif
@@ -182,6 +190,7 @@ void EsynetFoundation::receiveRouterMessage( const EsynetEvent & mesg )
 //        m_ni_list[ con_ni[ j ] ].clearAcceptList();
 //#endif
     }
+    updateStatistic();
 }
 
 void EsynetFoundation::receiveWireMessage(const EsynetEvent & mesg)
@@ -232,76 +241,16 @@ void EsynetFoundation::receiveNiReadMessage(const EsynetEvent& mesg)
 
 void EsynetFoundation::simulationResults()
 {
-    double curr_time = m_current_time;
-    long router_num = m_network_cfg->routerCount();
-
     // Collect statistic of routers and network interfaces.
     for( size_t i = 0; i < m_router_list.size(); i ++ )
     {
         m_statistic = m_statistic + m_router_list[ i ].statistics();
-        m_statistic.addRouterPower( curr_time, router_num, m_router_list[ i ].powerUnit() );
+        m_statistic.addRouterPower( m_current_time, i, m_router_list[ i ].powerUnit() );
     }
 
-    double average_latency = 0.0;
-    if ( m_statistic.acceptedPacket() > 0 )
-    {
-        average_latency = m_statistic.totalDelay() / m_statistic.acceptedPacket();
-    }
-    double packet_inject_rate = 0.0;
-    if ( m_statistic.injectStopTime() - m_statistic.injectStartTime() > 0 )
-    {
-        packet_inject_rate =
-            (double)m_statistic.injectedPacket() / (double)( m_statistic.injectStopTime() - m_statistic.injectStartTime() );
-    }
-    double average_throughput = 0.0;
-    if ( m_statistic.acceptStopTime() - m_statistic.acceptStartTime() > 0 )
-    {
-        average_throughput =
-            (double)m_statistic.acceptedPacket() / (double)( m_statistic.acceptStopTime() - m_statistic.acceptStartTime() );
-    }
-
-    double latency_measure = 0.0;
-    if ( m_statistic.acceptMarkPacket() > 0 )
-    {
-        latency_measure = m_statistic.totalMarkDelay() / m_statistic.acceptMarkPacket();
-    }
-    double throughput_measure_cycle = m_statistic.throughputMeasureStopTime() - m_statistic.throughputMeasureStartTime();
-    long throughput_measure_packet = m_statistic.throughputMeasureStopPacket() - m_statistic.throughputMeasureStartPacket();
-    double throughput_measure = 0.0;
-    if ( throughput_measure_cycle > 0 )
-    {
-        throughput_measure = throughput_measure_packet / throughput_measure_cycle;
-    }
-
-    cout.precision(6);
-    cout << "**** General Information *************************" << endl;
-    cout << "packet injected:        " << m_statistic.injectedPacket() << endl;
-    cout << "packet inject. rate:    " << packet_inject_rate << endl;
-    cout << "total finished:         " << m_statistic.acceptedPacket() << endl;
-    cout << "average delay:          " << average_latency << endl;
-    cout << "throughput:             " << average_throughput << endl;
-    cout << "**** Power Consumption ***************************" << endl;
-    cout << "total mem power:        " << m_statistic.memPower( curr_time ) * POWER_NOM_ << endl;
-    cout << "total crossbar power:   " << m_statistic.crossbarPower( curr_time ) * POWER_NOM_ << endl;
-    cout << "total arbiter power:    " << m_statistic.arbiterPower( curr_time ) * POWER_NOM_ << endl;
-    cout << "total link power:       " << m_statistic.linkPower( curr_time ) * POWER_NOM_ << endl;
-    cout << "total power:            " << m_statistic.totalPower( curr_time ) * POWER_NOM_ << endl;
-
-    if ( m_argument_cfg->latencyMeasurePacket() > 0 )
-    {
-        cout << "**** Latency Measurement *************************" << endl;
-        cout << "delay:       " << m_statistic.totalMarkDelay() << endl;
-        cout << "packet:      " << m_statistic.acceptMarkPacket() << endl;
-        cout << "latency:     " << latency_measure << endl;
-    }
-    if ( m_argument_cfg->throughputMeasurePacket() > 0 )
-    {
-        cout << "**** Throughput Measurement **********************" << endl;
-        cout << "packet:      " << throughput_measure_packet << endl;
-        cout << "cycle:       " << throughput_measure_cycle  << endl;
-        cout << "throughput:  " << throughput_measure << endl;
-    }
-
+    m_statistic.printStatistics( std::cout, m_current_time
+        , ( m_argument_cfg->latencyMeasurePacket() > 0 ), ( m_argument_cfg->throughputMeasurePacket() > 0 ) );
+    
     /* print result for parallel */
     LINK_RESULT_APPEND( 7
         , (double)m_statistic.injectedPacket()
@@ -357,17 +306,8 @@ void EsynetFoundation::eventHandler(double time, const EsynetEvent& mess)
     }
 }
 
-void EsynetFoundation::updateStatistic(const vector< EsynetEvent > & accepted)
+void EsynetFoundation::updateStatistic()
 {
-    for ( int i = 0; i < accepted.size(); i ++ )
-    {
-        m_statistic.incAcceptPacket( m_current_time, m_current_time - accepted[ i ].flit().startTime() );
-        if ( accepted[ i ].flit().marked() )
-        {
-            m_statistic.incAcceptMarkPacket( m_current_time - accepted[ i ].flit().startTime() );
-        }
-    }
-    
     if ( m_argument_cfg->injectedPacket() >= 0 && m_statistic.acceptedPacket() >= m_argument_cfg->injectedPacket() )
     {
         m_injection_state = MEASURE_END;

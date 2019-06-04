@@ -115,6 +115,8 @@ EsynetRouter::EsynetRouter( EsyNetworkCfg * network_cfg, long router_id, EsynetC
     case esynet::RA_TABLE: m_curr_algorithm = &EsynetRouter::algorithmTable; break;
     case esynet::RA_SINGLERING: m_curr_algorithm = &EsynetRouter::algorithmSingleRing; break;
     case esynet::RA_DOUBLERING: m_curr_algorithm = &EsynetRouter::algorithmDoubleRing; break;
+    case esynet::RA_DIAMESH:  m_curr_algorithm = &EsynetRouter::algorithmDiaMesh;  break;
+    case esynet::RA_DIATORUS: m_curr_algorithm = &EsynetRouter::algorithmDiaTorus; break;
     }
     m_routing_table.resize( m_network_cfg->setNiCount() );
 
