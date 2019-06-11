@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_TRAFFIC_GENERATOR
+ * @file esynet_packet_generator.cc
+ * @brief Implement the packet generator.
+ */
+
 #include "esynet_packet_generator.h"
 #include "esynet_random_unit.h"
 

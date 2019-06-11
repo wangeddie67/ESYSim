@@ -250,16 +250,16 @@ void EsynetFoundation::simulationResults()
 
     m_statistic.printStatistics( std::cout, m_current_time
         , ( m_argument_cfg->latencyMeasurePacket() > 0 ), ( m_argument_cfg->throughputMeasurePacket() > 0 ) );
-    
+
     /* print result for parallel */
     LINK_RESULT_APPEND( 7
         , (double)m_statistic.injectedPacket()
         , (double)m_statistic.acceptedPacket()
-        , packet_inject_rate
-        , average_latency
-        , average_throughput
-        , latency_measure
-        , throughput_measure
+        , (double)m_statistic.packetInjectRate()
+        , (double)m_statistic.latency()
+        , (double)m_statistic.throughput()
+        , (double)m_statistic.latencyMeasure()
+        , (double)m_statistic.throughputMeasure()
     )
     LINK_RESULT_OUT
 }
@@ -335,9 +335,11 @@ void EsynetFoundation::updateStatistic()
             m_latency_measure_state = MEASURE_END;
         }
         break;
+    case MEASURE_END:
+        break;
     }
 
-    switch ( m_throughput_measure_state )   
+    switch ( m_throughput_measure_state )
     {
     case MEASURE_INIT:
         if ( m_statistic.acceptedPacket() >= m_argument_cfg->warmUpPacket() )
@@ -346,14 +348,17 @@ void EsynetFoundation::updateStatistic()
             m_statistic.setThroughputMeasureStart( m_current_time, m_statistic.acceptedPacket() );
         }
         break;
+    case MEASURE_PRE:
+        break;
     case MEASURE_ING:
         m_statistic.setThroughputMeasureStop( m_current_time, m_statistic.acceptedPacket() );
         if ( m_argument_cfg->throughputMeasurePacket() >= 0 &&
-            m_statistic.acceptedPacket() >= m_argument_cfg->warmUpPacket() + 
-            m_argument_cfg->throughputMeasurePacket() )
+            m_statistic.acceptedPacket() >= m_argument_cfg->warmUpPacket() + m_argument_cfg->throughputMeasurePacket() )
         {
             m_throughput_measure_state = MEASURE_END;
         }
+        break;
+    case MEASURE_END:
         break;
     }
 }

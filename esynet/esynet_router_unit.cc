@@ -1,6 +1,6 @@
 /*
- * File name : esynet_router_unit.h
- * Function : implement router module.
+ * File name : esynet_router_unit.cc
+ * Function : Implement router module.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,6 +18,12 @@
  * Boston, MA  02110-1301, USA.
  *
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
+
+/**
+ * @ingroup ESYNET_ROUTER
+ * @file esynet_router_unit.cc 
+ * @brief Implement router module.
  */
 
 #include "esynet_router_unit.h"
@@ -79,7 +85,7 @@ EsynetRouter::EsynetRouter()
     , m_vc_output_arbiter()
     , m_port_input_arbiter()
     , m_port_output_arbiter()
-    , m_flow_control()
+    , m_switch_method()
     , m_curr_algorithm()
 {
 }
@@ -100,7 +106,7 @@ EsynetRouter::EsynetRouter( EsyNetworkCfg * network_cfg, long router_id, EsynetC
     , m_vc_output_arbiter( network_cfg->router( router_id ).portNum() )
     , m_port_input_arbiter()
     , m_port_output_arbiter()
-    , m_flow_control( argument_cfg->flowControl() )
+    , m_switch_method( argument_cfg->switchMethod() )
     , m_curr_algorithm()
 {
     // Router address.
@@ -275,7 +281,7 @@ pair< long, long > EsynetRouter::vcSelection(long a, long b)
     {
         esynet::EsynetVC v_t = vc_can_t[ i ];
         bool port_avail = false;
-        if ( m_flow_control == esynet::FC_RING )
+        if ( m_switch_method == esynet::FC_RING )
         {
             // NI channel, only forward packet if there is enough space for how packet.
             if ( m_router_cfg->port( a ).networkInterface() )
@@ -285,6 +291,10 @@ pair< long, long > EsynetRouter::vcSelection(long a, long b)
                     m_output_port[ v_t.first ][ v_t.second ].creditCounter() > flit_t.flitSize() )
                 {
                     port_avail = true;
+                }
+                else
+                {
+                    std::cout << "hold" << std::endl;
                 }
             }
             // other channel forward packet if there is free space.

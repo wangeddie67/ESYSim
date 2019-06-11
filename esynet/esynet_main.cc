@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_GROUP
+ * @file esynet_main.cc
+ * @brief Main function for ESYNet.
+ */
+
 #include "esy_argument.h"
 #include "esy_linktool.h"
 #include "esy_networkcfg.h"
@@ -29,22 +35,17 @@
 #include "esynet_event_queue.h"
 #include "esynet_random_unit.h"
 
-/**
- * @ingroup ESYNET_GROUP
- * @file esynet_main.cc
- * @brief Main function for ESYNet.
- */
-
-// global define of double sim_cycle, used by power cacluation.
 extern "C" {
-double sim_cycle;
+double sim_cycle;   /*!< @brief Global simulation cycle, used by power model. */
 }
 
 /**
  * @brief Main function for ESYNet.
  * @param argc Argument number.
  * @param argv Argument list.
- * @return 0.
+ * @return Error code.
+ * @retval 0 Program Success.
+ * @retval 2 No such file or directory.
  */
 int main( int argc, char *argv[] )
 {
@@ -62,13 +63,13 @@ int main( int argc, char *argv[] )
         if ( t_err.hasError() )
         {
             cerr << "Error: cannot read file " << argu_list.networkCfgFileName() << endl;
-            return 0;
+            return 2;
         }
     }
     else
     {
         network_cfg = EsyNetworkCfg( argu_list.topology(),
-                                     argu_list.aryNumber(),
+                                     argu_list.networkSize(),
                                      argu_list.dataPathWidth(),
                                      argu_list.simulationPeriod(),
                                      argu_list.physicalPortNumber(),
@@ -89,30 +90,30 @@ int main( int argc, char *argv[] )
         if ( t_err.hasError() )
         {
             cerr << "Error: cannot create file " << argu_list.networkCfgFileName() << endl;
-            return 0;
+            return 2;
         }
     }
 
-    // message queue 
+    // Message queue 
     EsynetEventQueue network_mess_queue( 0.0, &sim_net, &argu_list );
 
-    // begin simulation
+    // Simulation begin
     cout << "**** simulation begin ****" << endl;
     LINK_PROGRESS_INIT
 
-    // loop simulation cycle
+    // Loop simulation cycle
     for ( sim_cycle = 0; sim_cycle <= argu_list.simLength(); sim_cycle = sim_cycle + argu_list.simulationPeriod() )
     {
-        // print simulation progress
+        // Print simulation progress
         LINK_PROGRESS_UPDATE( sim_cycle, argu_list.simLength() )
 
-        // simulation one cycle
+        // Simulation one cycle
         network_mess_queue.simulator( (long long int)sim_cycle );
 
-        // check simulation finished condition
+        // Check simulation finished condition
         if ( argu_list.latencyMeasurePacket() > 0 && argu_list.throughputMeasurePacket() > 0 )
         {
-            // latency and throughput measurement has finished
+            // Latency and throughput measurement has finished
             if ( sim_net.latencyMeasureState() == EsynetFoundation::MEASURE_END &&
                  sim_net.throughputMeasureState() == EsynetFoundation::MEASURE_END )
             {
@@ -127,22 +128,22 @@ int main( int argc, char *argv[] )
             }
         }
 
-        // synchronize for on-line visualization
+        // Synchronize for on-line visualization
         if ( argu_list.eventTraceCoutEnable() )
         {
             LINK_SYNCHORNOIZE( 'n' );
         }
     }
 
-    // finished simulation
+    // Simulation finish
     LINK_PROGRESS_END
     cout << "**** simulation end ****" << endl;
 
-    // print configuration value
+    // Print configuration value
     argu_list.printValue2Console( cout );
-    // print simulation result
+    // Print simulation result
     sim_net.simulationResults();
 
-    // return
+    // Return
     return 0;
 }

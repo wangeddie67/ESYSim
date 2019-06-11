@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_ROUTER
+ * @file esynet_routing_table.cc 
+ * @brief Table based routing algorithm.
+ */
+
 #include "esynet_router_unit.h"
 
 #define AX_X EsyNetworkCfg::AX_X

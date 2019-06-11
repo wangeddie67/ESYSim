@@ -1,6 +1,6 @@
 /*
  * File name : esynet_event_queue.h
- * Function : Define event queue.
+ * Function : Declare event queue.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

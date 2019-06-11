@@ -436,7 +436,6 @@ EsyArgumentList::AnalyseResultCode EsyArgumentList::analyse(
 		return RESULT_XML;
 	}
 
-	printValue2Console(cout);
 	return RESULT_OK;
 }
 

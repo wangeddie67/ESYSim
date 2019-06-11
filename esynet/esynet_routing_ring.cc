@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_ROUTER
+ * @file esynet_routing_ring.cc 
+ * @brief Routing algorithm for ring topology.
+ */
+
 #include "esynet_router_unit.h"
 
 #define PORT_LOCAL  0

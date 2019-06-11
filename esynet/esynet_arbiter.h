@@ -1,6 +1,6 @@
 /*
  * File name : esynet_arbiter.h
- * Function : Declarition of arbiter.
+ * Function : Declare arbiter module.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_ARBITER
+ * @file esynet_arbiter.h
+ * @brief Declare arbiter.
+ */
+
 #ifndef ESYNET_ARBITER_H
 #define ESYNET_ARBITER_H
 
@@ -30,6 +36,7 @@
 #include <map>
 
 /**
+ * @ingroup ESYNET_ARBITER
  * @brief Arbiter.
  */
 class EsynetArbiter
@@ -116,6 +123,10 @@ public:
         }
     }
     /**
+     * @brief Return true if request is not empty.
+     */
+    bool reqestIsValid();
+    /**
      * @brief Clear the request signal specified by index a.
      */
     inline void clearRequest( int a ) { m_request[ a ] = false; }
@@ -163,8 +174,6 @@ public:
     /**
      * @}
      */
-
-    bool reqestIsValid();
 
     /**
      * @name Arbitration algorithm.

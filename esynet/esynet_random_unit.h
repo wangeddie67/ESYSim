@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_RANDOM
+ * @file esynet_random_unit.h 
+ * @brief Declare random number generator.
+ */
+
 #ifndef ESYNET_RANDOM_UNIT_H
 #define ESYNET_RANDOM_UNIT_H
 
@@ -28,10 +34,8 @@
 #include <cassert>
 #include <vector>
 
-/** @defgroup randomnumber Generation random number.
- * @{
- */
 /*!
+ * @ingroup ESYNET_RANDOM
  * @brief Random number generator.
  * 
  * Generate random number by algorithm. Which is much uniform than rand() 
@@ -76,13 +80,12 @@ public:
      * @{
      */
     /**
-     * @brief Access global pointer to this entity #mp_global_pointer
-     * @return reference of this entity.
+     * @brief Return global pointer to this entity.
      */
     static EsynetSRGen & globalPointer() { return *mp_global_pointer; }
     /**
-     * @brief Set seed of random generator #m_seed.
-     * @param a  seed of random generator #m_seed.
+     * @brief Set seed of random generator.
+     * @param a  seed of random generator.
      */
     void setSeed( long a );
     /**

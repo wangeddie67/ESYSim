@@ -1,5 +1,5 @@
 /*
- * File name : esynet_routing_xy.cc
+ * File name : esynet_routing_mesh.cc
  * Function : Routing algorithm XY, TXY, and DyXY.
  *
  * This program is free software; you can redistribute it and/or
@@ -18,6 +18,12 @@
  * Boston, MA  02110-1301, USA.
  *
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
+
+/**
+ * @ingroup ESYNET_ROUTER
+ * @file esynet_routing_mesh.cc 
+ * @brief Routing algorithm for mesh/torus topology.
  */
 
 #include "esynet_router_unit.h"

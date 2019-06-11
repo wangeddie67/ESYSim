@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_RANDOM
+ * @file esynet_random_unit.cc
+ * @brief Implement random number generator.
+ */
+
 #include "esynet_random_unit.h"
 
 EsynetSRGen * EsynetSRGen::mp_global_pointer = 0;

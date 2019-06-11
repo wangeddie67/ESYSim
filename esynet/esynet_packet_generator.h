@@ -1,6 +1,6 @@
 /*
  * File name : esynet_packet_generator.h
- * Function : Define the packet generator.
+ * Function : Declare the packet generator.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,32 +20,38 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_TRAFFIC_GENERATOR
+ * @file esynet_packet_generator.h
+ * @brief Declare the packet generator.
+ */
+
 #ifndef ESYNETPACKETGENERATOR_H
 #define ESYNETPACKETGENERATOR_H
 
-/* including head file */
 #include "esy_interdata.h"
 #include "esy_networkcfg.h"
 #include "esy_iodatafile.h"
 #include "esynet_config.h"
 #include "esynet_sim_base.h"
 
+/**
+ * @ingroup ESYNET_TRAFFIC_GENERATOR
+ * @brief Packet generator.
+ */
 class EsynetPacketGenerator
 {
-/* Properties */
 private:
-    /* General Information */
-    /* Unique identification number */
     EsyNetworkCfg * m_network_cfg;  /*!< @brief Pointer to network configuration structure. */
     EsynetConfig * m_argu_cfg;  /*!< @brief Pointer to argument list .*/
     long m_ni_count;    /*!< @brief The number of NI in the network. */
 
     EsyDataFileIStream< EsyDataItemBenchmark > * m_tracein; /*!< @brief Pointer to benchmark trace interface. */
 
-    bool m_enable;  /*!< @brief True if packet generator is enabled */
-    long m_count;
+    bool m_enable;  /*!< @brief True if packet generator is enabled. */
+    long m_count;   /*!< @brief Counter of injected packets. */
 
-    EsyDataItemBenchmark m_item;
+    EsyDataItemBenchmark m_item;    /*!< @brief Tempoary variables to read benchmark file. */
 
 public:
     /**
@@ -59,13 +65,13 @@ public:
      * @brief Generate packet for one cycle
      * @return Packet generated in this cycle.
      */
-    std::vector<EsynetFlit> generatePacket(double sim_cycle);
+    std::vector< EsynetFlit > generatePacket(double sim_cycle);
     /**
      * @brief Generate packet for one router at one cycle according to traffic profiles
      * @param id NI id.
      * @return Packet generated in this cycle.
      */
-    std::vector<EsynetFlit> genPacketTrafficProfiles(long id);
+    std::vector< EsynetFlit > genPacketTrafficProfiles(long id);
 };
 
 #endif // ESYNETPACKETGENERATOR_H

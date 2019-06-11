@@ -72,7 +72,7 @@ void esynetNetworkInit( EsyNetworkCfg * network, EsynetConfig * config )
 		EsyNetworkCfgRouter t_template_router;
 		network->setDataPathWidth( config->dataPathWidth() );
 		network->setTopology( EsyNetworkCfg::NOC_TOPOLOGY_2DMESH );
-		network->setSize( config->aryNumber() );
+		network->setSize( config->networkSize() );
 		for ( long i = 0; i < config->physicalPortNumber(); i ++ )
 		{
 			EsyNetworkCfgPort::RouterPortDirection port_dir;

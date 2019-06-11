@@ -39,6 +39,7 @@ extern "C" {
 #include <cstdio>
 
 /**
+ * @ingroup ESYNET_POWER
  * @brief Calculate power consumption in a router. Interface to Orion 2.0 power module.
  */
 class EsynetRouterPower

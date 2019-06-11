@@ -1,6 +1,6 @@
 /*
  * File name : esynet_router_unit.h
- * Function : Declaire router structure.
+ * Function : Declaire router module.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_ROUTER
+ * @file esynet_router_unit.h
+ * @brief Declaire router module.
+ */
+
 #ifndef ESYNET_ROUTER_UNIT_H
 #define ESYNET_ROUTER_UNIT_H
 
@@ -32,6 +38,7 @@
 #include "esynet_arbiter.h"
 
 /**
+ * @ingroup ESYNET_ROUTER
  * @brief Router module.
  */
 class EsynetRouter : public EsynetSimBaseUnit
@@ -54,14 +61,18 @@ private:
     std::vector< EsynetArbiter > m_port_input_arbiter;  /*!< @brief Port arbiter at output ports. */
     std::vector< EsynetArbiter > m_port_output_arbiter; /*!< @brief Port arbiter at input ports. */
 
-    esynet::EsynetFlowControlType m_flow_control;   /*!< @brief Flow control method. */
+    esynet::EsynetSwitchType m_switch_method;   /*!< @brief Flow control method. */
     void (EsynetRouter::*m_curr_algorithm)(long, long, long, long); /*!< @brief Routing algorithm function. */
 
-    std::vector< std::vector< std::pair< long, esynet::EsynetVC > > > m_routing_table; /*!< @brief Routing table. First item is source address, second item is routing decision. */
+    std::vector< std::vector< std::pair< long, esynet::EsynetVC > > > m_routing_table; /*!< @brief Routing table. First index is destination address. First item in pair is source address, second item in pair is routing decision. */
 
 public:
     /**
-     * @brief Constructor Function.
+     * @name Construction function
+     * @{
+     */
+    /**
+     * @brief Construct empty instance.
      */
     EsynetRouter();
     /**
@@ -71,7 +82,14 @@ public:
      * @param argument_cfg Pointer to argument list.
      */
     EsynetRouter( EsyNetworkCfg * network_cfg, long router_id, EsynetConfig * argument_cfg );
+    /**
+     * @}
+     */
 
+    /**
+     * @name Function to access and set variables
+     * @{
+     */
     /**
      * @brief Return reference to specified output port.
      */
@@ -116,6 +134,10 @@ public:
      */
     bool routingTableCheck();
     /**
+     * @}
+     */
+
+    /**
      * @name Event handler function.
      * @{
      */
@@ -134,15 +156,18 @@ public:
      */
     void receiveCredit( long phy, long vc, long credit );
     /**
-     * @}
-     */
-
-    /**
      * @brief Simulate pipeline.
      */
     void routerSimPipeline();
+    /**
+     * @}
+     */
 
 private:
+    /**
+     * @name Private function to access variable
+     * @{
+     */
     /**
      * @brief Return credit of connected port to specified output physical port and virtual channel.
      */
@@ -159,10 +184,16 @@ private:
      * @brief Return constant reference to specified input physical port and virtual channel.
      */
     inline const EsynetInputVirtualChannel & inputVirtualChannel( long phy, long vc ) const { return m_input_port[ phy ][ vc ]; }
+    /**
+     * @}
+     */
 
-
-    /* operate function of vc */
-    /* get vc */
+    /**
+     * @brief Return virtual channel selection for specified input virtual channel.
+     * @param a input physical channel.
+     * @param b input virtual channel.
+     * @return Selected virtual channel
+     */
     esynet::EsynetVC vcSelection( long a, long b );
 
     /**

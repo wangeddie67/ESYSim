@@ -29,36 +29,52 @@
  * @defgroup ESYNET_GROUP Esynet
  */
 /**
- * @ingroup ESYNET_GROUP
+ * @ingroup  ESYNET_GROUP
  * @defgroup ESYNET_GLOBAL Global Definition
  */
 /**
- * @ingroup ESYNET_GROUP
+ * @ingroup  ESYNET_GROUP
  * @defgroup ESYNET_SIM_ENGINE Simulation Engine
  */
 /**
- * @ingroup ESYNET_GROUP
+ * @ingroup  ESYNET_GROUP
  * @defgroup ESYNET_OPTIONS Options
  */
 /**
- * @ingroup ESYNET_GROUP
+ * @ingroup  ESYNET_GROUP
+ * @defgroup ESYNET_RANDOM Random Number Generator
+ */
+/**
+ * @ingroup  ESYNET_GROUP
  * @defgroup ESYNET_NETWORK Network Platform
  */
 /**
- * @ingroup ESYNET_GROUP
- * @defgroup ESYNET_ROUTER Router
+ * @ingroup  ESYNET_GROUP
+ * @defgroup ESYNET_ROUTER Router Module
  */
 /**
- * @ingroup ESYNET_ROUTER
- * @defgroup ESYNET_PORT Port structure
+ * @ingroup  ESYNET_GROUP
+ * @defgroup ESYNET_NI NI Module
  */
 /**
- * @ingroup ESYNET_NETWORK
- * @defgroup ESYNET_POWER Power model
+ * @ingroup  ESYNET_ROUTER
+ * @defgroup ESYNET_PORT Port Module
  */
 /**
- * @ingroup ESYNET_NETWORK
- * @defgroup ESYNET_STATISTICS Statistics unit
+ * @ingroup  ESYNET_ROUTER
+ * @defgroup ESYNET_ARBITER Arbiter Module
+ */
+/**
+ * @ingroup  ESYNET_NETWORK
+ * @defgroup ESYNET_POWER Power Model
+ */
+/**
+ * @ingroup  ESYNET_NETWORK
+ * @defgroup ESYNET_TRAFFIC_GENERATOR Traffic Generator
+ */
+/**
+ * @ingroup  ESYNET_NETWORK
+ * @defgroup ESYNET_STATISTICS Statistics Unit
  */
 
 /**
@@ -122,9 +138,9 @@ enum EsynetArbiterType
 /**
  * @brief Flow control method.
  */
-enum EsynetFlowControlType
+enum EsynetSwitchType
 {
-    FC_WORMWHOLE,   /*!< @brief Worm whole. */
+    FC_WORMHOLE,   /*!< @brief Worm whole. */
     FC_RING,        /*!< @brief Ring flow control. */
 };
 /**

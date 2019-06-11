@@ -1,6 +1,6 @@
 /*
  * File name : esynet_port_unit.h
- * Function : Define port structure.
+ * Function : Define port module.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +23,7 @@
 /**
  * @ingroup ESYNET_PORT
  * @file esynet_port_unit.h
- * @brief Define port structure.
+ * @brief Define port module.
  */
 
 #ifndef ESYNET_PORT_UNIT_H

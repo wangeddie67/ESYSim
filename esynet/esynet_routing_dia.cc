@@ -20,6 +20,12 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
+/**
+ * @ingroup ESYNET_ROUTER
+ * @file esynet_routing_dia.cc 
+ * @brief Routing algorithm for diamension mesh/torus topology.
+ */
+
 #include "esynet_router_unit.h"
 
 void EsynetRouter::algorithmDiaTorus(long des, long src, long s_ph, long s_vc)

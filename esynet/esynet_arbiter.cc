@@ -1,6 +1,6 @@
 /*
  * File name : esynet_arbiter.cc
- * Function : Implementation of arbiter.
+ * Function : Implement arbiter module.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,6 +18,12 @@
  * Boston, MA  02110-1301, USA.
  *
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
+
+/**
+ * @ingroup ESYNET_ARBITER
+ * @file esynet_arbiter.cc
+ * @brief Implement arbiter.
  */
 
 #include "esynet_arbiter.h"

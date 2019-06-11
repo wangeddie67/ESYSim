@@ -1,6 +1,6 @@
 /*
  * File name : esynet_foundation.h
- * Function : Define network platform.
+ * Function : Declare network platform.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,14 +35,8 @@
 #include "esynet_packet_generator.h"
 
 /**
+ * @ingroup ESYNET_NETWORK
  * @brief Simulation platform.
- *
- * The duty of simulation platform includes:
- * - generate the routers and PEs for simulation.
- * - control simulation progress.
- * - response to simulation events.
- * - synchronize the signal between routers and PEs.
- * - statistic simulation results.
  */
 class EsynetFoundation : public EsynetSimBaseUnit
 {
@@ -86,32 +80,38 @@ public:
      */
     EsynetFoundation(EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg);
     
-    /** @name Functions to access variables */
-    ///@{
+    /**
+     * @name Functions to access variables
+     * @{
+     */
     /**
      * @brief Access state of latency measurement #m_latency_measure_state.
      * @return stat of latency measurement #m_latency_measure_state.
      */
-    MeasureState latencyMeasureState() const { return m_latency_measure_state; }
+    inline MeasureState latencyMeasureState() const { return m_latency_measure_state; }
     /**
      * @brief Access state of throughput measurement #m_throughput_measure_state.
      * @return stat of throughput measurement #m_throughput_measure_state.
      */
-    MeasureState throughputMeasureState() const { return m_throughput_measure_state; }
+    inline MeasureState throughputMeasureState() const { return m_throughput_measure_state; }
     /**
      * @brief Access state of throughput measurement # m_injection_state*.
      * @return stat of throughput measurement #m_injection_state.
      */
-    MeasureState limitedInjectionState() const { return m_injection_state; }
+    inline MeasureState limitedInjectionState() const { return m_injection_state; }
     /**
      * @brief Access the specified router.
      * @param id  id of specified router.
      * @return  reference to this router entity.
      */
-    EsynetRouter & router(long id) { return m_router_list[id]; }
-    
-    vector< EsynetEvent > acceptList();
-    ///@}
+    inline EsynetRouter & router( long id ) { return m_router_list[ id ]; }
+    /**
+     * @brief Return list of accepted packet.
+     */
+    std::vector< EsynetEvent > acceptList();
+    /**
+     * @}
+     */
 
     /**
      * @brief Collect the statistic variables and control the simulation.
@@ -147,8 +147,10 @@ public:
      */
     void informationPropagate();
     
-    /** Functions to handle simulation event */
-    ///@{
+    /**
+     * @name Functions to handle simulation event
+     * @{
+     */
     /**
      * @brief Message injection event handler.
      *
@@ -156,7 +158,6 @@ public:
      * - Generate a new packet and inject the packet into PE.
      *
      * @param mesg  including the packet to inject.
-     * \sa #eventHandler()
      */
     void receiveEvgMessage(const EsynetEvent & mesg);
     /**
@@ -168,7 +169,6 @@ public:
      * - propagate information between routers and PEs.
      *
      * @param mesg  including the router and the period.
-     * \sa #eventHandler()
      */
     void receiveRouterMessage(const EsynetEvent & mesg);
     /**
@@ -178,22 +178,21 @@ public:
      * - clear the flag of flit on link.
      *
      * @param mesg  including the flit to receive.
-     * \sa #eventHandler()
      */
     void receiveWireMessage(const EsynetEvent & mesg);
     /**
      * @brief Receive credit event handler.
      * @param mesg  including the credit to receive.
-     * \sa #eventHandler()
      */
     void receiveCreditMessage(const EsynetEvent & mesg);
     /**
      * @brief Receive NI read event handler.
      * @param mesg  including the ni read to receive.
-     * \sa #eventHandler()
      */
     void receiveNiReadMessage(const EsynetEvent & mesg);
-    ///@}
+    /**
+     * @}
+     */
 
     /**
      * @brief Collect simulation results and print them out through standard
@@ -210,12 +209,9 @@ public:
      *
      * @param time  current simulation time.
      * @param mess  message to handle.
-     * \sa #receiveEvgMessage(), #receiveRouterMessage(),
-     * #receiveWireMessage(), #receiveCreditMessage()
      */
     void eventHandler(double time, const EsynetEvent & mess);
 
-public:
     /**
      * @brief print configuration of routers to ostream os
      * @param os  output stream.

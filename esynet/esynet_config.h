@@ -62,7 +62,7 @@ private:
      * @{
      */
     EsyArgumentEnum m_topology;             /**< @brief Network topology. */
-    std::vector< long > m_ary_number;       /**< @brief Size of network in each dimension. */
+    std::vector< long > m_network_size;       /**< @brief Size of network in each dimension. */
     long m_physical_port_number;            /**< @brief The number of physical ports in each router. */
     long m_virtual_channel_number;          /**< @brief The number of virtual channels in each physical port. */
     long m_in_buffer_size;                  /**< @brief Input buffer size of each virtual channel. */
@@ -72,7 +72,7 @@ private:
     EsyArgumentEnum m_routing_alg;          /**< @brief Routing algorithms. */
     std::string m_routing_table;            /**< @brief Routing table file name. */
     EsyArgumentEnum m_arbiter;              /**< @brief Arbiter type. */
-    EsyArgumentEnum m_flow_control;         /**< @brief Flow control method. */
+    EsyArgumentEnum m_switch;               /**< @brief Flow control method. */
     long m_ni_buffer_size;                  /**< @brief Size of buffer in ni. */
     long m_ni_read_delay;                   /**< @brief Delay of ni read. */
     bool m_network_cfg_file_enable;         /**< @brief Enable network configuration. */
@@ -176,11 +176,11 @@ public:
     /**
      * @brief Return the size of the network in diamensions.
      */
-    inline const std::vector<long> & aryNumber() const { return m_ary_number; }
+    inline const std::vector<long> & networkSize() const { return m_network_size; }
     /**
      * @brief Return the number of diamension.
      */
-    inline long cubeNumber() const {return (long) m_ary_number.size();}
+    inline long cubeNumber() const {return (long) m_network_size.size();}
     /**
      * @brief Return the number of physical ports for one router.
      */
@@ -220,7 +220,7 @@ public:
     /**
      * @brief Return enumerate for flow control method.
      */
-    inline esynet::EsynetFlowControlType flowControl() const { return ( esynet::EsynetFlowControlType )( long )m_flow_control; }
+    inline esynet::EsynetSwitchType switchMethod() const { return ( esynet::EsynetSwitchType )( long )m_switch; }
     /**
      * @brief Return size of NI buffer.
      */

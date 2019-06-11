@@ -308,34 +308,67 @@ public:
      */
 
     /**
+     * @name Calculate variables
+     * @{
+     */
+    /**
+     * @brief Return average latency.
+     */
+    double latency() const
+    {
+        if ( m_accepted_packet > 0 )
+        {
+            return m_total_delay / m_accepted_packet;
+        }
+        else
+        {
+            return 0.0;
+        }
+    }
+    /**
+     * @brief Return packet injected rate.
+     */
+    double packetInjectRate() const
+    {
+        if ( m_inject_stop_time - m_inject_start_time > 0 )
+        {
+            return (double)m_injected_packet / (double)( m_inject_stop_time - m_inject_start_time );
+        }
+        else
+        {
+            return 0.0;
+        }
+    }
+    /**
+     * @brief Return average throughput.
+     */
+    double throughput() const
+    {
+        if ( m_accept_stop_time - m_accept_start_time > 0 )
+        {
+            return (double)m_accepted_packet / (double)( m_accept_stop_time - m_accept_start_time );
+        }
+        else
+        {
+            return 0.0;
+        }
+    }
+    /**
+     * @}
+     */
+    /**
      * @brief Print statistics to output stream
      * @param os reference to output stream
      * @param a constant reference to NI statistics unit.
      */
     friend std::ostream& operator<<( std::ostream& os, const EsynetNIStatistic& a )
     {
-        double average_latency = 0.0;
-        if ( a.acceptedPacket() > 0 )
-        {
-            average_latency = a.totalDelay() / a.acceptedPacket();
-        }
-        double packet_inject_rate = 0.0;
-        if ( a.injectStopTime() - a.injectStartTime() > 0 )
-        {
-            packet_inject_rate = (double)a.injectedPacket() / (double)( a.injectStopTime() - a.injectStartTime() );
-        }
-        double average_throughput = 0.0;
-        if ( a.acceptStopTime() - a.acceptStartTime() > 0 )
-        {
-            average_throughput = (double)a.acceptedPacket() / (double)( a.acceptStopTime() - a.acceptStartTime() );
-        }
-
         os.precision(6);
         os << "packet injected:       " << a.injectedPacket() << std::endl;
-        os << "packet injection rate: " << packet_inject_rate << std::endl;
+        os << "packet injection rate: " << a.packetInjectRate() << std::endl;
         os << "total finished:        " << a.acceptedPacket() << std::endl;
-        os << "average delay:         " << average_latency << std::endl;
-        os << "throughput:            " << average_throughput << std::endl;
+        os << "average delay:         " << a.latency() << std::endl;
+        os << "throughput:            " << a.throughput() << std::endl;
 
         return os;
     }
@@ -557,9 +590,45 @@ public:
      */
 
     /**
+     * @name Calculate variables
+     * @{
+     */
+    /**
+     * @brief Return latency measurement.
+     */
+    double latencyMeasure() const
+    {
+        if ( m_accept_mark_packet > 0 )
+        {
+            return m_total_mark_delay / m_accept_mark_packet;
+        }
+        else
+        {
+            return 0.0;
+        }
+    }
+    /**
+     * @brief Return throughput measurement.
+     */
+    double throughputMeasure() const
+    {
+        double throughput_measure_cycle = m_throughput_measure_stop_time - m_throughput_measure_start_time;
+        long throughput_measure_packet = m_throughput_measure_stop_packet - m_throughput_measure_start_packet;
+        if ( throughput_measure_cycle > 0 )
+        {
+            return throughput_measure_packet / throughput_measure_cycle;
+        }
+        else
+        {
+            return 0.0;
+        }
+    }
+    /**
+     * @}
+     */
+    /**
      * @brief Print statistics to output stream
      * @param os reference to output stream
-     * @param a constant reference to foundation statistics unit.
      * @param time current simulation time
      * @param latency True if print latency measurement
      * @param throughput True if print throughput measurement
@@ -579,29 +648,17 @@ public:
 
         if ( latency )
         {
-            double latency_measure = 0.0;
-            if ( m_accept_mark_packet > 0 )
-            {
-                latency_measure = m_total_mark_delay / m_accept_mark_packet;
-            }
             os << "==== Latency Measurement ====" << std::endl;
             os << "delay:   " << m_total_mark_delay << std::endl;
             os << "packet:  " << m_accept_mark_packet << std::endl;
-            os << "latency: " << latency_measure << std::endl;
+            os << "latency: " << latencyMeasure() << std::endl;
         }
         if ( throughput )
         {
-            double throughput_measure_cycle = m_throughput_measure_stop_time - m_throughput_measure_start_time;
-            long throughput_measure_packet = m_throughput_measure_stop_packet - m_throughput_measure_start_packet;
-            double throughput_measure = 0.0;
-            if ( throughput_measure_cycle > 0 )
-            {
-                throughput_measure = throughput_measure_packet / throughput_measure_cycle;
-            }
             os << "==== Throughput Measurement ====" << std::endl;
-            os << "packet:     " << throughput_measure_packet << std::endl;
-            os << "cycle:      " << throughput_measure_cycle  << std::endl;
-            os << "throughput: " << throughput_measure << std::endl;
+            os << "packet:     " << m_throughput_measure_stop_packet - m_throughput_measure_start_packet << std::endl;
+            os << "cycle:      " << m_throughput_measure_stop_time - m_throughput_measure_start_time  << std::endl;
+            os << "throughput: " << throughputMeasure() << std::endl;
         }
     }
 };

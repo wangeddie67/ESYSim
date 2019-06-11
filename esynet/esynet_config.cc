@@ -33,7 +33,7 @@
 
 EsynetConfig::EsynetConfig( EsynetConfig::ConfigType type )
     : m_topology( EsyNetworkCfg::NT_MESH_2D )
-    , m_ary_number( 2, 8 )
+    , m_network_size( 2, 8 )
     , m_physical_port_number( 5 )
     , m_virtual_channel_number( 1 )
     , m_in_buffer_size( 12 )
@@ -43,7 +43,7 @@ EsynetConfig::EsynetConfig( EsynetConfig::ConfigType type )
     , m_routing_alg( esynet::RA_XY )
     , m_routing_table( "../example/routing" )
     , m_arbiter( esynet::AR_MATRIX )
-    , m_flow_control( esynet::FC_WORMWHOLE )
+    , m_switch( esynet::FC_WORMHOLE )
     , m_ni_buffer_size( 1 )
     , m_ni_read_delay( 0 )
     , m_network_cfg_file_enable( false )
@@ -79,7 +79,7 @@ EsynetConfig::EsynetConfig( EsynetConfig::ConfigType type )
 
 EsynetConfig::EsynetConfig( int argc, char * const argv[], ConfigType type )
     : m_topology( EsyNetworkCfg::NT_MESH_2D )
-    , m_ary_number( 2, 8 )
+    , m_network_size( 2, 8 )
     , m_physical_port_number( 5 )
     , m_virtual_channel_number( 1 )
     , m_in_buffer_size( 12 )
@@ -89,7 +89,7 @@ EsynetConfig::EsynetConfig( int argc, char * const argv[], ConfigType type )
     , m_routing_alg( esynet::RA_XY )
     , m_routing_table( "../example/routing" )
     , m_arbiter( esynet::AR_MATRIX )
-    , m_flow_control( esynet::FC_WORMWHOLE )
+    , m_switch( esynet::FC_WORMHOLE )
     , m_ni_buffer_size( 1 )
     , m_ni_read_delay( 0 )
     , m_network_cfg_file_enable( false )
@@ -131,6 +131,8 @@ EsynetConfig::EsynetConfig( int argc, char * const argv[], ConfigType type )
     {
         exit( 0 );
     }
+
+    printValue2Console( std::cout );
 }
 
 bool EsynetConfig::preDefineCheck()
@@ -139,8 +141,8 @@ bool EsynetConfig::preDefineCheck()
     {
         case EsyNetworkCfg::NT_SWITCH :
             {
-                m_ary_number.resize( 1 );
-                m_ary_number[ 0 ] = 1;
+                m_network_size.resize( 1 );
+                m_network_size[ 0 ] = 1;
                 if ( m_routing_alg != esynet::RA_TABLE )
                 {
                     std::cout << "Only table-based routing algorithm works on the single switch." << std::endl;
@@ -150,13 +152,14 @@ bool EsynetConfig::preDefineCheck()
             break;
         case EsyNetworkCfg::NT_RING :
             {
-                m_ary_number.resize( 1 );
+                m_network_size.resize( 1 );
                 if ( m_physical_port_number < 3 )
                 {
                     std::cout << "The router of ring NoC must have at least 3 physical channels." << std::endl;
                     m_physical_port_number = 3;
                 }
-                if ( m_routing_alg != esynet::RA_SINGLERING && m_routing_alg != esynet::RA_DOUBLERING )
+                if ( m_routing_alg != esynet::RA_SINGLERING && m_routing_alg != esynet::RA_DOUBLERING
+                    && m_routing_alg != esynet::RA_TABLE )
                 {
                     std::cout << "Only single/double ring routing algorithm works on the ring NoC." << std::endl;
                     return false;
@@ -165,18 +168,18 @@ bool EsynetConfig::preDefineCheck()
             break;
         case EsyNetworkCfg::NT_MESH_2D :
             {
-                m_ary_number.resize( 2 );
-                if ( m_ary_number[ 1 ] == 0 )
+                m_network_size.resize( 2 );
+                if ( m_network_size[ 1 ] == 0 )
                 {
-                    m_ary_number[ 1 ] = m_ary_number[ 0 ];
+                    m_network_size[ 1 ] = m_network_size[ 0 ];
                 }
                 if ( m_physical_port_number < 5 )
                 {
                     std::cout << "The router of 2D mesh must have at least 5 physical channels." << std::endl;
                     m_physical_port_number = 5;
                 }
-                if ( ( m_routing_alg != esynet::RA_XY ) && ( m_routing_alg != esynet::RA_DYXY ) && 
-                    ( m_routing_alg != esynet::RA_DIAMESH ) )
+                if ( m_routing_alg != esynet::RA_XY && m_routing_alg != esynet::RA_DYXY && m_routing_alg != esynet::RA_DIAMESH
+                    && m_routing_alg != esynet::RA_TABLE )
                 {
                     std::cout << "Only XY, DyXY, Diamension mesh routing algorithm work on the Mesh NoC." << std::endl;
                     return false;
@@ -185,32 +188,41 @@ bool EsynetConfig::preDefineCheck()
             break;
         case EsyNetworkCfg::NT_TORUS_2D :
             {
-                m_ary_number.resize( 2 );
-                if ( m_ary_number[ 1 ] == 0 )
+                m_network_size.resize( 2 );
+                if ( m_network_size[ 1 ] == 0 )
                 {
-                    m_ary_number[ 1 ] = m_ary_number[ 0 ];
+                    m_network_size[ 1 ] = m_network_size[ 0 ];
                 }
                 if ( m_physical_port_number < 5 )
                 {
                     std::cout << "The router of 2D torus must have at least 5 physical channels." << std::endl;
                     m_physical_port_number = 5;
                 }
-                if ( ( m_routing_alg != esynet::RA_TXY ) && ( m_routing_alg != esynet::RA_DIATORUS ) )
+                if ( m_packet_size > 0 )
                 {
-                    std::cout << "Only Torus XY and diamension torus routing algorithm works on the Torus NoC." << std::endl;
+                    std::cout << "The 2D torus topology only support packets with 1 flit only." << std::endl;
+                    m_traffic_pir *= m_packet_size;
+                    m_packet_size = 1;
+                }
+                if ( m_routing_alg != esynet::RA_XY && m_routing_alg != esynet::RA_DYXY && m_routing_alg != esynet::RA_TXY
+                    && m_routing_alg != esynet::RA_DIAMESH && m_routing_alg != esynet::RA_DIATORUS
+                    && m_routing_alg != esynet::RA_TABLE )
+                {
+                    std::cout << "Only XY, DyXY, Torus XY and diamension mesh/torus routing algorithm works on the Torus NoC." << std::endl;
                     return false;
                 }
             }
             break;
         case EsyNetworkCfg::NT_MESH_DIA :
             {
-                long idea_phy = m_ary_number.size() * 2 + 1;
+                long idea_phy = m_network_size.size() * 2 + 1;
                 if ( m_physical_port_number < idea_phy )
                 {
                     std::cout << "The router must have at least " << idea_phy << " physical channels." << std::endl;
                     m_physical_port_number = idea_phy;
                 }
-                if ( m_routing_alg != esynet::RA_DIAMESH )
+                if ( m_routing_alg != esynet::RA_DIAMESH
+                    && m_routing_alg != esynet::RA_TABLE )
                 {
                     std::cout << "Only diamension mesh routing algorithm works on the mult-dim Mesh NoC." << std::endl;
                     return false;
@@ -219,13 +231,20 @@ bool EsynetConfig::preDefineCheck()
             break;
         case EsyNetworkCfg::NT_TORUS_DIA :
             {
-                long idea_phy = m_ary_number.size() * 2 + 1;
+                long idea_phy = m_network_size.size() * 2 + 1;
                 if ( m_physical_port_number < idea_phy )
                 {
                     std::cout << "The router must have at least " << idea_phy << " physical channels." << std::endl;
                     m_physical_port_number = idea_phy;
                 }
-                if ( m_routing_alg != esynet::RA_DIATORUS )
+                if ( m_packet_size > 0 )
+                {
+                    std::cout << "The diamension torus topology only support packets with 1 flit only." << std::endl;
+                    m_traffic_pir *= m_packet_size;
+                    m_packet_size = 1;
+                }
+                if ( m_routing_alg != esynet::RA_DIATORUS
+                    && m_routing_alg != esynet::RA_TABLE )
                 {
                     std::cout << "Only diamension torus routing algorithm works on the mult-dim Torus NoC." << std::endl;
                     return false;
@@ -254,7 +273,7 @@ void EsynetConfig::insertVariables(ConfigType type)
         m_topology.addOption( EsyNetworkCfg::NT_TORUS_DIA, "DiaTorus" );
         insertEnum( "-topology", "Code for topology", &m_topology);
         // Network size
-        insertLongVector( "-array_size", "Size of network in diamension", &m_ary_number
+        insertLongVector( "-network_size", "Size of network in diamension", &m_network_size
             , "-!network_cfg_file_enable", 1 );
         // Number of physical port
         insertLong( "-phy_number", "Number of physical port of a router", &m_physical_port_number
@@ -290,9 +309,9 @@ void EsynetConfig::insertVariables(ConfigType type)
         m_arbiter.addOption(esynet::AR_MATRIX, "Matrix");
         insertEnum("-arbiter", "Code of aribiter", &m_arbiter );
         // Flow control
-        m_flow_control.addOption(esynet::FC_WORMWHOLE, "WormWhole");
-        m_flow_control.addOption(esynet::FC_RING, "Ring");
-        insertEnum("-flow_control", "Code of flow control", &m_flow_control );
+        m_switch.addOption(esynet::FC_WORMHOLE, "Wormhole");
+        m_switch.addOption(esynet::FC_RING, "Ring");
+        insertEnum("-switch", "Code of switch method", &m_switch );
         // NI buffer size
         insertLong( "-ni_buffer_size", "Buffer size of NI, #unit", &m_ni_buffer_size );
         // NI read delay
