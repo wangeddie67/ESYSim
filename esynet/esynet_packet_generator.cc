@@ -59,6 +59,14 @@ EsynetPacketGenerator::EsynetPacketGenerator( EsyNetworkCfg * network_cfg, Esyne
     }
 }
 
+EsynetPacketGenerator::~EsynetPacketGenerator()
+{
+    if ( m_tracein != NULL )
+    {
+        delete m_tracein;
+    }
+}
+
 /**
  * @name Bit Operation Functions
  * @{

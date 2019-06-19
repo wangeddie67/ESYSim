@@ -59,9 +59,10 @@ void EsynetNI::receiveFlit( long vc, const EsynetFlit & flit )
     {
         m_eject_queue.push_back( flit_t );
         addEvent( EsynetEvent::generateCreditEvent( m_current_time + CREDIT_DELAY_
-            , m_id + m_network_cfg->routerCount(), 0, 0, m_router, m_port, vc
-            , m_argu_cfg->niBufferSize() - m_eject_queue.size() ) );
-        if ( flit.flitType() == EsynetFlit::FLIT_TAIL )
+            , m_id + m_network_cfg->routerCount(), 0, 0, m_router, m_port, vc, m_argu_cfg->niBufferSize() - m_eject_queue.size() ) );
+
+        // Raise interrupt when receive the last flit of NI.
+        if ( flit.flitType() == EsynetFlit::FLIT_TAIL || flit.flitSize() == 1 )
         {
             addEvent( EsynetEvent::generateNIReadEvent( m_current_time + m_argu_cfg->niReadDelay(), m_id ) );
         }
@@ -74,14 +75,16 @@ void EsynetNI::receiveFlit( long vc, const EsynetFlit & flit )
     }
 }
 
-void EsynetNI::receivePacketHandler()
+void EsynetNI::receiveNiInterrupt()
 {
     while ( m_eject_queue.size() > 0 )
     {
         EsynetFlit flit_t = m_eject_queue[ 0 ];
         receivePacket( flit_t );
         m_eject_queue.erase( m_eject_queue.begin() );
-        if ( flit_t.flitType() == EsynetFlit::FLIT_TAIL )
+
+        // Receive flit until the end of the packet.
+        if ( flit_t.flitType() == EsynetFlit::FLIT_TAIL || flit_t.flitSize() == 1 )
         {
             break;
         }
@@ -125,13 +128,27 @@ void EsynetNI::receivePacket( const EsynetFlit & flit )
     }
 }
 
-void EsynetNI::runBeforeRouter()
+void EsynetNI::niSimPipeline()
 {
-    flitTraversal();
-}
+    // If the injection queue is not empty, send out one flit.
+    if( m_inject_queue.size() > 0 )
+    {
+        long vs = 0;
 
-void EsynetNI::runAfterRouter()
-{
+        if ( m_vc_counter[ vs ] > 0 )
+        {
+            EsynetFlit flit_t = m_inject_queue[ 0 ];
+
+            m_inject_queue.erase( m_inject_queue.begin() );
+
+            addEvent( EsynetEvent::generateWireEvent( m_current_time + WIRE_DELAY_
+                , m_id + m_network_cfg->routerCount(), 0, 0, m_router, m_port, vs, flit_t) );
+            m_vc_counter[ vs ] --;
+
+            m_flit_on_link = true;
+        }
+    }
+
 }
 
 void EsynetNI::injectPacket( const EsynetFlit& t_flit )
@@ -184,42 +201,6 @@ void EsynetNI::injectPacket( const EsynetFlit& t_flit )
     m_statistic.incInjectPacket( m_current_time );
 }
 
-void EsynetNI::flitTraversal()
-{
-    if( m_inject_queue.size() > 0 )
-    {
-        long vs = 0;
-
-        if ( m_vc_counter[ vs ] > 0 )
-        {
-            EsynetFlit flit_t = m_inject_queue[ 0 ];
-
-            m_inject_queue.erase( m_inject_queue.begin() );
-
-            addEvent( EsynetEvent::generateWireEvent( m_current_time + WIRE_DELAY_
-                , m_id + m_network_cfg->routerCount(), 0, 0, m_router, m_port, vs, flit_t) );
-            m_vc_counter[ vs ] --;
-
-            m_flit_on_link = true;
-        }
-    }
-}
-
-long EsynetNI::suggestVC()
-{
-    /* check the inject vc with least flits in */
-    esynet::EsynetVC vc_t = pair<long, long> (0, m_vc_counter[ 0 ] );
-    for (size_t i = 1; i < m_vc_counter.size(); i ++)
-    {
-        long t = m_vc_counter[ i ];
-        if (vc_t.second > t)
-        {
-            vc_t = pair<long, long>( (long)i, t);
-        } /* end of  vc_t.second > t */
-    } /* end of  for (long i = 0; i < (vc_number_); i ++) */
-    /* return the id of vc with least flits */
-    return vc_t.first;
-}
 
 bool EsynetNI::isEmpty()
 {

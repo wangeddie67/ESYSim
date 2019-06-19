@@ -73,8 +73,8 @@ private:
     std::string m_routing_table;            /**< @brief Routing table file name. */
     EsyArgumentEnum m_arbiter;              /**< @brief Arbiter type. */
     EsyArgumentEnum m_switch;               /**< @brief Flow control method. */
-    long m_ni_buffer_size;                  /**< @brief Size of buffer in ni. */
-    long m_ni_read_delay;                   /**< @brief Delay of ni read. */
+    long m_ni_buffer_size;                  /**< @brief Size of buffer in NI. */
+    long m_ni_interrupt_delay;              /**< @brief Delay of NI interruption. */
     bool m_network_cfg_file_enable;         /**< @brief Enable network configuration. */
     bool m_network_cfg_file_out_enable;     /**< @brief Enable output network configuration. */
     std::string m_network_cfg_file_name;    /**< @brief Network configuration file name. */
@@ -228,7 +228,7 @@ public:
     /**
      * @brief Delay before NI read out data.
      */
-    inline long niReadDelay() const { return m_ni_read_delay; }
+    inline long niReadDelay() const { return m_ni_interrupt_delay; }
     /**
      * @brief Return TRUE if network configuration is generated.
      */

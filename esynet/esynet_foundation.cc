@@ -151,7 +151,7 @@ void EsynetFoundation::receiveRouterMessage( const EsynetEvent & mesg )
         // Loop routers
         for ( long i = 0; i < m_ni_list.size(); i ++ )
         {
-            m_ni_list[ i ].runBeforeRouter();
+            m_ni_list[ i ].niSimPipeline();
         }
         for ( long i = 0; i < m_network_cfg->routerCount(); i ++ ) 
         {
@@ -162,7 +162,6 @@ void EsynetFoundation::receiveRouterMessage( const EsynetEvent & mesg )
         }
         for ( long i = 0; i < m_ni_list.size(); i ++ )
         {
-            m_ni_list[ i ].runAfterRouter();
             const std::vector< EsynetEvent >& accepted = m_ni_list[ i ].acceptList();
             for ( int i = 0; i < accepted.size(); i ++ )
             {
@@ -235,7 +234,7 @@ void EsynetFoundation::receiveCreditMessage(const EsynetEvent & mesg)
 
 void EsynetFoundation::receiveNiReadMessage(const EsynetEvent& mesg)
 {
-    m_ni_list[ mesg.srcId() ].receivePacketHandler();
+    m_ni_list[ mesg.srcId() ].receiveNiInterrupt();
 }
 
 

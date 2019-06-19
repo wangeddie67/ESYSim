@@ -115,49 +115,44 @@ public:
      */
 
     /**
-     * @brief Functions to run before simulation of router.
+     * @name Entry to function flow
+     * @{
      */
-    void runBeforeRouter();
     /**
-     * @brief Functions to run before simulation of router.
-     */
-    void runAfterRouter();
-
-    /**
-     * @brief Inject new packet into the NI.
+     * @brief Inject new packet into the NI. Entry to handle EVG event.
      * @param b New packet.
      */
     void injectPacket( const EsynetFlit& b );
     /**
-     * @brief Receive flit from another router.
+     * @brief Functions to simulate ni pipeline. Entry to handle ROUTER event.
+     */
+    void niSimPipeline();
+    /**
+     * @brief Receive flit from another router. Entry to handle WIRE event.
      * @param vc Virtual channel.
      * @param b  Received flit.
      */
     void receiveFlit( long vc, const EsynetFlit & b );
     /**
-     * @brief Receive flit from receive flit queue.
-     */
-    void receivePacketHandler();
-    /**
-     * @brief Receive packet.
-     * @param b Received flit.
-     */
-    void receivePacket( const EsynetFlit & b );
-    /**
-     * @brief Receive credit from router
+     * @brief Receive credit from router. Entry to handle CREDIT event.
      * @param vc virtual channel.
      * @param credit Credit value.
      */
     void receiveCredit( long vc, long credit ) { m_vc_counter[ vc ] = credit ;}
     /**
-     * @brief Tranmit flit to connected router.
+     * @brief Receive flit from receive flit queue. Entry to handle NIREAD event.
      */
-    void flitTraversal();
-
+    void receiveNiInterrupt();
     /**
-     * @brief Return suggest vc, default = 0.
+     * @}
      */
-    long suggestVC();
+
+protected:
+    /**
+     * @brief Receive packet.
+     * @param b Received flit.
+     */
+    void receivePacket( const EsynetFlit & b );
 };
 
 #endif

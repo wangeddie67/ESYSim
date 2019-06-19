@@ -45,7 +45,7 @@ EsynetConfig::EsynetConfig( EsynetConfig::ConfigType type )
     , m_arbiter( esynet::AR_MATRIX )
     , m_switch( esynet::FC_WORMHOLE )
     , m_ni_buffer_size( 1 )
-    , m_ni_read_delay( 0 )
+    , m_ni_interrupt_delay( 0 )
     , m_network_cfg_file_enable( false )
     , m_network_cfg_file_out_enable( false )
     , m_network_cfg_file_name( "../example/routercfg" )
@@ -91,7 +91,7 @@ EsynetConfig::EsynetConfig( int argc, char * const argv[], ConfigType type )
     , m_arbiter( esynet::AR_MATRIX )
     , m_switch( esynet::FC_WORMHOLE )
     , m_ni_buffer_size( 1 )
-    , m_ni_read_delay( 0 )
+    , m_ni_interrupt_delay( 0 )
     , m_network_cfg_file_enable( false )
     , m_network_cfg_file_out_enable( false )
     , m_network_cfg_file_name( "../example/routercfg" )
@@ -253,6 +253,15 @@ bool EsynetConfig::preDefineCheck()
             break;
     }
 
+    if ( m_ni_interrupt_delay > 0 )
+    {
+        if ( m_ni_buffer_size < m_packet_size )
+        {
+            std::cout << "Size of NI buffer must be large enough to hold the entire packet." << std::endl;
+            return false;
+        }
+    }
+
     return true;
 }
 
@@ -315,7 +324,7 @@ void EsynetConfig::insertVariables(ConfigType type)
         // NI buffer size
         insertLong( "-ni_buffer_size", "Buffer size of NI, #unit", &m_ni_buffer_size );
         // NI read delay
-        insertLong( "-ni_read_delay", "Read delay of NI, #cycle", &m_ni_read_delay );
+        insertLong( "-ni_interrupt_delay", "interruption delay of NI, #cycle", &m_ni_interrupt_delay );
         // Network configuration file enable
         insertBool( "-network_cfg_file_enable", "Enable network configuration file", &m_network_cfg_file_enable );
         // Network configuration output enable

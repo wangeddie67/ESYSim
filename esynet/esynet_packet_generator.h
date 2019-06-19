@@ -60,6 +60,10 @@ public:
      * @param argument_cfg Pointer to option list.
      */
     EsynetPacketGenerator( EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg );
+    /**
+     * @brief destructor function
+     */
+    ~EsynetPacketGenerator();
 
     /**
      * @brief Generate packet for one cycle
