@@ -44,6 +44,7 @@ EsynetConfig::EsynetConfig( EsynetConfig::ConfigType type )
     , m_routing_table( "../example/routing" )
     , m_arbiter( esynet::AR_MATRIX )
     , m_switch( esynet::FC_WORMHOLE )
+    , m_crossbar( esynet::CR_VC )
     , m_ni_buffer_size( 1 )
     , m_ni_interrupt_delay( 0 )
     , m_network_cfg_file_enable( false )
@@ -90,6 +91,7 @@ EsynetConfig::EsynetConfig( int argc, char * const argv[], ConfigType type )
     , m_routing_table( "../example/routing" )
     , m_arbiter( esynet::AR_MATRIX )
     , m_switch( esynet::FC_WORMHOLE )
+    , m_crossbar( esynet::CR_VC )
     , m_ni_buffer_size( 1 )
     , m_ni_interrupt_delay( 0 )
     , m_network_cfg_file_enable( false )
@@ -301,26 +303,30 @@ void EsynetConfig::insertVariables(ConfigType type)
         // Link length
         insertDouble( "-link_length", "link length #num", &m_link_length );
         // Routing algorithm
-        m_routing_alg.addOption(esynet::RA_SINGLERING, "SingleRing" );
-        m_routing_alg.addOption(esynet::RA_DOUBLERING, "DoubleRing" );
-        m_routing_alg.addOption(esynet::RA_XY, "XY");
-        m_routing_alg.addOption(esynet::RA_TXY, "TXY");
-        m_routing_alg.addOption(esynet::RA_DYXY, "DyXY");
-        m_routing_alg.addOption(esynet::RA_TABLE, "Table");
-        m_routing_alg.addOption(esynet::RA_DIAMESH, "DiaMesh");
-        m_routing_alg.addOption(esynet::RA_DIATORUS, "DiaTorus");
+        m_routing_alg.addOption( esynet::RA_SINGLERING, "SingleRing" );
+        m_routing_alg.addOption( esynet::RA_DOUBLERING, "DoubleRing" );
+        m_routing_alg.addOption( esynet::RA_XY, "XY" );
+        m_routing_alg.addOption( esynet::RA_TXY, "TXY" );
+        m_routing_alg.addOption( esynet::RA_DYXY, "DyXY" );
+        m_routing_alg.addOption( esynet::RA_TABLE, "Table" );
+        m_routing_alg.addOption( esynet::RA_DIAMESH, "DiaMesh" );
+        m_routing_alg.addOption( esynet::RA_DIATORUS, "DiaTorus" );
         insertEnum("-routing_alg", "Code of chosen routing algorithm", &m_routing_alg );
         // Routing table
         insertOpenFile( "-routing_table", "Routing table file name", &m_routing_table, "", 1, "routing" );
         // Arbiter
-        m_arbiter.addOption(esynet::AR_RANDOM, "Random");
-        m_arbiter.addOption(esynet::AR_RR, "RR");
-        m_arbiter.addOption(esynet::AR_MATRIX, "Matrix");
+        m_arbiter.addOption( esynet::AR_RANDOM, "Random" );
+        m_arbiter.addOption( esynet::AR_RR, "RR" );
+        m_arbiter.addOption( esynet::AR_MATRIX, "Matrix" );
         insertEnum("-arbiter", "Code of aribiter", &m_arbiter );
         // Flow control
-        m_switch.addOption(esynet::FC_WORMHOLE, "Wormhole");
-        m_switch.addOption(esynet::FC_RING, "Ring");
+        m_switch.addOption( esynet::FC_WORMHOLE, "Wormhole" );
+        m_switch.addOption( esynet::FC_RING, "Ring" );
         insertEnum("-switch", "Code of switch method", &m_switch );
+        // Crossbar
+        m_crossbar.addOption( esynet::CR_PH, "PhysicalChannel");
+        m_crossbar.addOption( esynet::CR_VC, "VirtualChannel");
+        insertEnum( "-crossbar", "Size of crossbar", &m_crossbar );
         // NI buffer size
         insertLong( "-ni_buffer_size", "Buffer size of NI, #unit", &m_ni_buffer_size );
         // NI read delay

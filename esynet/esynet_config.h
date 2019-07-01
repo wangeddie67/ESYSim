@@ -62,7 +62,7 @@ private:
      * @{
      */
     EsyArgumentEnum m_topology;             /**< @brief Network topology. */
-    std::vector< long > m_network_size;       /**< @brief Size of network in each dimension. */
+    std::vector< long > m_network_size;     /**< @brief Size of network in each dimension. */
     long m_physical_port_number;            /**< @brief The number of physical ports in each router. */
     long m_virtual_channel_number;          /**< @brief The number of virtual channels in each physical port. */
     long m_in_buffer_size;                  /**< @brief Input buffer size of each virtual channel. */
@@ -73,6 +73,7 @@ private:
     std::string m_routing_table;            /**< @brief Routing table file name. */
     EsyArgumentEnum m_arbiter;              /**< @brief Arbiter type. */
     EsyArgumentEnum m_switch;               /**< @brief Flow control method. */
+    EsyArgumentEnum m_crossbar;             /**< @brief Crossbar Type. */
     long m_ni_buffer_size;                  /**< @brief Size of buffer in NI. */
     long m_ni_interrupt_delay;              /**< @brief Delay of NI interruption. */
     bool m_network_cfg_file_enable;         /**< @brief Enable network configuration. */
@@ -221,6 +222,10 @@ public:
      * @brief Return enumerate for flow control method.
      */
     inline esynet::EsynetSwitchType switchMethod() const { return ( esynet::EsynetSwitchType )( long )m_switch; }
+    /**
+     * @brief Return enumerate for size of the crossbar.
+     */
+    inline esynet::EsynetCrossbarType crossbar() const { return ( esynet::EsynetCrossbarType )( long )m_crossbar; }
     /**
      * @brief Return size of NI buffer.
      */

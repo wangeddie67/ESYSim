@@ -392,39 +392,73 @@ void EsynetRouter::vcArbitration()
 //switch arbitration pipeline stage
 void EsynetRouter::swArbitration()
 {
-    for ( size_t inphy = 0; inphy < m_input_port.size(); inphy ++ )
+    if ( m_argu_cfg->crossbar() == esynet::CR_PH )
     {
-        for( long invc = 0; invc < m_input_port[ inphy ].vcNumber(); invc ++ )
+        for ( size_t inphy = 0; inphy < m_input_port.size(); inphy ++ )
         {
-            if( m_input_port[ inphy ][ invc ].state() == esynet::VCS_SW_AB ) 
+            for( long invc = 0; invc < m_input_port[ inphy ].vcNumber(); invc ++ )
             {
-                esynet::EsynetVC out_t = m_input_port[ inphy ][ invc ].connection();
-                if( m_output_port[ out_t.first ][ out_t.second ].creditCounter() > 0 )
+                if( m_input_port[ inphy ][ invc ].state() == esynet::VCS_SW_AB ) 
                 {
-                    m_port_input_arbiter[ inphy ].setRequest( invc );
+                    esynet::EsynetVC out_t = m_input_port[ inphy ][ invc ].connection();
+                    if( m_output_port[ out_t.first ][ out_t.second ].creditCounter() > 0 )
+                    {
+                        m_port_input_arbiter[ inphy ].setRequest( invc );
+                    }
+                }
+            }
+
+            long win_t = m_port_input_arbiter[ inphy ].grant();
+            if ( win_t >= 0 )
+            {
+                esynet::EsynetVC r_t = m_input_port[ inphy ][ win_t ].connection();
+                m_port_output_arbiter[ r_t.first ].setRequest( esynet::EsynetVC ( inphy, win_t ) );
+            }
+        }
+
+        for( size_t outph = 0; outph < m_output_port.size(); outph ++ )
+        {
+            esynet::EsynetVC vc_win = m_port_output_arbiter[ outph ].grantVc();
+            if ( vc_win.first >= 0 && vc_win.second >= 0 )
+            {
+                esynet::EsynetVCStatus oldstate = m_input_port[ vc_win.first ][ vc_win.second ].state();
+                m_input_port[ vc_win.first ][ vc_win.second ].updateState( esynet::VCS_SW_TR );
+                esynet::EsynetVCStatus newstate = m_input_port[ vc_win.first ][ vc_win.second ].state();
+                addEvent( EsynetEvent ( m_current_time, ET_VC_STATE,
+                    m_router_id, vc_win.first, vc_win.second, m_router_id, vc_win.first, vc_win.second, 
+                    EsynetFlit( 0, 0, (EsynetFlit::FlitType)0, oldstate, newstate, 0, esynet::EsynetPayload() ) ) );
+            }
+        }
+    }
+    else if ( m_argu_cfg->crossbar() == esynet::CR_VC )
+    {
+        for ( size_t inphy = 0; inphy < m_input_port.size(); inphy ++ )
+        {
+            for( long invc = 0; invc < m_input_port[ inphy ].vcNumber(); invc ++ )
+            {
+                if( m_input_port[ inphy ][ invc ].state() == esynet::VCS_SW_AB ) 
+                {
+                    esynet::EsynetVC out_t = m_input_port[ inphy ][ invc ].connection();
+                    if( m_output_port[ out_t.first ][ out_t.second ].creditCounter() > 0 )
+                    {
+                        m_port_output_arbiter[ out_t.first ].setRequest( esynet::EsynetVC ( inphy, invc ) );
+                    }
                 }
             }
         }
 
-        long win_t = m_port_input_arbiter[ inphy ].grant();
-        if ( win_t >= 0 )
+        for( size_t outph = 0; outph < m_output_port.size(); outph ++ )
         {
-            esynet::EsynetVC r_t = m_input_port[ inphy ][ win_t ].connection();
-            m_port_output_arbiter[ r_t.first ].setRequest( esynet::EsynetVC ( inphy, win_t ) );
-        }
-    }
-
-    for( size_t outph = 0; outph < m_output_port.size(); outph ++ )
-    {
-        esynet::EsynetVC vc_win = m_port_output_arbiter[ outph ].grantVc();
-        if ( vc_win.first >= 0 && vc_win.second >= 0 )
-        {
-            esynet::EsynetVCStatus oldstate = m_input_port[ vc_win.first ][ vc_win.second ].state();
-            m_input_port[ vc_win.first ][ vc_win.second ].updateState( esynet::VCS_SW_TR );
-            esynet::EsynetVCStatus newstate = m_input_port[ vc_win.first ][ vc_win.second ].state();
-            addEvent( EsynetEvent ( m_current_time, ET_VC_STATE,
-                m_router_id, vc_win.first, vc_win.second, m_router_id, vc_win.first, vc_win.second, 
-                EsynetFlit( 0, 0, (EsynetFlit::FlitType)0, oldstate, newstate, 0, esynet::EsynetPayload() ) ) );
+            esynet::EsynetVC vc_win = m_port_output_arbiter[ outph ].grantVc();
+            if ( vc_win.first >= 0 && vc_win.second >= 0 )
+            {
+                esynet::EsynetVCStatus oldstate = m_input_port[ vc_win.first ][ vc_win.second ].state();
+                m_input_port[ vc_win.first ][ vc_win.second ].updateState( esynet::VCS_SW_TR );
+                esynet::EsynetVCStatus newstate = m_input_port[ vc_win.first ][ vc_win.second ].state();
+                addEvent( EsynetEvent ( m_current_time, ET_VC_STATE,
+                    m_router_id, vc_win.first, vc_win.second, m_router_id, vc_win.first, vc_win.second, 
+                    EsynetFlit( 0, 0, (EsynetFlit::FlitType)0, oldstate, newstate, 0, esynet::EsynetPayload() ) ) );
+            }
         }
     }
 }

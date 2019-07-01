@@ -133,15 +133,23 @@ enum EsynetArbiterType
 {
     AR_RANDOM,     /*!< @brief Random arbiter. */
     AR_RR,         /*!< @brief Round-robin arbiter. */
-    AR_MATRIX,    /*!< @brief Matrix arbiter. */
+    AR_MATRIX,      /*!< @brief Matrix arbiter. */
 };
 /**
- * @brief Flow control method.
+ * @brief Switching method.
  */
 enum EsynetSwitchType
 {
-    FC_WORMHOLE,   /*!< @brief Worm whole. */
+    FC_WORMHOLE,    /*!< @brief Worm whole. */
     FC_RING,        /*!< @brief Ring flow control. */
+};
+/**
+ * @brief Crossbar Size
+ */
+enum EsynetCrossbarType
+{
+    CR_VC,  /*!< @brief The size of crossbar is as same as the total number of virtual channels. */
+    CR_PH,  /*!< @brief The size of crossbar is as same as the size of physical channels. */
 };
 /**
  * @brief Traffic generation profiles.
