@@ -1,8 +1,0 @@
-<Argumentconfiguration exec="gateSimulator" compile="make" name="NoC Gate Simulation" version="1.0">
-    <Argu value="~/workspace/ftnoc/vsrc" dval="0" note="source code directory, default top module: m_Assembled_NoC.v" argument="-code" extension="" type="0" darg="" loop="0"/>
-    <Argu value="~/workspace/ftnoc/temp/mapped" dval="0" note="gate netlist directory" argument="-netlist" extension="" type="0" darg="" loop="0"/>
-    <Argu value="~/workspace/ftnoc/Library" dval="0" note="gate library directory" argument="-library" extension="" type="0" darg="" loop="0"/>
-    <Argu value="~/workspace/ftnoc/vsrc" dval="0" note="testbench directory" argument="-testbench" extension="" type="0" darg="" loop="0"/>
-    <Argu value="/home/junkaizhan/workspace/ftnoc/vsrc" dval="0" note="search path" argument="-search" extension="" type="0" darg="" loop="0"/>
-    <Argu value="-tb_timescale=1ns/10ps" dval="0" note="VCS options" argument="-timescale" extension="" type="0" darg="" loop="0"/>
-</Argumentconfiguration>

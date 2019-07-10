@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<networkcfg>
+    <topology>1</topology>
+    <size size="1">
+        <data index="0">4</data>
+    </size>
+    <template_router_cfg>
+        <id>0</id>
+        <position>
+            <x>0</x>
+            <y>0</y>
+        </position>
+        <port_cfg size="3">
+            <data index="0">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>6</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>10</input_buffer>
+                <output_buffer>10</output_buffer>
+                <ni>1</ni>
+            </data>
+            <data index="1">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>0</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>10</input_buffer>
+                <output_buffer>10</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="2">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>1</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>0</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>10</input_buffer>
+                <output_buffer>10</output_buffer>
+                <ni>0</ni>
+            </data>
+        </port_cfg>
+        <pipe_cycle>1</pipe_cycle>
+    </template_router_cfg>
+    <template_ni_cfg>
+        <id>0</id>
+        <position>
+            <x>0</x>
+            <y>0</y>
+        </position>
+        <port_cfg size="3">
+            <data index="0">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>6</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>10</input_buffer>
+                <output_buffer>10</output_buffer>
+                <ni>1</ni>
+            </data>
+            <data index="1">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>0</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>10</input_buffer>
+                <output_buffer>10</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="2">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>1</port_dir>
+                <port_axis>0</port_axis>
+                <port_axis_dir>0</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>10</input_buffer>
+                <output_buffer>10</output_buffer>
+                <ni>0</ni>
+            </data>
+        </port_cfg>
+        <pipe_cycle>1</pipe_cycle>
+    </template_ni_cfg>
+    <router_cfg size="4">
+        <data index="0">
+            <id>0</id>
+            <position>
+                <x>0</x>
+                <y>0</y>
+            </position>
+            <port_cfg size="3">
+                <data index="0">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>6</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>0</neighbor_id>
+                    <neighbor_port>0</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>1</ni>
+                </data>
+                <data index="1">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>3</neighbor_id>
+                    <neighbor_port>2</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="2">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>1</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>1</neighbor_id>
+                    <neighbor_port>1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+            </port_cfg>
+            <pipe_cycle>1</pipe_cycle>
+        </data>
+        <data index="1">
+            <id>1</id>
+            <position>
+                <x>0</x>
+                <y>0</y>
+            </position>
+            <port_cfg size="3">
+                <data index="0">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>6</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>1</neighbor_id>
+                    <neighbor_port>0</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>1</ni>
+                </data>
+                <data index="1">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>0</neighbor_id>
+                    <neighbor_port>2</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="2">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>1</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>2</neighbor_id>
+                    <neighbor_port>1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+            </port_cfg>
+            <pipe_cycle>1</pipe_cycle>
+        </data>
+        <data index="2">
+            <id>2</id>
+            <position>
+                <x>0</x>
+                <y>0</y>
+            </position>
+            <port_cfg size="3">
+                <data index="0">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>6</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>2</neighbor_id>
+                    <neighbor_port>0</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>1</ni>
+                </data>
+                <data index="1">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>1</neighbor_id>
+                    <neighbor_port>2</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="2">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>1</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>3</neighbor_id>
+                    <neighbor_port>1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+            </port_cfg>
+            <pipe_cycle>1</pipe_cycle>
+        </data>
+        <data index="3">
+            <id>3</id>
+            <position>
+                <x>0</x>
+                <y>0</y>
+            </position>
+            <port_cfg size="3">
+                <data index="0">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>6</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>3</neighbor_id>
+                    <neighbor_port>0</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>1</ni>
+                </data>
+                <data index="1">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>2</neighbor_id>
+                    <neighbor_port>2</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="2">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>1</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>0</neighbor_id>
+                    <neighbor_port>1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+            </port_cfg>
+            <pipe_cycle>1</pipe_cycle>
+        </data>
+    </router_cfg>
+    <ni_cfg size="4">
+        <data index="0">
+            <id>0</id>
+            <connect_router>0</connect_router>
+            <connect_port>0</connect_port>
+            <pipe_cycle>1</pipe_cycle>
+            <buffer_size>10</buffer_size>
+            <interrupt_delay>200</interrupt_delay>
+        </data>
+        <data index="1">
+            <id>1</id>
+            <connect_router>1</connect_router>
+            <connect_port>0</connect_port>
+            <pipe_cycle>1</pipe_cycle>
+            <buffer_size>10</buffer_size>
+            <interrupt_delay>200</interrupt_delay>
+        </data>
+        <data index="2">
+            <id>2</id>
+            <connect_router>2</connect_router>
+            <connect_port>0</connect_port>
+            <pipe_cycle>1</pipe_cycle>
+            <buffer_size>10</buffer_size>
+            <interrupt_delay>200</interrupt_delay>
+        </data>
+        <data index="3">
+            <id>3</id>
+            <connect_router>3</connect_router>
+            <connect_port>0</connect_port>
+            <pipe_cycle>1</pipe_cycle>
+            <buffer_size>10</buffer_size>
+            <interrupt_delay>200</interrupt_delay>
+        </data>
+    </ni_cfg>
+</networkcfg>

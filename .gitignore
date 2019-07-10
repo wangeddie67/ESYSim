@@ -1,5 +1,6 @@
 moc/
 obj/
+dep/
 docs/
 bin/
 esyarch/

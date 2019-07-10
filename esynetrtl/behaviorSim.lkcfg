@@ -1,7 +1,0 @@
-<Argumentconfiguration version="1.0" exec="behaviorSimulator.sh" compile="make" name="NoC Behavior Simulator">
-    <Argu loop="0" argument="-code" note="source code directory, default top module: m_Assembled_NoC.v" value="~/workspace/ftnoc/vsrc" darg="" dval="0" extension="" type="0"/>
-    <Argu loop="0" argument="-library" note="gate library directory" value="~/workspace/ftnoc/Library" darg="" dval="0" extension="" type="0"/>
-    <Argu loop="0" argument="-testbench" note="testbench directory" value="~/workspace/ftnoc/vsrc" darg="" dval="0" extension="" type="0"/>
-    <Argu loop="0" argument="-search" note="search path" value="/home/junkaizhan/workspace/ftnoc/vsrc" darg="" dval="0" extension="" type="0"/>
-    <Argu loop="0" argument="-timescale" note="VCS options" value="-tb_timescale=1ns/10ps" darg="" dval="0" extension="" type="0"/>
-</Argumentconfiguration>

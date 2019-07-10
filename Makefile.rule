@@ -1,0 +1,42 @@
+
+# Make rules
+$(OBJ_DIR)$(X)%.$(OEXT):%.cc
+	if [ ! -d $(OBJ_DIR) ]; then $(MKDIR) $(OBJ_DIR); fi; \
+	$(CCPP) -c $(CFLAGS) -o $@ $<
+
+$(OBJ_DIR)$(X)%.$(OEXT):%.cpp
+	if [ ! -d $(OBJ_DIR) ]; then $(MKDIR) $(OBJ_DIR); fi; \
+	$(CCPP) -c $(CFLAGS) -o $@ $<
+
+$(OBJ_DIR)$(X)%.$(OEXT):%.c
+	if [ ! -d $(OBJ_DIR) ]; then $(MKDIR) $(OBJ_DIR); fi; \
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+$(DEP_DIR)$(X)%.$(DEXT):%.cc
+	if [ ! -d $(DEP_DIR) ]; then $(MKDIR) $(DEP_DIR); fi; \
+	$(CCPP) -MM $(CFLAGS) $< > $@
+
+$(DEP_DIR)$(X)%.$(DEXT):%.cpp
+	if [ ! -d $(DEP_DIR) ]; then $(MKDIR) $(DEP_DIR); fi; \
+	$(CCPP) -MM $(CFLAGS) $< > $@
+
+$(DEP_DIR)$(X)%.$(DEXT):%.c
+	if [ ! -d $(DEP_DIR) ]; then $(MKDIR) $(DEP_DIR); fi; \
+	$(CC) -MM $(CFLAGS) $< > $@
+
+# Rules
+.PHONY: clean
+
+libs:
+	cd $(LIB_DIR); make
+
+netcfg_lib:
+	cd $(NETCFG_LIB_DIR); make
+
+tinyxml_lib:
+	cd $(TINYXML_LIB_DIR); make
+
+clean:
+	$(RMDIR) $(OBJ_DIR)
+	$(RMDIR) $(DEP_DIR)
+	$(RMDIR) $(BIN_DIR)
