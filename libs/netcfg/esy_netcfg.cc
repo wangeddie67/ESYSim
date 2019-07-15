@@ -244,7 +244,7 @@ void EsyNetworkCfg::writeXml( TiXmlElement * root )
 
     // Template router.
     TiXmlElement * t_template_ni_item = new TiXmlElement( NET_ARGU_TEMPLATE_NI );
-    m_template_router.writeXml( t_template_ni_item );
+    m_template_ni.writeXml( t_template_ni_item );
     root->LinkEndChild( t_template_ni_item );
 
     // Special routers.

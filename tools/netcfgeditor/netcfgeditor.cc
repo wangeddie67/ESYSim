@@ -1,3 +1,30 @@
+/*
+ * File name : netcfgeditor.cc
+ * Function : Network configuration editor
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
+ */
+
+/**
+ * @ingroup TOOLS_NETCFGEDITOR
+ * @file netcfgeditor.cc
+ * @brief Implement network configuration editor.
+ */
 
 #include <cstdlib>
 #include <iostream>
@@ -5,405 +32,476 @@
 #include <string>
 
 #include "esy_netcfg.h"
-
-char makeSelection( const std::string & options )
-{
-    while ( true )
-    {
-        std::cout << "    Make selection (";
-        for ( int i = 0; i < options.size(); i ++ )
-        {
-            if ( i == 0 )
-            {
-                std::cout << options[ i ];
-            }
-            else
-            {
-                std::cout << "/" << options[ i ];
-            }
-        }
-        std::cout << ") : ";
-
-        char space[ 1024 ];
-        std::cin.getline( space, 1024 );
-        std::string a( space );
-
-        if ( a.size() != 1 )
-        {
-            std::cout << "Error: Only one character is accepted. Try again." << std::endl;
-            continue;
-        }
-
-        char res = a[ 0 ];
-        for ( int i = 0; i < options.size(); i ++ )
-        {
-            if ( res == options[ i ] )
-            {
-                return res;
-            }
-        }
-
-        std::cout << "Error: Wrong option. Try again." << std::endl;
-    }
-}
-
-long getIntegar( const std::string & options, long min, long max )
-{
-    while ( true )
-    {
-        std::cout << "    " << options << " (" << min << " - " << max << ") : ";
-
-        char space[ 1024 ];
-        std::cin.getline( space, 1024 );
-        std::string a( space );
-
-        bool validcheck = true;
-        for ( int i = 0; i < a.size(); i ++ )
-        {
-            if ( a[ i ] < '0' || a[ i ] > '9' )
-            {
-                std::cout << "Error: Only one integar value is accepted. Try again." << std::endl;
-                validcheck = false;
-                break;
-            }
-        }
-        if ( !validcheck )
-        {
-            continue;
-        }
-
-        long value;
-        std::stringstream ss( a );
-        ss >> value;
-        
-        if ( value >= min && value <= max )
-        {
-            return value;
-        }
-        
-        std::cout << "Error: Wrong value. Try again." << std::endl;
-    }
-}
-
-double getDouble( const std::string & options, double min, double max )
-{
-    while ( true )
-    {
-        std::cout << "    " << options << " (" << min << " - " << max << ") : ";
-
-        char space[ 1024 ];
-        std::cin.getline( space, 1024 );
-        std::string a( space );
-
-        bool validcheck = true;
-        long dotcount = 0;
-        for ( int i = 0; i < a.size(); i ++ )
-        {
-            if ( ( a[ i ] < '0' || a[ i ] > '9' ) && a[ i ] != '.' )
-            {
-                std::cout << "Error: Only one double value is accepted. Try again." << std::endl;
-                validcheck = false;
-                break;
-            }
-            if ( a [ i ] == '.' )
-            {
-                dotcount ++;
-                if ( dotcount > 1 )
-                {
-                    std::cout << "Error: Only one double value is accepted. Try again." << std::endl;
-                    validcheck = false;
-                    break;
-                }
-            }
-        }
-        if ( !validcheck )
-        {
-            continue;
-        }
-
-        double value;
-        std::stringstream ss( a );
-        ss >> value;
-        
-        if ( value >= min && value <= max )
-        {
-            return value;
-        }
-        
-        std::cout << "Error: Wrong value. Try again." << std::endl;
-    }
-}
+#include "esy_argument.h"
 
 int main( int argc, char * argv[])
 {
-    system( "dialog --title \"Welcome\" "
-        " --msgbox \"Network configuration editor\" 20 50" );
-    
-    // Get network configuration file name
-    if ( argc != 2 )
+    // Define arguments
+    EsyArgumentEnum a_topology( EsyNetworkCfg::NT_MESH_2D );    /**< @brief Network topology. */
+    std::vector< long > a_net_size( 2, 8 );     /**< @brief Size of network in each dimension. */
+
+    double a_pipe_cycle = -1;      /**< @brief Pipe cycle of router. */
+    long a_phy_port_num = -1;        /**< @brief The number of physical ports in each router. */
+    long a_in_vc_num = -1;           /**< @brief The number of virtual channels in each physical port. */
+    long a_out_vc_num = -1;          /**< @brief The number of virtual channels in each physical port. */
+    long a_in_buf_size = -1;        /**< @brief Input buffer size of each virtual channel. */
+    long a_out_buf_size = -1;       /**< @brief Output buffer size of each virtual channel. */
+    long a_axis = -1;           /**< @brief Port axis. */
+    EsyArgumentEnum a_axis_dir( EsyNetworkCfgPort::AXDIR_NUM ); /**< @brief Direction on axis. */
+    long a_conn_router = -1;     /**< @brief Connected router/NI. */
+    long a_conn_port = -1;       /**< @brief Connected port. */
+    bool a_conn_ni = false;         /**< @brief The port connect to NI. */
+    bool a_not_conn_ni = false;     /**< @brief The port does not connect to NI. */
+
+    double a_ni_pipe_cycle = -1;   /**< @brief Pipe cycle of NI. */
+    long a_ni_buf_size = -1;        /**< @brief Size of buffer in NI. */
+    double a_ni_int_delay = -1;      /**< @brief Delay of NI interruption. */
+    long a_ni_conn_router = -1;     /**< @brief Connected router. */
+    long a_ni_conn_port = -1;       /**< @brief Connected port. */
+
+    std::string a_netcfg_file_name = "../example/routing";      /**< @brief Network configuration file name. */
+
+    bool a_create = false;
+    bool a_view = false;
+    bool a_modify = false;
+    bool a_search = false;
+
+    long a_router_id = -1;
+    long a_ni_id = -1;
+    long a_port_id = -1;
+    bool a_template_router = false;
+    bool a_template_ni = false;
+
+    bool a_update = false;
+
+    EsyArgumentList argu;
+    a_topology.addOption( EsyNetworkCfg::NT_SWITCH,    "Switch" );
+    a_topology.addOption( EsyNetworkCfg::NT_RING,      "Ring" );
+    a_topology.addOption( EsyNetworkCfg::NT_MESH_2D,   "2DMesh" );
+    a_topology.addOption( EsyNetworkCfg::NT_TORUS_2D,  "2DTorus" );
+    a_topology.addOption( EsyNetworkCfg::NT_MESH_DIA,  "DiaMesh" );
+    a_topology.addOption( EsyNetworkCfg::NT_TORUS_DIA, "DiaTorus" );
+    a_topology.addOption( EsyNetworkCfg::NT_IRREGULAR, "Irregular" );
+    argu.insertEnum( "-topology", "Code for topology", &a_topology );
+    argu.insertLongVector( "-network_size", "Size of network in diamension", &a_net_size );
+
+    argu.insertDouble( "-pipe_cycle", "Pipeline cycle of routers", &a_pipe_cycle );
+    argu.insertLong( "-phy_number", "Number of physical port of a router", &a_phy_port_num );
+    argu.insertLong( "-in_vc_number", "Number of input virtual channel", &a_in_vc_num );
+    argu.insertLong( "-out_vc_number", "Number of output virtual channel", &a_out_vc_num );
+    argu.insertLong( "-in_buffer_size", "Buffer size of each VC", &a_in_buf_size );
+    argu.insertLong( "-out_buffer_size", "Output buffer size", &a_out_buf_size );
+    argu.insertLong( "-axis", "Axis of the port", &a_axis );
+    a_axis_dir.addOption( EsyNetworkCfgPort::AXDIR_UP,   "Up" );
+    a_axis_dir.addOption( EsyNetworkCfgPort::AXDIR_DOWN, "Down" );
+    argu.insertEnum( "-axis_dir", "Direction of axis", &a_axis_dir );
+    argu.insertLong( "-connect_router", "Connected router or NI. NI is after routers.", &a_conn_router );
+    argu.insertLong( "-connect_port", "Connected port. NI is after routers.", &a_conn_port );
+    a_axis_dir.addOption( EsyNetworkCfgPort::AXDIR_UP,   "Up" );
+    a_axis_dir.addOption( EsyNetworkCfgPort::AXDIR_DOWN, "Down" );
+    argu.insertBool( "-connect_ni", "Connect to NI.", &a_conn_ni );
+    argu.insertBool( "-not_connect_ni", "Not connect to NI.", & a_not_conn_ni );
+
+    argu.insertDouble( "-ni_pipe_cycle", "Pipeline cycle of NIs", &a_ni_pipe_cycle );
+    argu.insertLong( "-ni_buffer_size", "Buffer size of NI, #unit", &a_ni_buf_size );
+    argu.insertDouble( "-ni_interrupt_delay", "interruption delay of NI, #cycle", &a_ni_int_delay );
+    argu.insertLong( "-ni_connect_router", "Connected router of NI", &a_ni_conn_router );
+    argu.insertLong( "-ni_connect_port", "Connected port of NI", &a_ni_conn_port );
+
+    argu.insertOpenFile( "-network_cfg_file_name", "Network configuration file name", &a_netcfg_file_name, "", 1, NETCFG_EXTENSION );
+
+    argu.insertBool( "-create", "Create new network configuration file", &a_create );
+    argu.insertBool( "-view", "Print network configuration file", &a_view );
+    argu.insertBool( "-modify", "Modify network configuration file", &a_modify );
+    argu.insertBool( "-search", "Search parameters of specified network/router/port/ni", &a_search );
+
+    argu.insertLong( "-router_id", "ID of the router to modify", &a_router_id );
+    argu.insertBool( "-template_router", "Modify template router", &a_template_router );
+    argu.insertLong( "-port_id", "ID of the port to modify", &a_port_id );
+    argu.insertLong( "-ni_id", "ID of the NI to modify", &a_ni_id );
+    argu.insertBool( "-template_ni", "Modify template NI", &a_template_ni );
+
+    argu.insertBool( "-update", "Update network configuration", &a_update );
+
+    if ( argu.analyse( argc, argv ) != EsyArgumentList::RESULT_OK )
     {
-        std::cout << "Usage: ./netcfgeditor <file_name>" << std::endl;
+        return 1;
     }
-    std::string net_cfg_file_name( argv[ 1 ] );
 
-    long sel = system( "dialog --title \"Select first i\" "
-        " --menu \"Make selection\" 20 50 5 "
-        " 1 \"Create new network configuration\" "
-        " 2 \"Modify network configuration\" "
-        " 3 \"exit\" " );
-    std::cout << sel << std::endl;
-    // First Page
-    std::cout << "Network Configuration Editor" << std::endl;
-    std::cout << std::endl;
-    std::cout << "    A. Create new network configuration" << std::endl;
-    std::cout << "    B. Modify network configuration" << std::endl;
-    std::cout << "       (Heterogeneous configuration only)" << std::endl;
-    std::cout << std::endl;
-    char res1 = makeSelection( "AaBb" );
-    std::cout << "=========================================" << std::endl;
-
-    EsyNetworkCfg* net_cfg = NULL;
-
-    if ( res1 == 'A' || res1 == 'a' )
+    // View the network configuration file.
+    if ( a_view )
     {
-        EsyNetworkCfg::NoCTopology topology = EsyNetworkCfg::NT_SWITCH;
-        std::vector< long > net_size;
-        long router_num = 1;
-
-        double pipe_cycle = 1.0;
-        long phy_port = 0;
-        long input_vc_num = 1;
-        long output_vc_num = 1;
-        long input_buffer = 12;
-        long output_buffer = 12;
-        
-        double ni_pipe_cycle = 1.0;
-        long ni_buffer_size = 12;
-        long ni_interrupt_delay = 0;
-
-        // Step 1 Configuration topology
-        std::cout << "Create New Network Configuration" << std::endl;
-        std::cout << "Step 1: Configuration Topology" << std::endl;
-
-        // Select topology
-        std::cout << std::endl;
-        std::cout << "Select topology: " << std::endl;
-        std::cout << std::endl;
-        std::string argu = "";
-        for ( int i = 0; i < EsyNetworkCfg::NT_COUNT; i ++ )
+        // Read in network configuration file
+        EsyNetworkCfg net_cfg;
+        EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
+        if ( xml_error.hasError() )
         {
-            std::cout << "    " << i << ". " << EsyNetworkCfg::nocTopologyStrVector( i ) << std::endl;
-            argu += ( '0' + i );
+            std::cout << "Error: cannot read file " << a_netcfg_file_name << "." << std::endl;
+            return 2;
         }
-        std::cout << std::endl;
-        char topo_code = makeSelection( argu );
-        topology = ( EsyNetworkCfg::NoCTopology )( topo_code - '0' );
-
-        // Specifiy size
-        if ( topology == EsyNetworkCfg::NT_SWITCH )
+        std::cout << net_cfg;
+    }
+    // Create new network configuration file.
+    else if ( a_create )
+    {
+        // default values
+        if ( a_pipe_cycle < 0 )
         {
-            net_size.push_back( 1 );
-            router_num = 1;
+            a_pipe_cycle = 1.0;
         }
+        if ( a_phy_port_num <= 0 )
+        {
+            a_phy_port_num = a_net_size.size() * 2 + 1;
+        }
+        if ( a_in_vc_num <= 0 )
+        {
+            a_in_vc_num = 1;
+        }
+        if ( a_out_vc_num <= 0 )
+        {
+            a_out_vc_num = 1;
+        }
+        if ( a_in_buf_size <= 0 )
+        {
+            a_in_buf_size = 10;
+        }
+        if ( a_out_buf_size <= 0 )
+        {
+            a_out_buf_size = 10;
+        }
+        if ( a_ni_pipe_cycle < 0 )
+        {
+            a_ni_pipe_cycle = 1.0;
+        }
+        if ( a_ni_buf_size <= 0 )
+        {
+            a_ni_buf_size = 10;
+        }
+        if ( a_ni_int_delay < 0 )
+        {
+            a_ni_int_delay = 100;
+        }
+
+        // Create new network configuration
+        EsyNetworkCfg net_cfg( ( EsyNetworkCfg::NoCTopology )( long )a_topology, a_net_size
+            , a_pipe_cycle, a_phy_port_num, a_in_vc_num, a_out_vc_num, a_in_buf_size, a_out_buf_size
+            , a_ni_pipe_cycle, a_ni_buf_size, a_ni_int_delay );
+        // Print network configuration
+        std::cout << net_cfg;
+
+        EsyXmlError xml_error = net_cfg.writeXml( a_netcfg_file_name );
+        if ( xml_error.hasError() )
+        {
+            std::cout << "Error: cannot write file " << a_netcfg_file_name << "." << std::endl;
+            return 2;
+        }
+    }
+    // Search parameters of network or specified router/ni/port
+    else if ( a_search )
+    {
+        // Read in network configuration file
+        EsyNetworkCfg net_cfg;
+        EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
+        if ( xml_error.hasError() )
+        {
+            std::cout << "Error: cannot read file " << a_netcfg_file_name << "." << std::endl;
+            return 2;
+        }
+
+        // Configure template router
+        if ( a_template_router )
+        {
+            EsyNetworkCfgRouter& router_cfg = net_cfg.templateRouter();
+            // Configure port
+            if ( a_port_id > 0 && a_port_id <= router_cfg.portNum() )
+            {
+                EsyNetworkCfgPort& port_cfg = router_cfg.port( a_port_id );
+                std::cout << "in_vc_num = " << port_cfg.inputVcNumber() << std::endl;
+                std::cout << "out_vc_num = " << port_cfg.outputVcNumber() << std::endl;
+                std::cout << "in_buf_size = " << port_cfg.inputBuffer() << std::endl;
+                std::cout << "out_buf_size = " << port_cfg.outputBuffer() << std::endl;
+                std::cout << "axis = " << port_cfg.portAxis() << std::endl;
+                std::cout << "axis_dir = " << port_cfg.portAxisDirectionStr() << std::endl;
+                std::cout << "ni = " << ( port_cfg.networkInterface() ? "True" : "False" ) << std::endl;
+            }
+            // Configure router
+            else
+            {
+                std::cout << "pipe_cycle = " << router_cfg.pipeCycle() << std::endl;
+                std::cout << "port_num = " << router_cfg.portNum() << std::endl;
+            }
+
+        }
+        else if ( a_template_ni )
+        {
+            EsyNetworkCfgNI& ni_cfg = net_cfg.templateNI();
+            std::cout << "ni_pipe_cycle = " << ni_cfg.pipeCycle() << std::endl;
+            std::cout << "ni_buf_size = " << ni_cfg.bufferSize() << std::endl;
+            std::cout << "ni_int_delay = " << ni_cfg.interruptDelay() << std::endl;
+        }
+        // Configure router
+        else if ( a_router_id >= 0 && a_router_id < net_cfg.routerCount() )
+        {
+            EsyNetworkCfgRouter& router_cfg = net_cfg.router( a_router_id );
+            // Configure port
+            if ( a_port_id >= 0 && a_port_id < router_cfg.portNum() )
+            {
+                EsyNetworkCfgPort& port_cfg = router_cfg.port( a_port_id );
+                std::cout << "in_vc_num = " << port_cfg.inputVcNumber() << std::endl;
+                std::cout << "out_vc_num = " << port_cfg.outputVcNumber() << std::endl;
+                std::cout << "in_buf_size = " << port_cfg.inputBuffer() << std::endl;
+                std::cout << "out_buf_size = " << port_cfg.outputBuffer() << std::endl;
+                std::cout << "axis = " << port_cfg.portAxis() << std::endl;
+                std::cout << "axis_dir = " << port_cfg.portAxisDirectionStr() << std::endl;
+                std::cout << "ni = " << ( port_cfg.networkInterface() ? "True" : "False" ) << std::endl;
+                std::cout << "conn_router = " << port_cfg.neighborRouter() << std::endl;
+                std::cout << "conn_port = " << port_cfg.neighborPort() << std::endl;
+            }
+            // Configure router
+            else
+            {
+                std::cout << "pipe_cycle = " << router_cfg.pipeCycle() << std::endl;
+                std::cout << "port_num = " << router_cfg.portNum() << std::endl;
+            }
+        }
+        // Configure NI
+        else if ( a_ni_id >= 0 && a_ni_id < net_cfg.niCount() )
+        {
+            EsyNetworkCfgNI& ni_cfg = net_cfg.ni( a_ni_id );
+            std::cout << "ni_pipe_cycle = " << ni_cfg.pipeCycle() << std::endl;
+            std::cout << "ni_buf_size = " << ni_cfg.bufferSize() << std::endl;
+            std::cout << "ni_int_delay = " << ni_cfg.interruptDelay() << std::endl;
+            std::cout << "ni_conn_router = " << ni_cfg.connectRouter() << std::endl;
+            std::cout << "ni_conn_port = " << ni_cfg.connectPort() << std::endl;
+        }
+        // Return parameters of network
         else
         {
-            std::cout << std::endl;
-            std::cout << "Specify network size" << std::endl;
-            std::cout << std::endl;
-
-            long dim_size;
-            if ( topology == EsyNetworkCfg::NT_RING || topology == EsyNetworkCfg::NT_IRREGULAR )
+            std::cout << "topology = " << net_cfg.topologyStr() << std::endl;
+            std::cout << "net_size = ";
+            for ( int i = 0; i < net_cfg.dim(); i ++ )
             {
-                dim_size = getIntegar( "Specifiy number of routers", 1, 1024 );
-                net_size.push_back( dim_size );
-                router_num = dim_size;
+                std::cout << net_cfg.size( i ) << " ";
             }
-            else if ( topology == EsyNetworkCfg::NT_MESH_2D || topology == EsyNetworkCfg::NT_TORUS_2D )
-            {
-                dim_size = getIntegar( "Specifiy size of AX_X (lower)", 1, 128 );
-                net_size.push_back( dim_size );
-                router_num *= dim_size;
+            std::cout << std::endl;
+            std::cout << "router_count = " << net_cfg.routerCount() << std::endl;
+            std::cout << "ni_count = " << net_cfg.niCount() << std::endl;
+        }
+    }
+    // Create new network configuration file.
+    else if ( a_modify )
+    {
+        EsyNetworkCfg net_cfg;
+        EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
+        if ( xml_error.hasError() )
+        {
+            std::cerr << "Error: cannot read file " << a_netcfg_file_name << "." << std::endl;
+            return 2;
+        }
 
-                dim_size = getIntegar( "Specifiy size of AX_Y (higher)", 1, 128 );
-                net_size.push_back( dim_size );
-                router_num *= dim_size;
-            }
-            else if ( topology == EsyNetworkCfg::NT_MESH_DIA || topology == EsyNetworkCfg::NT_TORUS_DIA )
+        // Configure template router or template NI
+        if ( a_template_router || a_template_ni )
+        {
+            // Configure template router
+            if ( a_template_router )
             {
-                long dim = getIntegar( "Specifiy Diamension", 1, 128 );
-
-                for ( int i = 0; i < dim; i ++ )
+                EsyNetworkCfgRouter& router_cfg = net_cfg.templateRouter();
+                // Configure port
+                if ( a_port_id > 0 && a_port_id <= router_cfg.portNum() )
                 {
-                    std::stringstream ss;
-                    ss << "Specifiy size of diamension [" << i << "] ";
-                    if ( dim > 1 )
+                    EsyNetworkCfgPort& port_cfg = router_cfg.port( a_port_id );
+                    if ( a_in_vc_num > 0 )
                     {
-                        if ( i == 0 )
-                        {
-                            ss << " (lower) ";
-                        }
-                        else if ( i == dim - 1)
-                        {
-                            ss << " (higher)";
-                        }
-                        else
-                        {
-                            ss << "         ";
-                        }
+                        port_cfg.setInputVcNumber( a_in_vc_num );
                     }
-                    dim_size = getIntegar( ss.str(), 1, 128 );
-                    net_size.push_back( dim_size );
-                    router_num *= dim_size;
+                    if ( a_out_vc_num > 0 )
+                    {
+                        port_cfg.setOutputVcNumber( a_out_vc_num );
+                    }
+                    if ( a_in_buf_size > 0 )
+                    {
+                        port_cfg.setInputBuffer( a_in_buf_size );
+                    }
+                    if ( a_out_buf_size > 0 )
+                    {
+                        port_cfg.setOutputBuffer( a_out_buf_size );
+                    }
+                    if ( a_axis >= 0 )
+                    {
+                        port_cfg.setPortAxis( a_axis );
+                    }
+                    if ( a_axis_dir < EsyNetworkCfgPort::AXDIR_NUM )
+                    {
+                        port_cfg.setPortAxisDir( ( EsyNetworkCfgPort::PortAxisDirection )( long )a_axis_dir );
+                    }
+                    if ( a_not_conn_ni )
+                    {
+                        port_cfg.setNetworkInterface( false );
+                    }
+                    else if ( a_conn_ni )
+                    {
+                        port_cfg.setNetworkInterface( true );
+                    }
+                }
+                // Configure router
+                else
+                {
+                    if ( a_pipe_cycle >= 0 )
+                    {
+                        router_cfg.setPipeCycle( a_pipe_cycle );
+                    }
+                    if ( a_phy_port_num > 0 )
+                    {
+                        router_cfg.resizePort( a_phy_port_num );
+                    }
+                }
+
+            }
+            else if ( a_template_ni )
+            {
+                EsyNetworkCfgNI& ni_cfg = net_cfg.templateNI();
+                if ( a_ni_pipe_cycle >= 0 )
+                {
+                    ni_cfg.setPipeCycle( a_ni_pipe_cycle );
+                }
+                if ( a_ni_buf_size > 0 )
+                {
+                    ni_cfg.setBufferSize( a_ni_buf_size );
+                }
+                if ( a_ni_int_delay >= 0 )
+                {
+                    ni_cfg.setInterruptDelay( a_ni_int_delay );
+                }
+            }
+
+            if ( a_update )
+            {
+                net_cfg.updateNetwork();
+            }
+        }
+        // Configure router
+        else if ( a_router_id >= 0 && a_router_id < net_cfg.routerCount() )
+        {
+            EsyNetworkCfgRouter& router_cfg = net_cfg.router( a_router_id );
+            // Configure port
+            if ( a_port_id >= 0 && a_port_id <= router_cfg.portNum() )
+            {
+                EsyNetworkCfgPort& port_cfg = router_cfg.port( a_port_id );
+                if ( a_in_vc_num > 0 )
+                {
+                    port_cfg.setInputVcNumber( a_in_vc_num );
+                }
+                if ( a_out_vc_num > 0 )
+                {
+                    port_cfg.setOutputVcNumber( a_out_vc_num );
+                }
+                if ( a_in_buf_size > 0 )
+                {
+                    port_cfg.setInputBuffer( a_in_buf_size );
+                }
+                if ( a_out_buf_size > 0 )
+                {
+                    port_cfg.setOutputBuffer( a_out_buf_size );
+                }
+                if ( a_axis >= 0 )
+                {
+                    port_cfg.setPortAxis( a_axis );
+                }
+                if ( a_axis_dir < EsyNetworkCfgPort::AXDIR_NUM )
+                {
+                    port_cfg.setPortAxisDir( ( EsyNetworkCfgPort::PortAxisDirection )( long )a_axis_dir );
+                }
+                if ( a_not_conn_ni )
+                {
+                    port_cfg.setNetworkInterface( false );
+                }
+                else if ( a_conn_ni )
+                {
+                    port_cfg.setNetworkInterface( true );
+                }
+                if ( port_cfg.networkInterface() )
+                {
+                    if ( a_conn_router >= 0 && a_conn_router < net_cfg.niCount() )
+                    {
+                        port_cfg.setNeighborRouter( a_conn_router );
+                    }
+                    port_cfg.setNeighborPort( 0 );
+                }
+                else
+                {
+                    if ( a_conn_router >= 0 && a_conn_router < net_cfg.router( port_cfg.neighborRouter() ).portNum() )
+                    {
+                        port_cfg.setNeighborRouter( a_conn_router );
+                    }
+                    if ( a_conn_port >= 0 )
+                    {
+                        port_cfg.setNeighborPort( a_conn_port );
+                    }
+                }
+            }
+            // Configure router
+            else
+            {
+                if ( a_pipe_cycle >= 0 )
+                {
+                    router_cfg.setPipeCycle( a_pipe_cycle );
+                }
+                if ( a_phy_port_num > 0 )
+                {
+                    router_cfg.resizePort( a_phy_port_num );
                 }
             }
         }
-
-        // Confirm configuration 
-        std::cout << std::endl;
-        std::cout << "Confirm Topology: " << std::endl;
-        std::cout << std::endl;
-        std::cout << "    Topology : " << EsyNetworkCfg::nocTopologyStrVector( topology ) << std::endl;
-        if ( net_size.size() > 1 )
+        // Configure NI
+        else if ( a_ni_id >= 0 && a_ni_id < net_cfg.niCount() )
         {
-            std::cout << "    Size (Lower->Higher) : " ;
-            for ( int i = 0; i < net_size.size(); i ++ )
+            EsyNetworkCfgNI& ni_cfg = net_cfg.ni( a_ni_id );
+            if ( a_ni_pipe_cycle >= 0 )
             {
-                std::cout << net_size[ i ] << " ";
+                ni_cfg.setPipeCycle( a_ni_pipe_cycle );
             }
-            std::cout << std::endl;
-        }
-        std::cout << "    Router count : " << router_num << std::endl;
-        std::cout << "=========================================" << std::endl;
-
-        // Step 2 Configuration template router
-        std::cout << "Create New Network Configuration" << std::endl;
-        std::cout << "Step 2: Configuration Template Router" << std::endl;
-        std::cout << "" << std::endl;
-
-        pipe_cycle = getDouble( "Specifiy pipeline cycle", 0.0, 10.0 );
-        phy_port = getIntegar( "Specifiy number of physical ports", 1, 100 );
-        input_vc_num = getIntegar( "Specifiy number of virtual channels for input ports", 1, 100 );
-        output_vc_num = getIntegar( "Specifiy number of virtual channels for output ports", 1, 100 );
-        input_buffer = getIntegar( "Specifiy size of the input buffer", 1, 100 );
-        output_buffer = getIntegar( "Specifiy size of the output buffer", 1, 100 );
-
-        // Confirm configuration 
-        std::cout << std::endl;
-        std::cout << "Confirm Template Router: " << std::endl;
-        std::cout << std::endl;
-        std::cout << "    Pipeline cycle : " << pipe_cycle << std::endl;
-        std::cout << "    Physical port : " << phy_port << std::endl;
-        std::cout << "    Input  VC number : " << input_vc_num  << std::endl;
-        std::cout << "    Output VC number : " << output_vc_num << std::endl;
-        std::cout << "    Input  buffer : " << input_buffer  << std::endl;
-        std::cout << "    Output buffer : " << output_buffer << std::endl;
-        std::cout << "=========================================" << std::endl;
-
-        std::cout << "Create New Network Configuration" << std::endl;
-        std::cout << "Step 3: Configuration Template Network Interface" << std::endl;
-        std::cout << "" << std::endl;
-
-        ni_pipe_cycle = getDouble( "Specifiy pipeline cycle", 0.0, 10.0 );
-        ni_buffer_size = getIntegar( "Specifiy size of the ejection buffer", 1, 100 );
-        ni_interrupt_delay = getDouble( "Specifiy interrupt delay", 1.0, 1000.0 );
-
-        // Confirm configuration 
-        std::cout << std::endl;
-        std::cout << "Confirm Template Network Interface: " << std::endl;
-        std::cout << std::endl;
-        std::cout << "    Pipeline cycle : " << ni_pipe_cycle << std::endl;
-        std::cout << "    Ejection buffer : " << ni_buffer_size  << std::endl;
-        std::cout << "    Interrupt cycle : " << ni_interrupt_delay << std::endl;
-        std::cout << "=========================================" << std::endl;
-
-        std::cout << "Create New Network Configuration" << std::endl;
-        std::cout << "Step 4: Create network configuration file" << std::endl;
-        std::cout << "" << std::endl;
-
-        net_cfg = new EsyNetworkCfg( topology, net_size, 
-                                     pipe_cycle, phy_port, input_vc_num, output_vc_num, input_buffer, output_buffer,
-                                     ni_pipe_cycle, ni_buffer_size, ni_interrupt_delay
-                                   );
-
-        std::cout << *net_cfg;
-        std::cout << "=========================================" << std::endl;
-    }
-    else if ( res1 == 'B' || res1 == 'b' )
-    {
-        std::cout << "Modify Network Configuration" << std::endl;
-        std::cout << "Open Network Configuration File" << std::endl;
-        std::cout << std::endl;
-
-        net_cfg = new EsyNetworkCfg;
-        net_cfg->readXml( net_cfg_file_name );
-        std::cout << *net_cfg;
-        std::cout << "=========================================" << std::endl;
-    }
-    else
-    {
-        exit( 0 );
-    }
-
-    while ( true )
-    {
-        std::cout << "Modify network configuration" << std::endl;
-        std::cout << std::endl;
-        // main selection
-        std::cout << "    A. Template Router Configuration" << std::endl;
-        std::cout << "    B. Template NI Configuration" << std::endl;
-        std::cout << "    C. Special Router Configuration" << std::endl;
-        std::cout << "    D. Special NI Configuration" << std::endl;
-        std::cout << "    E. Reset Network Configuration" << std::endl;
-        std::cout << "    F. Save and Quit" << std::endl;
-        std::cout << std::endl;
-        char res2 = makeSelection( "AaBbCcDdEeFf" );
-        std::cout << "=========================================" << std::endl;
-
-        if ( res2 == 'A' || res2 == 'a' )
-        {
-            std::cout << "Modify network configuration" << std::endl;
-            std::cout << "Configuration of template router" << std::endl;
-            std::cout << std::endl;
-            std::cout << "Select Field to Modify:" << std::endl;
-            std::cout << std::endl;
-            EsyNetworkCfgRouter& template_router = net_cfg->templateRouter();
-            std::cout << "    0. Pipeline cycle : " << template_router.pipeCycle() << std::endl;
-            std::cout << "    1. Physical port : " << template_router.portNum() << std::endl;
-            std::cout << "    2. Input  VC number : " << template_router.maxInputVcNum()  << std::endl;
-            std::cout << "    3. Output VC number : " << template_router.maxOutputVcNum() << std::endl;
-            std::cout << "    4. Input  buffer : " << template_router.maxInputBuffer()  << std::endl;
-            std::cout << "    5. Output buffer : " << template_router.maxOutputBuffer() << std::endl;
-            std::cout << "    Y. Confirm configuration." << std::endl;
-            char resA = makeSelection( "012345Yy" );
-            std::cout << "=========================================" << std::endl;
-        }
-        else if ( res2 == 'B' || res2 == 'b' )
-        {
-            std::cout << "Modify network configuration" << std::endl;
-            std::cout << "Configuration of NI B" << std::endl;
-            std::cout << "" << std::endl;
-            char resA4 = makeSelection( "a" );
-            std::cout << "=========================================" << std::endl;
-        }
-        else if ( res2 == 'C' || res2 == 'c' )
-        {
-            std::cout << "Modify network configuration" << std::endl;
-            std::cout << "Reset Configuration" << std::endl;
-            std::cout << "" << std::endl;
-            char resA4 = makeSelection( "a" );
-            std::cout << "=========================================" << std::endl;
+            if ( a_ni_buf_size > 0 )
+            {
+                ni_cfg.setBufferSize( a_ni_buf_size );
+            }
+            if ( a_ni_int_delay >= 0 )
+            {
+                ni_cfg.setInterruptDelay( a_ni_int_delay );
+            }
+            if ( a_ni_conn_router >= 0 && a_ni_conn_router < net_cfg.niCount() )
+            {
+                ni_cfg.setConnectRouter( a_ni_conn_router );
+            }
+            if ( a_ni_conn_port >= 0 && a_ni_conn_port < net_cfg.router( ni_cfg.connectRouter() ).portNum() )
+            {
+                ni_cfg.setConnectPort( a_ni_conn_port );
+            }
         }
         else
         {
-            std::cout << "Modify network configuration" << std::endl;
-            std::cout << "Save modification" << std::endl;
-            std::cout << std::endl;
-            std::cout << "    File path: " << net_cfg_file_name << std::endl;
-            net_cfg->writeXml( net_cfg_file_name );
-            std::cout << "=========================================" << std::endl;
-            break;
+            std::cout << "Please specify the router/port/NI to modify" << std::endl;
+            std::cout << "  -router_id  ID of the router to modify." << std::endl;
+            std::cout << "  -port_id    ID of the port to modify." << std::endl;
+            std::cout << "  -ni_id      ID of the NI to modify." << std::endl;
+        }
+
+        std::cout << net_cfg;
+
+        EsyXmlError xml_write_error = net_cfg.writeXml( a_netcfg_file_name );
+        if ( xml_write_error.hasError() )
+        {
+            std::cerr << "Error: cannot write file " << a_netcfg_file_name << "." << std::endl;
+            return 2;
         }
     }
+    else
+    {
+        std::cout << "Please specify operation: " << std::endl;
+        std::cout << "  -create  Create new network configuration." << std::endl;
+        std::cout << "  -view    Print network configuration." << std::endl;
+        std::cout << "  -modify  Modify network configuration." << std::endl;
+        std::cout << "  -search  Search paramters of network or specified router/port/ni." << std::endl;
+    }
 
-    exit( 0 );
+    return 0;
 }

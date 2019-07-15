@@ -5,6 +5,7 @@ docs/
 bin/
 esyarch/
 .kdev4/
+__pycache__
 
 *.d
 *.o

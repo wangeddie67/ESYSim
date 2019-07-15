@@ -1,167 +1,205 @@
-
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 
 import locale
-import os
 from dialog import Dialog
+import pages
+import cmds
 
-locale.setlocale( locale.LC_ALL, '' )
+##
+# @brief Create newwork configuration
+# @return Dictionary of parameters.
+def createNewCfg() :
+    # Create new network configuration
 
-# Configuration window
-d = Dialog( dialog="dialog", autowidgetsize=True )
-d.set_background_title( "Network Configuration Editor" )
+    title = "Create Network Configuration"
+    # Topology page
+    topology_dict = pages.pageTopology( d, title )
+    if not topology_dict :
+        exit( 10 )
 
-# Select module
-code, tags = d.menu( "Create or Open File",
-                    choices=[( "1", "Create new network configuration" ),
-                             ( "2", "Modify network configuration" )] )
+    # network size page
+    netsize_dict = pages.pageNetSize( d, title, topology_dict[ "topology" ] )
+    if not netsize_dict :
+        exit( 10 )
 
-if ( code != d.OK ) :
-    exit( 0 )
+    # Router page
+    router_dict = pages.pageRouter( d, title, netsize_dict[ "port_num" ], default={}, mode="New" )
+    if not router_dict :
+        exit( 10 )
 
-if ( tags == "1" ) :
-    d.msgbox( "Create new" )
+    # NI page
+    ni_dict = pages.pageNI( d, title, default={}, mode="New" )
+    if not ni_dict:
+        exit( 10 )
 
-    topology = 0;
-    net_size = [ 1 ];
-    router_count = 1;
+    # netcfgeditor command
+    net_cfg_dict = {}
+    net_cfg_dict.update( topology_dict )
+    net_cfg_dict.update( netsize_dict )
+    net_cfg_dict.update( router_dict )
+    net_cfg_dict.update( ni_dict )
+    return net_cfg_dict
+
+
+if __name__ == "__main__" :
+    locale.setlocale( locale.LC_ALL, '' )
+
+    # Configuration window
+    d = Dialog( dialog="dialog", autowidgetsize=True )
+    d.set_background_title( "Network Configuration Editor" )
+
+    # Select model: 1-Create new; 2-Modify
+    code, tags = d.menu( title="Get Start",
+                         text="Create or Open File",
+                         choices=[ ( "Create", "Create new network configuration" ),
+                                   ( "Modify", "Modify network configuration" ) ] )
+    if ( code != d.OK ) :
+        exit( 10 )
     
-    pipe_cycle = 1.0;
-    phy_port = 0;
-    input_vc_num = 1;
-    output_vc_num = 1;
-    input_buffer = 12;
-    output_buffer = 12;
-    
-    ni_pipe_cycle = 1.0;
-    ni_buffer_size = 12;
-    ni_interrupt_delay = 0;
+    # Create network configuration
+    if ( tags == "Create" ) :
+        # Get parameters
+        net_cfg_dict = createNewCfg()
+        # New network configuration file
+        path = pages.pageFileSelect( d, title="New network configuration file" )
+        if path == "" :
+            exit( 10 )
+        # Create network configuration file
+        net_cfg_out = cmds.createNetcfg( path, net_cfg_dict )
+        # Print file
+        d.scrollbox( title="Network configuration file", text=net_cfg_out )
 
-    while True :
-        code, tags = d.menu( title="Create Network Configuration",
-            text="Select network topology:",
-            choices=[( "0", "Switch" ),
-                ( "1", "Ring" ),
-                ( "2", "2D Mesh" ),
-                ( "3", "2D Torus" ),
-                ( "4", "Multi-Dia Mesh" ),
-                ( "5", "Multi-Dia Torus" ),
-                ( "6", "Irregular" )] )
+    else :
+        # New network configuration file
+        path = pages.pageFileSelect( d, title="Open network configuration file" )
+        if path == "" :
+            exit( 10 )
+        # View network configuration file
+        net_cfg_out = cmds.viewNetCfg( path )
+        # Print file
+        d.scrollbox( title="Network configuration file", text=net_cfg_out )
 
-        if code == d.OK:
-            topology = int( tags );
-            break;
+    while True:
+        net_cfg_dict = cmds.searchNetCfg( path )
+        router_count = int( net_cfg_dict["router_count"] )
+        ni_count = int( net_cfg_dict["ni_count"] )
 
-    # switch
-    if topology == 0 :
-        net_size = [ 1 ]
-        router_num = 1
-        phy_port = 5
-    # ring and irregular
-    elif topology == 1 or topology == 6:
-        while True :
-            code, val_list = d.form( title="Create Network Configuration", 
-                text="Specify network size",
-                elements=[( "Routers", 1, 1, "1", 1, 20, 5, 2)])
+        # Select Components to modify
+        code, tags = d.menu( "Select Components to Modify",
+                             choices=[ ( "0", "Template Router" ),
+                                       ( "1", "Template Network Interface" ),
+                                       ( "2", "Router (0-{0})".format( router_count -1 ) ),
+                                       ( "3", "Network Interface (0-{0})".format( ni_count -1 ) ) ] )
+        # Quit
+        if code != d.OK :
+            break
 
-            if code == d.OK:
-                val_item = int( val_list[ 0 ] )
-                net_size = [ val_item ]
-                router_num = val_item
-                phy_port = 3
-                break;
-    # 2D mesh and 2D torus
-    elif topology == 2 or topology == 3:
-        while True :
-            code, val_list = d.form( title="Create Network Configuration", 
-                text="Specify network size",
-                elements=[( "AX_X (lower)",  1, 1, "8", 1, 20, 5, 2),
-                    ( "AX_Y (higher)", 2, 1, "8", 2, 20, 5, 2)] )
+        # Modify configuration of the template router
+        if tags == "0" :
+            # Get template router configuration
+            router_cfg_dict = cmds.searchRouterCfg( path, temp_router=True )
+            port_count = int( router_cfg_dict[ "port_num" ] )
 
-            if code == d.OK:
-                net_size = []
-                router_num = 1
-                for val_item_str in val_list :
-                    val_item = int( val_item_str )
-                    net_size.append( val_item )
-                    router_num *= val_item
-                phy_port = 5
-                break;
-    # 2D mesh and 2D torus
-    elif topology == 4 or topology == 5:
-        dim = 3
-        while True :
-            code, val_list = d.form( title="Create Network Configuration", 
-                text="Specify Diamension",
-                elements=[( "Diamension", 1, 1, "3", 1, 20, 5, 2)] )
-            
-            if code == d.OK:
-                dim = int( val_list[ 0 ] )
-                break;
+            # Select Components to modify
+            choices = [ ( "R", "Router arguments" ) ]
+            for i in range( 0, port_count ) :
+                choices.append( ( str( i ), "Port {0}".format( i ) ) )
+            code, tags = d.menu( "Select Components to Modify - Template Router", choices=choices )
+            if code == d.OK :
+                if tags == "R" :
+                    # Router page
+                    title = "Modify template router"
+                    router_cfg_dict_new = pages.pageRouter( d, title=title, default=router_cfg_dict, mode="Modify" )
+                    if router_cfg_dict_new:
+                        # Update
+                        update = pages.pageUpdate( d, title )
+                        # Modify router configuration
+                        router_cfg_out = cmds.modifyRouterCfg( path, router_cfg=router_cfg_dict_new, temp_router=True, update=update )
+                        if router_cfg_out :
+                            d.scrollbox( title=title, text=router_cfg_out )
+                else :
+                    port_id = int( tags )
+                    # Search port configuration
+                    port_cfg_dict = cmds.searchPortCfg( path, port_id=port_id, temp_router=True )
+                    # Configuration page
+                    title = "Modify port {0} of template router".format( port_id )
+                    port_cfg_dict_new = pages.pagePort(d, title, port_cfg_dict, True )
+                    if port_cfg_dict_new:
+                        # Update
+                        update = pages.pageUpdate( d, title )
+                        # Modify port configuration
+                        port_cfg_out = cmds.modifyPortCfg( path, port_cfg_dict_new, port_id=port_id, temp_router=True, update=update )
+                        if port_cfg_out :
+                            d.scrollbox( title=title, text=port_cfg_out )
+            else :
+                break
 
-        elements = []
-        for i in range( 0, dim ):
-            label = "Diamension [" + str( i ) + "] "
-            if dim > 1:
-                if i == 0:
-                    label += " (lower)"
-                elif i == dim - 1:
-                    label += " (higher)"
-            elements.append( ( label, i + 1, 1, "2", i + 1, 20, 5, 2 ) )
-        while True :
-            code, val_list = d.form( title="Create Network Configuration", 
-                text="Specify network size",
-                elements=elements )
-            
-            if code == d.OK:
-                net_size = []
-                router_num = 1
-                for val_item_str in val_list :
-                    val_item = int( val_item_str )
-                    net_size.push_back( val_item )
-                    router_num *= val_item
-                phy_port = dim * 2 + 1
-                break;
+        # Modify configuration of the template NI
+        elif tags == "1" :
+            # Search NI configuration
+            ni_cfg_dict = cmds.searchNICfg( path, temp_ni=True )
+            # Configuration page
+            title = "Modify template NI"
+            ni_cfg_dict_new = pages.pageNI( d, title, default=ni_cfg_dict, mode="ModTemp" )
+            if ni_cfg_dict_new:
+                # Update
+                update = pages.pageUpdate( d, title )
+                # Modify ni configuration
+                ni_cfg_out = cmds.modifyNICfg( path, ni_cfg=ni_cfg_dict_new, temp_ni=True, update=update )
+                if ni_cfg_out :
+                    d.scrollbox( title=title, text=ni_cfg_out )
 
-    while True :
-        code, val_list = d.form( title="Create Network Configuration", 
-            text="Specify Template Router",
-            elements=[( "Pipeline", 1, 1, "1.0", 1, 20, 5, 4 ),
-                      ( "Physical Ports", 2, 1, str(phy_port), 2, 20, 5, 2 ),
-                      ( "Input VC", 3, 1, "1", 3, 20, 5, 2 ),
-                      ( "Output VC", 4, 1, "1", 4, 20, 5, 2 ),
-                      ( "Input Buf Size", 5, 1, "10", 5, 20, 5, 3 ),
-                      ( "Output Buf Size", 6, 1, "10", 6, 20, 5, 3 )] )
+        # Modify configuration of specified router
+        elif tags == "2" :
+            code, router_id = pages.pageSelComp( d, text="Select router to modify", min_max=[ 0, router_count - 1 ] )
+            if code == d.OK :
+                # Get router configuration
+                router_cfg_dict = cmds.searchRouterCfg( path, router_id=router_id )
+                port_count = int( router_cfg_dict[ "port_num" ] )
 
-        if code == d.OK:
-            pipe_cycle = float( val_list[ 0 ] )
-            phy_port = int( val_list[ 1 ] )
-            input_vc_num = int( val_list[ 2 ] )
-            output_vc_num = int( val_list[ 3 ] )
-            input_buffer = int( val_list[ 4 ] )
-            output_buffer = int( val_list[ 5 ] )
-            break;
+                # Select Components to modify
+                choices = [ ( "R", "Router arguments" ) ]
+                for i in range( 0, port_count ) :
+                    choices.append( ( str( i ), "Port {0}".format( i ) ) )
+                code, tags = d.menu( "Select Components to Modify - Router {0}".format( router_id ), choices=choices )
+                if code == d.OK :
+                    if tags == "R" :
+                        # Router page
+                        title = "Modify router {0}".format( router_id )
+                        router_cfg_dict_new = pages.pageRouter( d, title, default=router_cfg_dict, mode="Modify" )
+                        if router_cfg_dict_new:
+                            # Modify router configuration
+                            router_cfg_out = cmds.modifyRouterCfg( path, router_cfg=router_cfg_dict_new, router_id=router_id )
+                            if router_cfg_out :
+                                d.scrollbox( title=title, text=router_cfg_out )
+                    else :
+                        port_id = int( tags )
+                        # Search port configuration
+                        port_cfg_dict = cmds.searchPortCfg( path, router_id=router_id, port_id=port_id )
+                        # Configuration page
+                        title = "Modify port {0} of router {1}".format( port_id, router_id )
+                        port_cfg_dict_new = pages.pagePort(d, title, port_cfg_dict, True )
+                        if port_cfg_dict_new:
+                            # Modify port configuration
+                            port_cfg_out = cmds.modifyPortCfg( path, port_cfg_dict_new, port_id=port_id, router_id=router_id )
+                            if port_cfg_out :
+                                d.scrollbox( title=title, text=port_cfg_out )
+                else :
+                    break
+            else :
+                break
 
-    while True :
-        code, val_list = d.form( title="Create Network Configuration", 
-            text="Specify Template Network Interface",
-            elements=[( "Pipeline", 1, 1, "1.0", 1, 20, 5, 4 ),
-                      ( "Buffer Size", 2, 1, "10", 2, 20, 5, 3 ),
-                      ( "Interrupt Delay", 3, 1, "10", 3, 20, 5, 3 )] )
-
-        if code == d.OK:
-            ni_pipe_cycle = float( val_list[ 0 ] )
-            ni_buffer_size = int( val_list[ 1 ] )
-            ni_interrupt_delay = float( val_list[ 2 ] )
-            break;
-
-    code, path = d.fselect( "" )
-
-    #os.system( "netcfgeditor -n path" )
-
-else :
-    code, path = d.fselect( "" )
-    print( path )
-
-d.msgbox( "Modify new" )
-
+        # Modify configuration of specified NI
+        elif tags == "3" :
+            code, ni_id = pages.pageSelComp( d, text="Select NI to modify", min_max=[ 0, router_count - 1 ] )
+            if code == d.OK :
+                # Search NI configuration
+                ni_cfg_dict = cmds.searchNICfg( path, ni_id=ni_id )
+                # Configuration page
+                title = "Modify NI {0}".format( ni_id )
+                ni_cfg_dict_new = pages.pageNI( d, title, default=ni_cfg_dict, mode="Modify" )
+                if ni_cfg_dict_new:
+                    # Modify NI configuration
+                    ni_cfg_out = cmds.modifyNICfg( path, ni_cfg_dict_new, ni_id=ni_id )
+                    if ni_cfg_out :
+                        d.scrollbox( title=title, text=ni_cfg_out )

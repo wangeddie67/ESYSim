@@ -171,7 +171,7 @@ public:
     /**
      * @brief Overload operator == function. Compare value of two items.
      * @param t  item to compare.
-     * @return If t has the same value as this item at all field, return TRUE. 
+     * @return If t has the same value as this item at all field, return TRUE.
      */
     inline bool operator ==(const EsyNetworkCfgPort & t) const
     {

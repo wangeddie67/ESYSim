@@ -1,6 +1,6 @@
 
 # Root Direction
-ESYSIM_ROOT := /home/snake1989/ESYSim
+ESYSIM_ROOT := /media/sf_share/ESYSim
 
 # Linux Command
 MAKE   := make

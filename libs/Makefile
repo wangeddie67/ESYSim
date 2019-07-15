@@ -8,6 +8,6 @@ DEPS := $(addprefix $(DEP_DIR)$(X), $(notdir $(SRCS:%.cc=%.d)))
 
 all: $(OBJS)
 
-include $(DEPS)
+-include $(DEPS)
 
 include ../Makefile.rule
