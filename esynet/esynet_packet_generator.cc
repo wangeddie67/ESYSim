@@ -33,7 +33,6 @@
 EsynetPacketGenerator::EsynetPacketGenerator( EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg )
     : m_network_cfg( network_cfg )
     , m_argu_cfg( argument_cfg )
-    , m_ni_count( network_cfg->setNiCount() )
     , m_tracein( NULL )
     , m_enable( !argument_cfg->trafficInjectDisable() )
     , m_count( 0 )
@@ -144,7 +143,7 @@ EsynetPacketGenerator::generatePacket(double sim_cycle)
         // otherwise, generate by traffic profiles.
         else
         {
-            for ( int id = 0; id < m_ni_count; id ++ )
+            for ( int id = 0; id < m_network_cfg->niCount(); id ++ )
             {
                 std::vector< EsynetFlit > pac_list_one = genPacketTrafficProfiles( id );
                 for ( int i = 0; i < pac_list_one.size(); i ++ )
@@ -174,7 +173,7 @@ EsynetPacketGenerator::genPacketTrafficProfiles( long id )
         if ( shot )
         {
             // coordinate of source id.
-            int nbits = (int)log2Ceil( m_ni_count );
+            int nbits = (int)log2Ceil( m_network_cfg->niCount() );
             std::vector< long > src_cord = m_network_cfg->seq2Coord( id );
 
             // generate new packet.
@@ -183,7 +182,7 @@ EsynetPacketGenerator::genPacketTrafficProfiles( long id )
             {
             // Determine the destination in new packet according to Random rule.
             case esynet::TP_UNIFORM : 
-                dst = EsynetSRGenFlatLong( 0, m_ni_count );
+                dst = EsynetSRGenFlatLong( 0, m_network_cfg->niCount() );
                 break;
             // Determine the destination in new packet according to Transpose1 rule (x,y) -> (Y-1-y,X-1-x), X,Y is the size of network.
             case esynet::TP_TRANSPOSE1: 

@@ -8,7 +8,7 @@
 #include "../modelsview/application_gantt_chart.h"
 
 #include "port_graphics_item.h"
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 
 
 // draw NoC and show the states of each packet and router

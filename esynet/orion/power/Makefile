@@ -1,6 +1,4 @@
-# this file is for local test purpose only
 
-#Makefile for popnet
 include ../../../Makefile.include
 
 # IBM SA-27 technology (InfiniBand)

@@ -1,95 +1,35 @@
-﻿#Makefile for ESYNet
-
+﻿
 include ../Makefile.include
 
-ESYNET_NAME = esynet
-ESYNET_TARGET = $(ESYNET_NAME)$(EEXT)
+MODULE := esynet
 
-POWER_RELEASE = orion_power_beta_mar2003
+TARGET_NAME := esynet
+TARGET := $(TARGET_NAME)$(EEXT)
 
-CFLAGS += -DPOWER_TEST \
-	-I.$(X)$(POWER_RELEASE)$(X)power -I.$(X)$(POWER_RELEASE)$(X)library \
-	-I$(INTERFACE_DIR) -I$(TINYXML_DIR) $(ESYNETLINKED)
+SRCS := $(filter-out esynet_interface.cc, $(wildcard *.cc))
 
-LINKFLAGS = -L.$(X)$(POWER_RELEASE)$(X)power -lm -lpower
+OBJS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS:%.cc=%.o)))
+DEPS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS:%.cc=%.d)))
 
-PTARGET = power_model
+CFLAGS += -DPOWER_TEST -I.$(X)orion$(X)power -I.$(X)orion$(X)library
 
-ESYNET_SRCS = esynet_main.cc
-INTER_SRC = esynet_interface.cc
-SIM_SRCS = \
-	esynet_config.cc \
-	esynet_foundation.cc \
-	esynet_event_queue.cc \
-	esynet_ni_unit.cc \
-	esynet_packet_generator.cc \
-	esynet_random_unit.cc \
-	esynet_arbiter.cc \
-	esynet_router_unit.cc \
-	esynet_routing_ring.cc \
-	esynet_routing_mesh.cc \
-	esynet_routing_dia.cc \
-	esynet_routing_table.cc
+OFLAGS += -L.$(X)orion$(X)power -lpower
 
-ESYNET_OBJS = esynet_main.$(OEXT)
-INTER_OBJS = esynet_interface.$(OEXT)
-SIM_OBJS = \
-	esynet_config.$(OEXT) \
-	esynet_foundation.$(OEXT) \
-	esynet_event_queue.$(OEXT) \
-	esynet_ni_unit.$(OEXT) \
-	esynet_packet_generator.$(OEXT) \
-	esynet_random_unit.$(OEXT) \
-	esynet_arbiter.$(OEXT) \
-	esynet_router_unit.$(OEXT) \
-	esynet_routing_ring.$(OEXT) \
-	esynet_routing_mesh.$(OEXT) \
-	esynet_routing_dia.$(OEXT) \
-	esynet_routing_table.$(OEXT)
+all:
+	@echo Compile ESYNet Network-on-Chip Simulator
+	$(MAKE) libs
+	$(MAKE) netcfg_lib
+	$(MAKE) tinyxml_lib
+	$(MAKE) $(TARGET)
 
-all: $(ESYNET_TARGET)
-	
-$(ESYNET_TARGET): $(SIM_OBJS) $(ESYNET_OBJS) $(PTARGET) $(INTERFACE_TARGET) \
-$(TINYXML_TARGET)
-	$(CCPP) $(OUTOPT)$(ESYNET_TARGET) $(SIM_OBJS) $(ESYNET_OBJS) \
-		.$(X)$(POWER_RELEASE)$(X)power$(X)libpower.$(LEXT) \
-		$(INTERFACE_LIB) $(TINYXML_LIB)
-	$(MKDIR) ../bin
-	$(MV) $(ESYNET_TARGET) ../bin
-	$(RM) $(ESYNET_OBJS)
-
-$(PTARGET):
-	cd .$(X)$(POWER_RELEASE)$(X)power && $(MAKE)
-
-$(INTERFACE_TARGET):
-	cd $(INTERFACE_DIR) && $(MAKE)
-
-$(TINYXML_TARGET):
-	cd $(TINYXML_DIR) && $(MAKE)
-	
-interface: $(SIM_OBJS) $(INTER_OBJS) $(PTARGET) $(INTERFACE_TARGET) \
-$(TINYXML_TARGET)
+$(TARGET): $(OBJS)
+	$(MKDIR) $(BIN_DIR)
+	$(CCPP) $(OFLAGS) -o $(BIN_DIR)$(X)$(TARGET)
 
 updatexml:
-	$(EXEC)$(ESYNET_TARGET) -xml $(ESYNET_NAME) \
-		-xmlexec $(EXEC)$(ESYNET_TARGET) -xmlcomp "$(MAKE)" \
-		-xmlname "ESYNet Simulator"
+	$(EXEC)$(TARGET) -xml $(TARGET_NAME) -xmlexec $(EXEC)$(TARGET) -xmlcomp "$(MAKE)" -xmlname "ESYNet Simulator"
 
-include $(SIM_SRCS:.cc=.d)
-include $(ESYNET_SRCS:.cc=.d)
+-include $(DEPS)
 
-clean: cleanlocal
-
-cleanall: cleanlocal cleanlib cleanpower
-	
-cleanlocal:
-	$(RM) ../bin
-	$(RM) *~ *.obj *.o *.d *.exe *.dll
-
-cleanlib:
-	cd $(INTERFACE_DIR) && $(MAKE) clean
-	cd $(TINYXML_DIR) && $(MAKE) clean
-
-cleanpower:
-	cd .$(X)$(POWER_RELEASE)$(X)power && $(MAKE) clean
+include ../Makefile.rule
 

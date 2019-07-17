@@ -4,7 +4,7 @@
 #include "../define/qt_include.h"
 
 #include "esy_soccfg.h"
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 
 class SoCCfgModelItem : public QStandardItem
 {

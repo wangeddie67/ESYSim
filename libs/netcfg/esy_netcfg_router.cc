@@ -142,6 +142,11 @@ void EsyNetworkCfgRouter::writeXml( TiXmlElement * root )
     root->LinkEndChild( t_item );
 }
 
+long int EsyNetworkCfgRouter::maxVcNum() const
+{
+    return ( maxInputVcNum() > maxOutputVcNum() ) ? maxInputVcNum() : maxOutputVcNum();
+}
+
 long int EsyNetworkCfgRouter::maxInputVcNum() const
 {
     long vcnum = 1;

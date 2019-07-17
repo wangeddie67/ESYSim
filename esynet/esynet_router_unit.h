@@ -29,7 +29,7 @@
 #ifndef ESYNET_ROUTER_UNIT_H
 #define ESYNET_ROUTER_UNIT_H
 
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 #include "esynet_config.h"
 #include "esynet_port_unit.h"
 #include "esynet_router_power.h"

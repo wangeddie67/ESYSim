@@ -30,7 +30,7 @@
 #define ESYNET_NI_UNIT_H
 
 #include "esy_interdata.h"
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 #include "esynet_config.h"
 #include "esynet_sim_base.h"
 #include "esynet_statistics.h"

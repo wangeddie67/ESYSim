@@ -1,42 +1,40 @@
 
 # Make rules
-$(OBJ_DIR)$(X)%.$(OEXT):%.cc
-	if [ ! -d $(OBJ_DIR) ]; then $(MKDIR) $(OBJ_DIR); fi; \
-	$(CCPP) -c $(CFLAGS) -o $@ $<
+$(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.cc
+	$(CCPP) -c  $(CFLAGS) -o $@ $<
 
-$(OBJ_DIR)$(X)%.$(OEXT):%.cpp
-	if [ ! -d $(OBJ_DIR) ]; then $(MKDIR) $(OBJ_DIR); fi; \
-	$(CCPP) -c $(CFLAGS) -o $@ $<
+$(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.cpp
+	$(CCPP) -c  $(CFLAGS) -o $@ $<
 
-$(OBJ_DIR)$(X)%.$(OEXT):%.c
-	if [ ! -d $(OBJ_DIR) ]; then $(MKDIR) $(OBJ_DIR); fi; \
-	$(CC) -c $(CFLAGS) -o $@ $<
+$(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.c
+	$(CC)   -c  $(CFLAGS) -o $@ $<
 
-$(DEP_DIR)$(X)%.$(DEXT):%.cc
-	if [ ! -d $(DEP_DIR) ]; then $(MKDIR) $(DEP_DIR); fi; \
+$(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.cc
 	$(CCPP) -MM $(CFLAGS) $< > $@
 
-$(DEP_DIR)$(X)%.$(DEXT):%.cpp
-	if [ ! -d $(DEP_DIR) ]; then $(MKDIR) $(DEP_DIR); fi; \
+$(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.cpp
 	$(CCPP) -MM $(CFLAGS) $< > $@
 
-$(DEP_DIR)$(X)%.$(DEXT):%.c
-	if [ ! -d $(DEP_DIR) ]; then $(MKDIR) $(DEP_DIR); fi; \
-	$(CC) -MM $(CFLAGS) $< > $@
+$(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.c
+	$(CC)   -MM $(CFLAGS) $< > $@
 
 # Rules
 .PHONY: clean
 
-libs:
-	cd $(LIB_DIR); make
+SUBMODULE_DEP := $(addprefix dep_, $(SUBMODULE) )
+SUBMODULE_OBJ := $(addprefix obj_, $(SUBMODULE) )
 
-netcfg_lib:
-	cd $(NETCFG_LIB_DIR); make
+depend: $(DEPS) $(SUBMODULE_DEP)
 
-tinyxml_lib:
-	cd $(TINYXML_LIB_DIR); make
+$(SUBMODULE_DEP):
+	$(MKDIR) $(BUILD_DIR)$(X)$(MODULE)$(X)$(patsubst dep_%,%, $@)
+	$(MAKE) -C $(patsubst dep_%, %, $@) depend
+
+objs: $(OBJS) $(SUBMODULE_OBJ)
+
+$(SUBMODULE_OBJ):
+	$(MAKE) -C $(patsubst obj_%, %, $@) objs
 
 clean:
-	$(RMDIR) $(OBJ_DIR)
-	$(RMDIR) $(DEP_DIR)
+	$(RMDIR) $(BUILD_DIR)
 	$(RMDIR) $(BIN_DIR)

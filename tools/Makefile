@@ -1,7 +1,8 @@
 
-include ../../Makefile.include
+include ../Makefile.include
 
-MODULE := libs$(X)netcfg
+MODULE := tools
+SUBMODULE := netcfgeditor
 
 SRCS := $(wildcard *.cc)
 
@@ -12,4 +13,4 @@ all: $(OBJS)
 
 -include $(DEPS)
 
-include ../../Makefile.rule
+include ../Makefile.rule

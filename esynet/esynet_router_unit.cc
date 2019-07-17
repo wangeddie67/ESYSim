@@ -100,7 +100,7 @@ EsynetRouter::EsynetRouter( EsyNetworkCfg * network_cfg, long router_id, EsynetC
     , m_output_port()
     , m_power_unit( network_cfg->router( router_id ).portNum()
         , network_cfg->router( router_id ).maxVcNum()
-        , network_cfg->flitSize( ATOM_WIDTH_ ), 0 )
+        , ATOM_WIDTH_ / 64, 0 )
     , m_statistics_unit()
     , m_vc_input_arbiter( network_cfg->router( router_id ).portNum() )
     , m_vc_output_arbiter( network_cfg->router( router_id ).portNum() )
@@ -124,7 +124,7 @@ EsynetRouter::EsynetRouter( EsyNetworkCfg * network_cfg, long router_id, EsynetC
     case esynet::RA_DIAMESH:  m_curr_algorithm = &EsynetRouter::algorithmDiaMesh;  break;
     case esynet::RA_DIATORUS: m_curr_algorithm = &EsynetRouter::algorithmDiaTorus; break;
     }
-    m_routing_table.resize( m_network_cfg->setNiCount() );
+    m_routing_table.resize( m_network_cfg->niCount() );
 
     for ( long l_port = 0; l_port < m_router_cfg->portNum(); l_port ++ )
     {

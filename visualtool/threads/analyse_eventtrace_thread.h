@@ -5,7 +5,7 @@
 #include "../modelsview/path_trace_table.h"
 #include "../modelsview/application_gantt_chart.h"
 
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 #include "esy_interdata.h"
 #include "esy_eventtype.h"
 

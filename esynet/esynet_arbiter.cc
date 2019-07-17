@@ -149,7 +149,7 @@ int EsynetArbiter::grant()
     }
     else 
     {
-        vector< int > req_vector;
+        std::vector< int > req_vector;
         for ( int r = 0; r < m_size; r ++ )
         {
             if ( m_request[ r ] )

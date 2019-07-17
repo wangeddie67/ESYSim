@@ -4,7 +4,7 @@
 #include "../define/qt_include.h"
 
 #include "esy_interdata.h"
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 
 /*!
  * \brief sorting item based on standard item

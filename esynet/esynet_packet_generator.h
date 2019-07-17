@@ -30,7 +30,7 @@
 #define ESYNETPACKETGENERATOR_H
 
 #include "esy_interdata.h"
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 #include "esy_iodatafile.h"
 #include "esynet_config.h"
 #include "esynet_sim_base.h"
@@ -44,7 +44,6 @@ class EsynetPacketGenerator
 private:
     EsyNetworkCfg * m_network_cfg;  /*!< @brief Pointer to network configuration structure. */
     EsynetConfig * m_argu_cfg;  /*!< @brief Pointer to argument list .*/
-    long m_ni_count;    /*!< @brief The number of NI in the network. */
 
     EsyDataFileIStream< EsyDataItemBenchmark > * m_tracein; /*!< @brief Pointer to benchmark trace interface. */
 

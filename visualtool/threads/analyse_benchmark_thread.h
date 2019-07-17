@@ -3,7 +3,7 @@
 
 #include "../define/qt_include.h"
 
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 #include "esy_interdata.h"
 #include "esy_eventtype.h"
 

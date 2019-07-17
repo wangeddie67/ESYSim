@@ -3,7 +3,7 @@
 
 #include "../define/qt_include.h"
 
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 
 /*!
  * \brief model of network configuration

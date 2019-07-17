@@ -1,10 +1,13 @@
 
 include ../Makefile.include
 
+MODULE := libs
+SUBMODULE := netcfg tinyxml
+
 SRCS := $(wildcard *.cc)
 
-OBJS := $(addprefix $(OBJ_DIR)$(X), $(notdir $(SRCS:%.cc=%.o)))
-DEPS := $(addprefix $(DEP_DIR)$(X), $(notdir $(SRCS:%.cc=%.d)))
+OBJS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS:%.cc=%.o)))
+DEPS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS:%.cc=%.d)))
 
 all: $(OBJS)
 

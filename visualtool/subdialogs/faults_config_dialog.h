@@ -5,7 +5,7 @@
 
 #include "result_base_dialog.h"
 
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 
 #include "../modelsview/faults_state_table.h"
 #include "../modelsview/faults_list_table.h"

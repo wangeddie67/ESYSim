@@ -41,7 +41,7 @@ class EsynetSimBaseUnit
 {
 protected:
     double m_current_time;  /*!< @brief Simulation time. */
-    vector< EsynetEvent > m_event_queue;    /*!< @brief New event generated during event handler. */
+    std::vector< EsynetEvent > m_event_queue;    /*!< @brief New event generated during event handler. */
 
 public:
     /**
@@ -59,16 +59,16 @@ public:
     /**
      * @brief Return constant reference of the event queue.
      */
-    inline const vector< EsynetEvent > & eventQueue() const { return m_event_queue; }
+    const std::vector< EsynetEvent > & eventQueue() const { return m_event_queue; }
     /**
      * @brief Clear the event queue.
      */
-    inline void clearEventQueue() { m_event_queue.clear(); }
+    void clearEventQueue() { m_event_queue.clear(); }
     /**
      * @brief Add events into the event queue.
      * @param event constant reference to the event.
      */
-    inline void addEvent(const EsynetEvent & event) { m_event_queue.push_back( event ); }
+    void addEvent(const EsynetEvent & event) { m_event_queue.push_back( event ); }
     /**
      * @}
      */
@@ -81,7 +81,7 @@ public:
      * @brief Set simulation time.
      * @param time simulation time.
      */
-    inline void setTime( double time ) { m_current_time = time; }
+    void setTime( double time ) { m_current_time = time; }
     /**
      * @}
      */

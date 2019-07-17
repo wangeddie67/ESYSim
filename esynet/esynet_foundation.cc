@@ -58,15 +58,14 @@ EsynetFoundation::EsynetFoundation( EsyNetworkCfg * network_cfg, EsynetConfig * 
 
         if ( m_network_cfg->router( router_cfg.routerId() ).pipeCycle() != PIPE_DELAY_ )
         {
-            addEvent(
-                EsynetEvent::generateRouterEvent( 0.0, m_network_cfg->router( router_cfg.routerId() ).pipeCycle(), router_cfg.routerId() ) );
+            addEvent( EsynetEvent::generateRouterEvent( 0.0, m_network_cfg->router( router_cfg.routerId() ).pipeCycle(), router_cfg.routerId() ) );
         }
     }
     
     // Read routing table
     if ( m_argument_cfg->routingAlg() == esynet::RA_TABLE )
     {
-        long ni_count =  m_network_cfg->setNiCount();
+        long ni_count =  m_network_cfg->niCount();
         std::ifstream file_istream( m_argument_cfg->routingTable().c_str() );
         if ( !file_istream )
         {

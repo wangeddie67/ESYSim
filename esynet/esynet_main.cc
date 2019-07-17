@@ -28,7 +28,7 @@
 
 #include "esy_argument.h"
 #include "esy_linktool.h"
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 #include "esynet_config.h"
 #include "esynet_foundation.h"
 #include "esynet_global.h"
@@ -70,13 +70,16 @@ int main( int argc, char *argv[] )
     {
         network_cfg = EsyNetworkCfg( argu_list.topology(),
                                      argu_list.networkSize(),
-                                     argu_list.dataPathWidth(),
-                                     argu_list.simulationPeriod(),
+                                     1.0,
                                      argu_list.physicalPortNumber(),
                                      argu_list.virtualChannelNumber(),
                                      argu_list.virtualChannelNumber(),
                                      argu_list.inbufferSize(),
-                                     argu_list.outbufferSize() );
+                                     argu_list.outbufferSize(),
+                                     1.0,
+                                     argu_list.niBufferSize(),
+                                     argu_list.niReadDelay()
+                                   );
     }
 
     // Network simulation platform 

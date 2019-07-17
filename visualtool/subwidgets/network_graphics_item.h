@@ -3,7 +3,7 @@
 
 #include "../define/qt_include.h"
 #include "../modelsview/graphics_config_tree.h"
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 
 // draw one router
 class PortGraphicsItem : public QGraphicsItem

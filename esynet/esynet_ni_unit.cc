@@ -39,8 +39,8 @@ EsynetNI::EsynetNI( EsyNetworkCfg * network_cfg, long id, long router, long port
     , m_argu_cfg( argument_cfg )
     , m_inject_vc( 0 )
     , m_vc_counter( network_cfg->router( router ).maxVcNum(), network_cfg->router( router ).maxInputBuffer() )
-    , m_init_data( network_cfg->flitSize( ATOM_WIDTH_ ), 0 )
-    , m_flit_size( network_cfg->flitSize( ATOM_WIDTH_ ) )
+    , m_init_data( ATOM_WIDTH_ / 64, 0 )
+    , m_flit_size( ATOM_WIDTH_ / 64 )
     , m_flit_on_link( false )
 {
     // initalization data

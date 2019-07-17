@@ -30,7 +30,7 @@
 #define ESYNET_CONFIG_H
 
 #include "esy_argument.h"
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 #include "esynet_global.h"
 
 /**

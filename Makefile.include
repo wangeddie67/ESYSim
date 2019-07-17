@@ -1,6 +1,6 @@
 
 # Root Direction
-ESYSIM_ROOT := /media/sf_share/ESYSim
+ESYSIM_ROOT := /home/snake1989/ESYSim
 
 # Linux Command
 MAKE   := make
@@ -31,8 +31,7 @@ NETCFG_LIB_DIR := $(LIB_DIR)$(X)netcfg
 TINYXML_LIB_DIR := $(LIB_DIR)$(X)tinyxml
 
 # dependence, object, binary folder
-DEP_DIR := $(ESYSIM_ROOT)$(X)dep
-OBJ_DIR := $(ESYSIM_ROOT)$(X)obj
+BUILD_DIR := $(ESYSIM_ROOT)$(X)build
 BIN_DIR := $(ESYSIM_ROOT)$(X)bin
 
 # GNU C/C++ Command

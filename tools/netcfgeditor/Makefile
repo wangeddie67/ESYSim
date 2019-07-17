@@ -1,12 +1,13 @@
 
 include ../../Makefile.include
 
-TARGET := netcfgeditor
+MODULE := tools$(X)netcfgeditor
+TARGET := netcfgeditor$(EEXT)
 
 SRCS := $(wildcard *.cc)
 
-OBJS := $(addprefix $(OBJ_DIR)$(X), $(notdir $(SRCS:%.cc=%.o)))
-DEPS := $(addprefix $(DEP_DIR)$(X), $(notdir $(SRCS:%.cc=%.d)))
+OBJS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS:%.cc=%.o)))
+DEPS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS:%.cc=%.d)))
 
 all:
 	@echo Compile Network Configuration Editor
@@ -15,7 +16,6 @@ all:
 	$(MAKE) tinyxml_lib
 	$(MAKE) $(TARGET)
 	
-
 $(TARGET): $(OBJS)
 	$(MKDIR) $(BIN_DIR)
 	$(CCPP) $(OFLAGS) -o $(BIN_DIR)$(X)$(TARGET)

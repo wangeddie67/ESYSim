@@ -194,6 +194,10 @@ public:
      * @{
      */
     /**
+     * @brief Return the maximum number of virtual channels for all ports.
+     */
+    long maxVcNum() const;
+    /**
      * @brief Return the maximum number of input virtual channels for all ports.
      */
     long maxInputVcNum() const;

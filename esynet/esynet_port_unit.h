@@ -29,7 +29,7 @@
 #ifndef ESYNET_PORT_UNIT_H
 #define ESYNET_PORT_UNIT_H
 
-#include "esy_networkcfg.h"
+#include "esy_netcfg.h"
 #include "esynet_flit.h"
 
 /**
