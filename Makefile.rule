@@ -1,4 +1,25 @@
 
+# Source File
+SRCS_CPP := $(filter-out $(EXCLUDE_SRCFILE), $(wildcard *.cpp))
+SRCS_CC  := $(filter-out $(EXCLUDE_SRCFILE), $(wildcard *.cc))
+SRCS_C   := $(filter-out $(EXCLUDE_SRCFILE), $(wildcard *.c))
+SRCS := $(SRCS_CPP) $(SRCS_CC) $(SRCS_C)
+
+# Object File
+OBJS_CPP := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_CPP:%.cpp=%.o)))
+OBJS_CC  := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_CC:%.cc=%.o)))
+OBJS_C   := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_C:%.c=%.o)))
+OBJS := $(OBJS_CPP) $(OBJS_CC) $(OBJS_C)
+
+# Dependence File
+DEPS_CPP := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_CPP:%.cpp=%.d)))
+DEPS_CC  := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_CC:%.cc=%.d)))
+DEPS_C   := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_C:%.c=%.d)))
+DEPS := $(DEPS_CPP) $(DEPS_CC) $(DEPS_C)
+
+# Dependent Files
+-include $(DEPS)
+
 # Make rules
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.cc
 	$(CCPP) -c  $(CFLAGS) -o $@ $<

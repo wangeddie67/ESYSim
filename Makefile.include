@@ -25,20 +25,19 @@ LEXT := a
 EEXT :=
 X    := /
 
-# Include 
-LIB_DIR := $(ESYSIM_ROOT)$(X)libs
-NETCFG_LIB_DIR := $(LIB_DIR)$(X)netcfg
-TINYXML_LIB_DIR := $(LIB_DIR)$(X)tinyxml
-
 # dependence, object, binary folder
 BUILD_DIR := $(ESYSIM_ROOT)$(X)build
 BIN_DIR := $(ESYSIM_ROOT)$(X)bin
 
+# Include 
+INC_DIR := -I$(ESYSIM_ROOT)$(X)libs -I$(ESYSIM_ROOT)$(X)libs$(X)netcfg -I$(ESYSIM_ROOT)$(X)libs$(X)tinyxml
+LINK_OBJ := $(BUILD_DIR)$(X)libs$(X)tinyxml$(X)*.$(OEXT) $(BUILD_DIR)$(X)libs$(X)netcfg$(X)*.$(OEXT) $(BUILD_DIR)$(X)libs$(X)*.$(OEXT)
+
 # GNU C/C++ Command
 CCPP   := g++
 CC     := gcc
-OFLAGS := -g -w -Wall $(OBJ_DIR)$(X)*.$(OEXT)
-CFLAGS := -g -w -Wall -I$(LIB_DIR) -I$(NETCFG_LIB_DIR) -I$(TINYXML_LIB_DIR)
+OFLAGS := -g -w -Wall $(LINK_OBJ)
+CFLAGS := -g -w -Wall $(INC_DIR)
 
 
 
