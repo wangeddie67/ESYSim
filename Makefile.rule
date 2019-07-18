@@ -1,21 +1,19 @@
 
 # Source File
-SRCS_CPP := $(filter-out $(EXCLUDE_SRCFILE), $(wildcard *.cpp))
-SRCS_CC  := $(filter-out $(EXCLUDE_SRCFILE), $(wildcard *.cc))
-SRCS_C   := $(filter-out $(EXCLUDE_SRCFILE), $(wildcard *.c))
-SRCS := $(SRCS_CPP) $(SRCS_CC) $(SRCS_C)
+SRCS_1 := $(wildcard *.cpp *.cc *.c) $(INCLUDE_SRCFILE)
+SRCS := $(filter-out $(EXCLUDE_SRCFILE), $(SRCS_1))
 
 # Object File
-OBJS_CPP := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_CPP:%.cpp=%.o)))
-OBJS_CC  := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_CC:%.cc=%.o)))
-OBJS_C   := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_C:%.c=%.o)))
-OBJS := $(OBJS_CPP) $(OBJS_CC) $(OBJS_C)
+OBJS_1 := $(patsubst %.cpp,%.$(OEXT), $(SRCS))
+OBJS_2 := $(patsubst %.cc,%.$(OEXT),  $(OBJS_1))
+OBJS_3 := $(patsubst %.c,%.$(OEXT),   $(OBJS_2))
+OBJS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(OBJS_3)))
 
 # Dependence File
-DEPS_CPP := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_CPP:%.cpp=%.d)))
-DEPS_CC  := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_CC:%.cc=%.d)))
-DEPS_C   := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SRCS_C:%.c=%.d)))
-DEPS := $(DEPS_CPP) $(DEPS_CC) $(DEPS_C)
+DEPS_1 := $(patsubst %.cpp,%.$(DEXT), $(SRCS))
+DEPS_2 := $(patsubst %.cc,%.$(DEXT),  $(DEPS_1))
+DEPS_3 := $(patsubst %.c,%.$(DEXT),   $(DEPS_2))
+DEPS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(DEPS_3)))
 
 # Dependent Files
 -include $(DEPS)
@@ -31,13 +29,16 @@ $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.c
 	$(CC)   -c  $(CFLAGS) -o $@ $<
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.cc
-	$(CCPP) -MM $(CFLAGS) $< > $@
+	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
+	$(CCPP) -MM $(CFLAGS) $< >> $@
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.cpp
-	$(CCPP) -MM $(CFLAGS) $< > $@
+	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
+	$(CCPP) -MM $(CFLAGS) $< >> $@
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.c
-	$(CC)   -MM $(CFLAGS) $< > $@
+	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
+	$(CC)   -MM $(CFLAGS) $< >> $@
 
 # Rules
 .PHONY: clean

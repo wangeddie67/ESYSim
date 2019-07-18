@@ -12,7 +12,7 @@
 
 #include <math.h>
 #include <string.h>
-#include <library_LIB/LIB_defines.h>
+#include "LIB_defines.h"
 #include "SIM_power.h"
 #include "SIM_power_array_internal.h"
 #include "SIM_power_array.h"

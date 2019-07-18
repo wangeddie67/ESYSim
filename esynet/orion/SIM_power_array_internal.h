@@ -2,7 +2,7 @@
 #define _SIM_POWER_ARRAY_INTERNAL_H
 
 #include <sys/types.h>
-#include <library_LIB/LIB_defines.h>
+#include "LIB_defines.h"
 
 #define SIM_ARRAY_READ		0
 #define SIM_ARRAY_WRITE		1

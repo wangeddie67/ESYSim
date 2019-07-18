@@ -12,9 +12,11 @@ all:
 
 	@echo Link Executable Files
 	$(MKDIR) $(BIN_DIR)
-	$(CCPP) $(OFLAGS) $(BUILD_DIR)$(X)esynet$(X)*.$(OEXT) \
-		-o $(BIN_DIR)$(X)esynet
-	$(CCPP) $(OFLAGS) $(BUILD_DIR)$(X)tools$(X)netcfgeditor$(X)*.$(OEXT) \
-		-o $(BIN_DIR)$(X)netcfgeditor
+	$(CCPP) $(OFLAGS) -o $(BIN_DIR)$(X)esynet \
+		$(BUILD_DIR)$(X)esynet$(X)*.$(OEXT) \
+		$(BUILD_DIR)$(X)esynet$(X)orion$(X)*.$(OEXT) 
+
+	$(CCPP) $(OFLAGS) -o $(BIN_DIR)$(X)netcfgeditor \
+		$(BUILD_DIR)$(X)tools$(X)netcfgeditor$(X)*.$(OEXT)
 
 include Makefile.rule

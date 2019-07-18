@@ -2,7 +2,7 @@
 #define _SIM_POWER_MISC_H
 
 #include <sys/types.h>
-#include <library_LIB/LIB_defines.h>
+#include "LIB_defines.h"
 #include "SIM_power_misc_internal.h"
 
 

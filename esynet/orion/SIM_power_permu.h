@@ -1,7 +1,7 @@
 #ifndef _SIM_POWER_PERMU_H
 #define _SIM_POWER_PERMU_H
 
-#include <library_LIB/LIB_defines.h>
+#include "LIB_defines.h"
 #include "SIM_power.h"
 
 

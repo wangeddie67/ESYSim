@@ -1,7 +1,7 @@
 #ifndef _SIM_POWER_ROUTER_INTERNAL_H
 #define _SIM_POWER_ROUTER_INTERNAL_H
 
-#include <library_LIB/LIB_defines.h>
+#include "LIB_defines.h"
 #include "SIM_power_misc.h"
 #include "SIM_power_array.h"
 

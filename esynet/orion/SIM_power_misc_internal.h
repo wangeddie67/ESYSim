@@ -2,7 +2,7 @@
 #define _SIM_POWER_MISC_INTERNAL_H
 
 #include <sys/types.h>
-#include <library_LIB/LIB_defines.h>
+#include "LIB_defines.h"
 
 /* maximum level of selection arbiter tree */
 #define MAX_SEL_LEVEL	5

@@ -2,11 +2,7 @@
 #define _SIM_POWER_H
 
 #include <sys/types.h>
-#ifdef _WIN32
-#include <library_LIB\LIB_defines.h>
-#else
-#include <library_LIB/LIB_defines.h>
-#endif
+#include "LIB_defines.h"
 #ifdef	POWER_TEST
 #include "SIM_power_test.h"
 #endif

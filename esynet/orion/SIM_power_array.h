@@ -2,7 +2,7 @@
 #define _SIM_POWER_ARRAY_H
 
 #include <sys/types.h>
-#include <library_LIB/LIB_defines.h>
+#include "LIB_defines.h"
 #include "SIM_power_array_internal.h"
 
 
