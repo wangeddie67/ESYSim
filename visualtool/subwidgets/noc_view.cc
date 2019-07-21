@@ -93,11 +93,11 @@ void NoCScene::drawNoCScene()
     for ( int t_index = 0; t_index < mp_network_cfg->routerCount(); t_index ++ )
     {
         vector< long > t_ax = mp_network_cfg->seq2Coord( t_index );
-        int t_ax_x = t_ax[ EsyNetworkCfg::AX_X ];
+        int t_ax_x = t_ax[ EsyNetCfg::AX_X ];
 		int t_ax_y = 0;
 		if ( t_ax.size() > 1 )
 		{
-			t_ax_y = t_ax[ EsyNetworkCfg::AX_Y ];
+			t_ax_y = t_ax[ EsyNetCfg::AX_Y ];
 		}
         // new router
         RouterGraphicsItem *item = new RouterGraphicsItem(
@@ -109,9 +109,9 @@ void NoCScene::drawNoCScene()
 //             mp_network_cfg->router( t_index ).pos().second == 0.0 )
 //        {
             if ( ( mp_network_cfg->topology() ==
-                   EsyNetworkCfg::NOC_TOPOLOGY_2DMESH ) ||
+                   EsyNetCfg::NOC_TOPOLOGY_2DMESH ) ||
                  ( mp_network_cfg->topology() ==
-                   EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS ) )
+                   EsyNetCfg::NOC_TOPOLOGY_2DTORUS ) )
             {
                 mp_network_cfg->router( t_index ).setPos(
 					DRAW_ROUTER_CONNECT_LENGTH * t_ax_x,
@@ -132,7 +132,7 @@ void NoCScene::drawNoCScene()
 	// connect router
     for ( int t_index = 0; t_index < mp_network_cfg->routerCount(); t_index ++ )
     {
-        EsyNetworkCfgRouter t_router_cfg = mp_network_cfg->router( t_index );
+        EsyNetCfgRouter t_router_cfg = mp_network_cfg->router( t_index );
 
         for ( long t_port_index = 0;
             t_port_index < t_router_cfg.portNum(); t_port_index ++ )
@@ -159,7 +159,7 @@ LinkGraphicsItem * NoCScene::addLink( int src_id, int src_port )
         return 0;
     }
 
-    EsyNetworkCfgRouter t_router_cfg = mp_network_cfg->router( src_id );
+    EsyNetCfgRouter t_router_cfg = mp_network_cfg->router( src_id );
 
     if ( t_router_cfg.port( src_port ).neighborRouter() < 0 ||
          t_router_cfg.port( src_port ).neighborRouter() >=
@@ -176,8 +176,8 @@ LinkGraphicsItem * NoCScene::addLink( int src_id, int src_port )
     }
 
     vector< long > t_ax = mp_network_cfg->seq2Coord( src_id );
-    int t_ax_x = t_ax[ EsyNetworkCfg::AX_X ];
-    int t_ax_y = t_ax[ EsyNetworkCfg::AX_Y ];
+    int t_ax_x = t_ax[ EsyNetCfg::AX_X ];
+    int t_ax_y = t_ax[ EsyNetCfg::AX_Y ];
 
     LinkGraphicsItem * t_link = new LinkGraphicsItem( src_id, src_port,
                 t_router_cfg.port( src_port ).neighborRouter(),
@@ -193,32 +193,32 @@ LinkGraphicsItem * NoCScene::addLink( int src_id, int src_port )
             inputPortConnectPos(
                 t_router_cfg.port( src_port ).neighborPort() ) );
 
-    if ( mp_network_cfg->topology() == EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS )
+    if ( mp_network_cfg->topology() == EsyNetCfg::NOC_TOPOLOGY_2DTORUS )
     {
         if ( t_ax_x == 0 && t_router_cfg.port( src_port ).portDirection() ==
-             EsyNetworkCfgPort::ROUTER_PORT_WEST )
+             EsyNetCfgPort::ROUTER_PORT_WEST )
         {
             t_dst_point = t_src_point + QPointF( -DRAW_ROUTER_CONNECT_LENGTH, 0 );
         }
         else if ( ( t_ax_x ==
-            mp_network_cfg->size( EsyNetworkCfg::AX_X ) - 1 ) &&
+            mp_network_cfg->size( EsyNetCfg::AX_X ) - 1 ) &&
             t_router_cfg.port( src_port ).portDirection() ==
-                EsyNetworkCfgPort::ROUTER_PORT_EAST )
+                EsyNetCfgPort::ROUTER_PORT_EAST )
         {
             t_dst_point = t_src_point +
                     QPointF( DRAW_ROUTER_CONNECT_LENGTH, 0 );
         }
         else if ( ( t_ax_y == 0 ) &&
                   t_router_cfg.port( src_port ).portDirection() ==
-                  EsyNetworkCfgPort::ROUTER_PORT_NORTH )
+                  EsyNetCfgPort::ROUTER_PORT_NORTH )
         {
             t_dst_point = t_src_point +
                     QPointF( 0, -DRAW_ROUTER_CONNECT_LENGTH );
         }
         else if ( ( t_ax_y ==
-                    mp_network_cfg->size( EsyNetworkCfg::AX_Y ) - 1 ) &&
+                    mp_network_cfg->size( EsyNetCfg::AX_Y ) - 1 ) &&
             t_router_cfg.port( src_port ).portDirection() ==
-                  EsyNetworkCfgPort::ROUTER_PORT_SOUTH )
+                  EsyNetCfgPort::ROUTER_PORT_SOUTH )
         {
             t_dst_point = t_src_point +
                     QPointF( 0, DRAW_ROUTER_CONNECT_LENGTH );

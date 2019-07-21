@@ -34,16 +34,16 @@
 #define NET_ARGU_ROUTER_PORT_OUTPUT_BUFFER  "output_buffer"
 #define NET_ARGU_ROUTER_PORT_NETWORK_INTERFACE  "ni"
 
-std::string EsyNetworkCfgPort::const_port_direction[ ROUTER_PORT_NUM ] =
+std::string EsyNetCfgPort::const_port_direction[ ROUTER_PORT_NUM ] =
     { "North", "South", "West", "East", "NorthWest", "NorthEast", "SouthWest", "SouthEast" };
 
-std::string EsyNetworkCfgPort::const_port_direction_short[ ROUTER_PORT_NUM ] =
+std::string EsyNetCfgPort::const_port_direction_short[ ROUTER_PORT_NUM ] =
     { "N", "S", "W", "E", "NW", "NE", "SW", "SE" };
 
-std::string EsyNetworkCfgPort::const_port_axis_direction[ AXDIR_NUM ] =
+std::string EsyNetCfgPort::const_port_axis_direction[ AXDIR_NUM ] =
     { "Upward", "Downward" };
 
-void EsyNetworkCfgPort::readXml( TiXmlElement * root )
+void EsyNetCfgPort::readXml( TiXmlElement * root )
 {
     // Loop all item behind root.
     for ( TiXmlNode * p_child = root->FirstChild(); p_child != NULL; p_child = p_child->NextSibling() )
@@ -114,7 +114,7 @@ void EsyNetworkCfgPort::readXml( TiXmlElement * root )
     }
 }
 
-void EsyNetworkCfgPort::writeXml( TiXmlElement * root )
+void EsyNetCfgPort::writeXml( TiXmlElement * root )
 {
     TiXmlElement * t_item;
 
@@ -169,7 +169,7 @@ void EsyNetworkCfgPort::writeXml( TiXmlElement * root )
     root->LinkEndChild( t_item );
 }
 
-std::ostream& operator<<( std::ostream & os, const EsyNetworkCfgPort & port_cfg )
+std::ostream& operator<<( std::ostream & os, const EsyNetCfgPort & port_cfg )
 {
     os << "input_vc=" << port_cfg.m_input_vc_num << " ";
     os << "input_buffer=" << port_cfg.m_input_buffer << " ";

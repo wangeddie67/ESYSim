@@ -16,7 +16,7 @@ AnalyseDialog::AnalyseDialog() :
 {
 }
 AnalyseDialog::AnalyseDialog(
-	ResultTypeEnum type, const EsyNetworkCfg & cfg
+	ResultTypeEnum type, const EsyNetCfg & cfg
 ) :
 	ResultBaseDialog( type ),
 	m_network_cfg( cfg ),
@@ -28,8 +28,8 @@ AnalyseDialog::AnalyseDialog(
 	m_app_event_list( cfg.routerCount() )
 {
 	mp_result_plot = new AnalysePlot(
-				m_network_cfg.size( EsyNetworkCfg::AX_X ),
-				m_network_cfg.size( EsyNetworkCfg::AX_Y ),
+				m_network_cfg.size( EsyNetCfg::AX_X ),
+				m_network_cfg.size( EsyNetCfg::AX_Y ),
 				this );
 
 	mp_task_combobox = new QComboBox();
@@ -342,15 +342,15 @@ void AnalyseDialog::drawPlotHandler()
 		{
 		case 0:
 			mp_result_plot->attachSpectrogram( m_y_area_inject,
-				m_network_cfg.size( EsyNetworkCfg::AX_X ) );
+				m_network_cfg.size( EsyNetCfg::AX_X ) );
 			break;
 		case 1:
 			mp_result_plot->attachSpectrogram( m_y_area_accept,
-				m_network_cfg.size( EsyNetworkCfg::AX_X ) );
+				m_network_cfg.size( EsyNetCfg::AX_X ) );
 			break;
 		case 2:
 			mp_result_plot->attachSpectrogram( m_y_area_through,
-				m_network_cfg.size( EsyNetworkCfg::AX_X ) );
+				m_network_cfg.size( EsyNetCfg::AX_X ) );
 			break;
 		}
 	}
@@ -383,9 +383,9 @@ void AnalyseDialog::drawPlotHandler()
 	bool trafficdrawenable = (
 		 (m_current_task == TRAFFIC_AREA || m_current_task == TRAFFIC_WINDOW) &&
 		 ( m_network_cfg.topology() ==
-		   EsyNetworkCfg::NOC_TOPOLOGY_2DMESH ||
+		   EsyNetCfg::NOC_TOPOLOGY_2DMESH ||
 		   m_network_cfg.topology() ==
-		   EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS ) );
+		   EsyNetCfg::NOC_TOPOLOGY_2DTORUS ) );
 	mp_traffic_draw_label->setVisible( trafficdrawenable );
 	mp_traffic_draw_combobox->setVisible( trafficdrawenable );
 

@@ -1,9 +1,9 @@
 
 # Root Direction
-ESYSIM_ROOT := /media/sf_share/ESYSim
+ESYSIM_ROOT := /home/snake1989/ESYSim
 
 # Linux Command
-MAKE   := make
+MAKE   := make -s
 AR     := ar qcv
 AROPT  :=
 RANLIB := ranlib

@@ -29,16 +29,16 @@
 #include "esynet_ni_unit.h"
 #include "esynet_random_unit.h"
 
-EsynetNI::EsynetNI( EsyNetworkCfg * network_cfg, long id, long router, long port, EsynetConfig * argument_cfg )
+EsynetNI::EsynetNI( const EsyNetCfg & network_cfg, long id, long router, long port )
     : EsynetSimBaseUnit()
     , m_id( id )
     , m_router( router )
     , m_port( port )
     , m_network_cfg( network_cfg )
-    , m_router_cfg( &( network_cfg->router( router ) ) )
-    , m_argu_cfg( argument_cfg )
+    , m_ni_cfg( network_cfg.ni( id ) )
     , m_inject_vc( 0 )
-    , m_vc_counter( network_cfg->router( router ).maxVcNum(), network_cfg->router( router ).maxInputBuffer() )
+    , m_vc_counter( network_cfg.router( router ).port( port ).inputVcNumber(), 
+                    network_cfg.router( router ).port( port ).inputBuffer() )
     , m_init_data( ATOM_WIDTH_ / 64, 0 )
     , m_flit_size( ATOM_WIDTH_ / 64 )
     , m_flit_on_link( false )
@@ -55,22 +55,22 @@ void EsynetNI::receiveFlit( long vc, const EsynetFlit & flit )
 {
     EsynetFlit flit_t = flit;
 
-    if ( m_argu_cfg->niReadDelay() > 0 )
+    if ( m_ni_cfg.interruptDelay() > 0 )
     {
         m_eject_queue.push_back( flit_t );
         addEvent( EsynetEvent::generateCreditEvent( m_current_time + CREDIT_DELAY_
-            , m_id + m_network_cfg->routerCount(), 0, 0, m_router, m_port, vc, m_argu_cfg->niBufferSize() - m_eject_queue.size() ) );
+            , m_id + m_network_cfg.routerCount(), 0, 0, m_router, m_port, vc, m_ni_cfg.bufferSize() - m_eject_queue.size() ) );
 
         // Raise interrupt when receive the last flit of NI.
         if ( flit.flitType() == EsynetFlit::FLIT_TAIL || flit.flitSize() == 1 )
         {
-            addEvent( EsynetEvent::generateNIReadEvent( m_current_time + m_argu_cfg->niReadDelay(), m_id ) );
+            addEvent( EsynetEvent::generateNIReadEvent( m_current_time + m_ni_cfg.interruptDelay(), m_id ) );
         }
     }
     else
     {
         addEvent( EsynetEvent::generateCreditEvent( m_current_time + CREDIT_DELAY_
-            , m_id + m_network_cfg->routerCount(), 0, 0, m_router, m_port, vc, 10 ) );
+            , m_id + m_network_cfg.routerCount(), 0, 0, m_router, m_port, vc, 10 ) );
         receivePacket( flit_t );
     }
 }
@@ -90,7 +90,7 @@ void EsynetNI::receiveNiInterrupt()
         }
     }
     addEvent( EsynetEvent::generateCreditEvent( m_current_time + CREDIT_DELAY_
-        , m_id + m_network_cfg->routerCount(), 0, 0, m_router, m_port, 0, m_argu_cfg->niBufferSize() - m_eject_queue.size() ) );
+        , m_id + m_network_cfg.routerCount(), 0, 0, m_router, m_port, 0, m_ni_cfg.bufferSize() - m_eject_queue.size() ) );
 }
 
 void EsynetNI::receivePacket( const EsynetFlit & flit )
@@ -112,8 +112,7 @@ void EsynetNI::receivePacket( const EsynetFlit & flit )
         {
             // Event trace event
             addEvent( EsynetEvent( m_current_time, ET_PACKET_ACCEPT, flit.srcNi(), -1, -1, flit.desNi(), -1, -1, flit ) );
-            m_accept_list.push_back(
-                EsynetEvent( m_current_time, ET_PACKET_ACCEPT, flit.srcNi(), -1, -1, flit.desNi(), -1, -1, flit ) );
+            m_accept_list.push_back( EsynetEvent( m_current_time, ET_PACKET_ACCEPT, flit.srcNi(), -1, -1, flit.desNi(), -1, -1, flit ) );
         }
     }
     else if ( flit.flitType() == EsynetFlit::FLIT_BODY )
@@ -142,7 +141,7 @@ void EsynetNI::niSimPipeline()
             m_inject_queue.erase( m_inject_queue.begin() );
 
             addEvent( EsynetEvent::generateWireEvent( m_current_time + WIRE_DELAY_
-                , m_id + m_network_cfg->routerCount(), 0, 0, m_router, m_port, vs, flit_t) );
+                , m_id + m_network_cfg.routerCount(), 0, 0, m_router, m_port, vs, flit_t) );
             m_vc_counter[ vs ] --;
 
             m_flit_on_link = true;

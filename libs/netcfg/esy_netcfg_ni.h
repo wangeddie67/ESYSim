@@ -31,7 +31,7 @@
  * @ingroup networkcfggroup
  * @brief Structure of NI configuration item.
  */
-class EsyNetworkCfgNI
+class EsyNetCfgNI
 {
 protected:
     long m_id;                  /*!< @brief NI id. */
@@ -49,7 +49,7 @@ public:
     /**
      * @brief Constructs an empty item with default value.
      */
-    EsyNetworkCfgNI()
+    EsyNetCfgNI()
         : m_id( 0 )
         , m_connect_router( 0 )
         , m_connect_port( 0 )
@@ -63,7 +63,7 @@ public:
      * @param buffer_size     Size of ejection buffer.
      * @param interrupt_delay Delay to response NI interrupt.
      */
-    EsyNetworkCfgNI( double pipe_cycle, long buffer_size, double interrupt_delay )
+    EsyNetCfgNI( double pipe_cycle, long buffer_size, double interrupt_delay )
         : m_id( 0 )
         , m_connect_router( 0 )
         , m_connect_port( 0 )
@@ -80,7 +80,7 @@ public:
      * @param buffer_size     Size of ejection buffer.
      * @param interrupt_delay Delay to response NI interrupt.
      */
-    EsyNetworkCfgNI( long id, long router, long port, double pipe_cycle, long buffer_size, double interrupt_delay )
+    EsyNetCfgNI( long id, long router, long port, double pipe_cycle, long buffer_size, double interrupt_delay )
         : m_id( id )
         , m_connect_router( router )
         , m_connect_port( port )
@@ -92,7 +92,7 @@ public:
      * @brief Constructs an item by copying an exist item.
      * @param t  entity to copy.
      */
-    EsyNetworkCfgNI( const EsyNetworkCfgNI & t )
+    EsyNetCfgNI( const EsyNetCfgNI & t )
         : m_id( t.m_id )
         , m_connect_router( t.m_connect_router )
         , m_connect_port( t.m_connect_port )
@@ -113,7 +113,7 @@ public:
      * @param t  item to compare.
      * @return If t has the same value as this item at all field, return TRUE. 
      */
-    inline bool operator ==( const EsyNetworkCfgNI & t ) const
+    inline bool operator ==( const EsyNetCfgNI & t ) const
     {
         if ( m_pipe_cycle == t.m_pipe_cycle && m_buffer_size == t.m_buffer_size && m_interrupt_delay == t.m_interrupt_delay )
         {
@@ -130,7 +130,7 @@ public:
      * @param ni_cfg Network interface configuration structure.
      * @return output stream.
      */
-    friend std::ostream& operator<<( std::ostream & os, const EsyNetworkCfgNI & ni_cfg );
+    friend std::ostream& operator<<( std::ostream & os, const EsyNetCfgNI & ni_cfg );
     /**
      * @}
      */

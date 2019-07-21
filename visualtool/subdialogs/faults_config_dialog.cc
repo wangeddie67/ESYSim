@@ -6,7 +6,7 @@ QStringList FaultsConfigDialog::const_typical_fault_type_str = QStringList() <<
 
 // ---- constructor and destructor ----//
 FaultsConfigDialog::FaultsConfigDialog(
-        QString fname, const EsyNetworkCfg & network_cfg ) :
+        QString fname, const EsyNetCfg & network_cfg ) :
     ResultBaseDialog( ResultBaseDialog::RESULT_FAULT_CONFIG ),
     m_network_cfg( network_cfg ), m_cfg_file_dir( fname ),
     m_current_index( -1 ), m_edit_enable( false )

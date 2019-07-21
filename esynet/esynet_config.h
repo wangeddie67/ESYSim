@@ -173,7 +173,7 @@ public:
     /**
      * @brief Return enumerate of network topology.
      */
-    inline EsyNetworkCfg::NoCTopology topology() const { return ( EsyNetworkCfg::NoCTopology )( long )m_topology; }
+    inline EsyNetCfg::NoCTopology topology() const { return ( EsyNetCfg::NoCTopology )( long )m_topology; }
     /**
      * @brief Return the size of the network in diamensions.
      */

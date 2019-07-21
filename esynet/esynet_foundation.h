@@ -53,8 +53,8 @@ public:
     };
 
 protected:
-    EsyNetworkCfg * m_network_cfg;  /*!< @brief Pointer to network configuration structure. */
-    EsynetConfig * m_argument_cfg;  /*!< @brief Pointer to argument configuration structure. */
+    const EsyNetCfg & m_network_cfg;        /*!< @brief Reference to network configuration structure. */
+    const EsynetConfig & m_argument_cfg;    /*!< @brief Reference to argument configuration structure. */
 
     std::vector< EsynetRouter > m_router_list;  /*!< @brief Vector of router component. */
     std::vector< EsynetNI > m_ni_list;  /*!< @brief Vector of process element componenet. */
@@ -75,11 +75,11 @@ public:
      * - Initializate the period events for the frequency scaled routers.
      * - Configure fault injection units in each router.
      *
-     * @param network_cfg  pointer to network configuration structure.
-     * @param argument_cfg pointer to argument configuration structure.
+     * @param network_cfg  reference to network configuration structure.
+     * @param argument_cfg reference to argument configuration structure.
      */
-    EsynetFoundation(EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg);
-    
+    EsynetFoundation( const EsyNetCfg & network_cfg, const EsynetConfig & argument_cfg );
+
     /**
      * @name Functions to access variables
      * @{
@@ -136,7 +136,7 @@ public:
      * measurement.
      */
     void updateStatistic();
-    
+
     /**
      * @brief Synchronize the signals between routers and PEs.
      *
@@ -146,7 +146,7 @@ public:
      * faulty router in the center. This is function is used by TARRA.
      */
     void informationPropagate();
-    
+
     /**
      * @name Functions to handle simulation event
      * @{
@@ -211,14 +211,6 @@ public:
      * @param mess  message to handle.
      */
     void eventHandler(double time, const EsynetEvent & mess);
-
-    /**
-     * @brief print configuration of routers to ostream os
-     * @param os  output stream.
-     * @param sf  the simulation to print.
-     * @return  output stream.
-     */
-    friend ostream& operator<<(ostream& os, const EsynetFoundation& sf);
 };
 
 #endif

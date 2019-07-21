@@ -31,7 +31,7 @@
  * @ingroup networkcfggroup
  * @brief Structure of port configuration item.
  */
-class EsyNetworkCfgPort
+class EsyNetCfgPort
 {
 public:
     /**
@@ -86,7 +86,7 @@ public:
     /**
      * @brief Constructs an empty item with default value.
      */
-    EsyNetworkCfgPort()
+    EsyNetCfgPort()
         : m_input_vc_num( 1 )
         , m_output_vc_num( 1 )
         , m_port_dir( ROUTER_PORT_SOUTHEAST )
@@ -105,7 +105,7 @@ public:
      * @param input_buffer  Size of input buffer.
      * @param output_buffer Size of output buffer.
      */
-    EsyNetworkCfgPort( int input_vc_num, int output_vc_num, int input_buffer, int output_buffer )
+    EsyNetCfgPort( int input_vc_num, int output_vc_num, int input_buffer, int output_buffer )
         : m_input_vc_num( input_vc_num )
         , m_output_vc_num( output_vc_num )
         , m_port_dir( ROUTER_PORT_SOUTHEAST )
@@ -130,7 +130,7 @@ public:
      * @param output_buffer     Size of output buffer.
      * @param ni                Network interface flag of connection.
      */
-    EsyNetworkCfgPort( int input_vc_num, int output_vc_num, PortDirection dir, long axis, PortAxisDirection axis_dir
+    EsyNetCfgPort( int input_vc_num, int output_vc_num, PortDirection dir, long axis, PortAxisDirection axis_dir
         , long neighbor_router, long neighbor_port, int input_buffer, int output_buffer, bool ni
     )
         : m_input_vc_num( input_vc_num )
@@ -148,7 +148,7 @@ public:
      * @brief Constructs an item by copying an exist item.
      * @param t  entity to copy.
      */
-    EsyNetworkCfgPort( const EsyNetworkCfgPort & t )
+    EsyNetCfgPort( const EsyNetCfgPort & t )
         : m_input_vc_num( t.m_input_vc_num )
         , m_output_vc_num( t.m_output_vc_num )
         , m_port_dir( t.m_port_dir )
@@ -173,7 +173,7 @@ public:
      * @param t  item to compare.
      * @return If t has the same value as this item at all field, return TRUE.
      */
-    inline bool operator ==(const EsyNetworkCfgPort & t) const
+    inline bool operator ==(const EsyNetCfgPort & t) const
     {
         if ( m_input_vc_num == t.m_input_vc_num && m_output_vc_num == t.m_output_vc_num
             && m_port_dir == t.m_port_dir && m_port_axis == t.m_port_axis && m_port_axis_dir == t.m_port_axis_dir
@@ -191,7 +191,7 @@ public:
      * @param port_cfg Port configuration structure.
      * @return output stream.
      */
-    friend std::ostream& operator<<( std::ostream & os, const EsyNetworkCfgPort & port_cfg );
+    friend std::ostream& operator<<( std::ostream & os, const EsyNetCfgPort & port_cfg );
     /**
      * @}
      */

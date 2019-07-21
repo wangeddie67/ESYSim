@@ -1,6 +1,6 @@
 #include "analyse_fliter_panel.h"
 
-AnalyseFilterPanel::AnalyseFilterPanel(EsyNetworkCfg * cfg, QWidget *parent) :
+AnalyseFilterPanel::AnalyseFilterPanel(EsyNetCfg * cfg, QWidget *parent) :
     ToolBarBox( "Analyse Filter", -1, parent ), mp_network_cfg( cfg )
 {
     mp_src_id_label = new QLabel( "Src Addr", this );

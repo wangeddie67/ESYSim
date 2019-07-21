@@ -16,7 +16,7 @@ QString NetworkCfgModel::const_portcfg_title = "Port Configuration";
 QStringList NetworkCfgModel::const_viewheader_list = QStringList() <<
     "Name" << "Value";
 
-void NetworkCfgModel::setNetworkCfg( EsyNetworkCfg *cfg )
+void NetworkCfgModel::setNetworkCfg( EsyNetCfg *cfg )
 {
     clear();
 
@@ -28,7 +28,7 @@ void NetworkCfgModel::setNetworkCfg( EsyNetworkCfg *cfg )
         new QStandardItem(
             const_networkcfg_view_list[ NETWORKCFG_TOPOLOGY ] ) <<
         new QStandardItem( QString::fromStdString(
-            EsyNetworkCfg::nocTopologyStrVector(
+            EsyNetCfg::nocTopologyStrVector(
                 mp_network_cfg->topology() ) ) ) );
     setSizeCfg( NETWORKCFG_SIZE );
     appendRow( QList< QStandardItem * >() <<
@@ -48,7 +48,7 @@ void NetworkCfgModel::setNetworkCfg( EsyNetworkCfg *cfg )
             NETWORKCFG_VALUE )->index() );
 }
 
-void NetworkCfgModel::setRouterCfg( EsyNetworkCfgRouter *cfg )
+void NetworkCfgModel::setRouterCfg( EsyNetCfgRouter *cfg )
 {
     clear();
 
@@ -117,7 +117,7 @@ void NetworkCfgModel::setSizeCfg( int row )
                 {
                     size_item->appendRow( QList< QStandardItem * >() <<
                         new QStandardItem( QString::fromStdString(
-                            EsyNetworkCfg::nocAxisStrVector( i ) ) ) <<
+                            EsyNetCfg::nocAxisStrVector( i ) ) ) <<
                         new QStandardItem() );
                 }
 
@@ -155,7 +155,7 @@ void NetworkCfgModel::setSizeCfg( int row )
             {
                 size_item->appendRow( QList< QStandardItem * >() <<
                     new QStandardItem( QString::fromStdString(
-                        EsyNetworkCfg::nocAxisStrVector( i ) ) ) <<
+                        EsyNetCfg::nocAxisStrVector( i ) ) ) <<
                     new QStandardItem() );
             }
 
@@ -208,7 +208,7 @@ void NetworkCfgModel::setPortCfg( int start_row )
             }
         }
 
-        EsyNetworkCfgPort port_cfg;
+        EsyNetCfgPort port_cfg;
         if ( m_type == NETWORKCFG_NETWORK )
         {
 			port_cfg = mp_network_cfg->templateRouter().port( port_index );
@@ -284,9 +284,9 @@ int NetworkCfgModel::rowCount( const QModelIndex &parent ) const
               m_type == NETWORKCFG_NETWORK )
     {
         if ( mp_network_cfg->topology() ==
-             EsyNetworkCfg::NOC_TOPOLOGY_2DMESH ||
+             EsyNetCfg::NOC_TOPOLOGY_2DMESH ||
              mp_network_cfg->topology() ==
-             EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS )
+             EsyNetCfg::NOC_TOPOLOGY_2DTORUS )
         {
             return AXISCFG_ROW_COUNT;
         }
@@ -431,10 +431,10 @@ bool NetworkCfgModel::setData( const QModelIndex &index,
                         case NETWORKCFG_TOPOLOGY :
                             itemFromIndex( index )->setText(
                                 QString::fromStdString(
-                                    EsyNetworkCfg::nocTopologyStrVector(
+                                    EsyNetCfg::nocTopologyStrVector(
                                         value.toInt() ) ) );
                             mp_network_cfg->setTopology(
-                                (EsyNetworkCfg::NoCTopology)
+                                (EsyNetCfg::NoCTopology)
                                     value.toInt() );
                             setSizeCfg( NETWORKCFG_SIZE );
                             break;
@@ -494,7 +494,7 @@ bool NetworkCfgModel::setData( const QModelIndex &index,
                               ( index.parent().row() >= ROUTERCFG_PORT_START
                                 && m_type == NETWORKCFG_ROUTER ) )
                     {
-                        EsyNetworkCfgPort * port_cfg;
+                        EsyNetCfgPort * port_cfg;
                         if ( m_type == NETWORKCFG_NETWORK )
                         {
 							port_cfg = &( mp_network_cfg->templateRouter().port(
@@ -513,7 +513,7 @@ bool NetworkCfgModel::setData( const QModelIndex &index,
 							port_cfg->setOutputVcNumber( value.toInt() ); break;
 						case PORTCFG_DIRECTION :
                             port_cfg->setPortDirection(
-                                (EsyNetworkCfgPort::RouterPortDirection)
+                                (EsyNetCfgPort::RouterPortDirection)
                                     value.toInt() );
                             itemFromIndex( index )->setText(
                                 QString::fromStdString(
@@ -638,11 +638,11 @@ QWidget * NetworkCfgDelegate::createEditor(QWidget *parent,
             {
                 QComboBox * box = new QComboBox( parent );
                 box->setFrame( false );
-                for ( int i = 0; i < EsyNetworkCfg::NOC_TOPOLOGY_COUNT;
+                for ( int i = 0; i < EsyNetCfg::NOC_TOPOLOGY_COUNT;
                       i ++ )
                 {
                     box->addItem( QString::fromStdString(
-                         EsyNetworkCfg::nocTopologyStrVector( i ) ) );
+                         EsyNetCfg::nocTopologyStrVector( i ) ) );
                 }
                 return box;
             }
@@ -674,10 +674,10 @@ QWidget * NetworkCfgDelegate::createEditor(QWidget *parent,
             {
                 QComboBox * box = new QComboBox( parent );
                 box->setFrame( false );
-                for ( int i = 0; i < EsyNetworkCfgPort::ROUTER_PORT_NUM; i ++ )
+                for ( int i = 0; i < EsyNetCfgPort::ROUTER_PORT_NUM; i ++ )
                 {
                     box->addItem( QString::fromStdString(
-                        EsyNetworkCfgPort::portDirectionStrVector( i ) ) );
+                        EsyNetCfgPort::portDirectionStrVector( i ) ) );
                 }
 
                 return box;

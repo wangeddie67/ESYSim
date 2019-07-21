@@ -109,14 +109,14 @@ void SoCScene::drawSoCScene()
 //			 mp_soc_cfg->network().router( t_index ).pos().second == 0.0 )
 //		{
 			if ( ( mp_soc_cfg->network().topology() ==
-				   EsyNetworkCfg::NOC_TOPOLOGY_2DMESH ) ||
+				   EsyNetCfg::NOC_TOPOLOGY_2DMESH ) ||
 				 ( mp_soc_cfg->network().topology() ==
-				   EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS ) )
+				   EsyNetCfg::NOC_TOPOLOGY_2DTORUS ) )
 			{
 				vector< long > t_ax =
 					mp_soc_cfg->network().seq2Coord( t_index );
-				int t_ax_x = t_ax[ EsyNetworkCfg::AX_X ];
-				int t_ax_y = t_ax[ EsyNetworkCfg::AX_Y ];
+				int t_ax_x = t_ax[ EsyNetCfg::AX_X ];
+				int t_ax_y = t_ax[ EsyNetCfg::AX_Y ];
 				item->setPos( DRAW_ROUTER_CONNECT_LENGTH * t_ax_x,
 					DRAW_ROUTER_CONNECT_LENGTH * t_ax_y );
 			}
@@ -155,7 +155,7 @@ void SoCScene::drawSoCScene()
 	for ( int t_index = 0;
 		t_index < mp_soc_cfg->network().routerCount(); t_index ++ )
 	{
-		EsyNetworkCfgRouter t_router_cfg =
+		EsyNetCfgRouter t_router_cfg =
 			mp_soc_cfg->network().router( t_index );
 		// new link
 		for ( long t_port_index = 0;
@@ -194,7 +194,7 @@ LinkGraphicsItem * SoCScene::addNetworkLink( int src_id, int src_port )
 		return 0;
 	}
 
-	EsyNetworkCfgRouter t_router_cfg = mp_soc_cfg->network().router( src_id );
+	EsyNetCfgRouter t_router_cfg = mp_soc_cfg->network().router( src_id );
 
 	if ( t_router_cfg.port( src_port ).neighborRouter() < 0 ||
 		 t_router_cfg.port( src_port ).neighborRouter() >=
@@ -410,7 +410,7 @@ void SoCScene::setSelectRouter( int index )
 	m_router_vector[ index ]->setSelected( true );
 	m_router_vector[ index ]->update();
 
-	EsyNetworkCfgRouter router_cfg = m_router_vector[ index ]->routerCfg();
+	EsyNetCfgRouter router_cfg = m_router_vector[ index ]->routerCfg();
 	for( int port = 0; port < router_cfg.portNum(); port ++ )
 	{
 		if ( router_cfg.port( port ).networkInterface() )

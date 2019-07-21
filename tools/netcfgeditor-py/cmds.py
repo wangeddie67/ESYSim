@@ -1,10 +1,11 @@
 
 import os
 
+net_cfg_editor_path = "/home/snake1989/ESYSim/bin/netcfgeditor"
 
 def parseDict( text ) :
     lines = text.split( "\n" )
-    
+
     out_dict = {}
 
     for line in lines:
@@ -13,7 +14,7 @@ def parseDict( text ) :
         for t in line_strs:
             if t != "":
                 valid_strs.append( t )
-                
+
         if len( valid_strs ) >= 3 and valid_strs[ 1 ] == "=" :
             key = valid_strs[ 0 ]
             if len( valid_strs ) == 3:
@@ -23,7 +24,7 @@ def parseDict( text ) :
             out_dict[ key ] = value
 
     return out_dict
-   
+
 
 key2option_dict = { "topology"       : "-topology",
                     "net_size"       : "-network_size",
@@ -46,9 +47,9 @@ key2option_dict = { "topology"       : "-topology",
 
 def createNetcfg( path, net_cfg_dict = {} ) :
     # Command
-    keys = [ "topology", "net_size", "pipe_cycle", "port_num", "in_vc_num", "out_vc_num", 
+    keys = [ "topology", "net_size", "pipe_cycle", "port_num", "in_vc_num", "out_vc_num",
              "in_buf_size", "out_buf_size", "ni_pipe_cycle", "ni_buf_size", "ni_int_delay" ]
-    cmd = "./netcfgeditor -create"
+    cmd = net_cfg_editor_path + " -create"
     for key in keys :
         if key in net_cfg_dict :
             cmd += " " + key2option_dict[ key ] + " " + net_cfg_dict[ key ]
@@ -58,9 +59,9 @@ def createNetcfg( path, net_cfg_dict = {} ) :
     # Show output
     return output.read()
 
-def viewNetCfg( path ) :       
+def viewNetCfg( path ) :
     # command
-    cmd = "./netcfgeditor -view"
+    cmd = net_cfg_editor_path + " -view"
     cmd += " -network_cfg_file_name " + path
     # Execution
     output = os.popen( cmd )
@@ -69,7 +70,7 @@ def viewNetCfg( path ) :
 
 def searchNetCfg( path ) :
     # command
-    cmd = "./netcfgeditor -search"
+    cmd = net_cfg_editor_path + " -search"
     cmd += " -network_cfg_file_name " + path
     # Execution
     output = os.popen( cmd )
@@ -79,7 +80,7 @@ def searchNetCfg( path ) :
 
 def searchRouterCfg( path, router_id=0, temp_router=False ) :
     # command
-    cmd = "./netcfgeditor -search"
+    cmd = net_cfg_editor_path + " -search"
     if temp_router :
         cmd += " -template_router"
     else :
@@ -93,7 +94,7 @@ def searchRouterCfg( path, router_id=0, temp_router=False ) :
 
 def searchNICfg( path, ni_id=0, temp_ni=False ) :
     # command
-    cmd = "./netcfgeditor -search"
+    cmd = net_cfg_editor_path + " -search"
     if temp_ni :
         cmd += " -template_ni"
     else :
@@ -107,7 +108,7 @@ def searchNICfg( path, ni_id=0, temp_ni=False ) :
 
 def searchPortCfg( path, port_id=0, router_id=0, temp_router=False ) :
     # command
-    cmd = "./netcfgeditor -search"
+    cmd = net_cfg_editor_path + " -search"
     if temp_router :
         cmd += " -template_router -port_id " + str( port_id )
     else :
@@ -122,7 +123,7 @@ def searchPortCfg( path, port_id=0, router_id=0, temp_router=False ) :
 def modifyRouterCfg( path, router_cfg={}, router_id=0, temp_router=False, update=False ) :
     keys = [ "pipe_cycle", "port_num" ]
     # command
-    cmd = "./netcfgeditor -modify"
+    cmd = net_cfg_editor_path + " -modify"
     if temp_router :
         cmd += " -template_router"
     else :
@@ -131,7 +132,7 @@ def modifyRouterCfg( path, router_cfg={}, router_id=0, temp_router=False, update
     for key in keys :
         if key in router_cfg :
             cmd += " " + key2option_dict[ key ] + " " + router_cfg[ key ]
-    
+
     if temp_router and update :
         cmd += " -update"
 
@@ -146,7 +147,7 @@ def modifyNICfg( path, ni_cfg={}, ni_id=0, temp_ni=False, update=False ) :
     if not temp_ni :
         keys += [ "conn_router", "conn_port" ]
     # command
-    cmd = "./netcfgeditor -modify"
+    cmd = net_cfg_editor_path + " -modify"
     if temp_ni :
         cmd += " -template_ni"
     else :
@@ -170,7 +171,7 @@ def modifyPortCfg( path, port_cfg={}, port_id=0, router_id=0, temp_router=False,
     if not temp_router :
         keys += [ "conn_router", "conn_port" ]
     # command
-    cmd = "./netcfgeditor -modify"
+    cmd = net_cfg_editor_path + " -modify"
     if temp_router :
         cmd += " -template_router -port_id " + str( port_id )
     else :

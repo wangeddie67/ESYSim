@@ -28,14 +28,10 @@
 #include "esy_netcfg_ni.h"
 
 /**
- * @defgroup networkcfggroup Network Configuration Interface.
- */
-
-/**
  * @ingroup networkcfggroup
  * @brief Structure of network configuration item.
  */
-class EsyNetworkCfg
+class EsyNetCfg
 {
 public:
     /**
@@ -73,10 +69,10 @@ protected:
     NoCTopology m_topology;     /*!< @brief Network topology. */
     std::vector< long > m_size; /*!< @brief Size of network in dimensions. */
 
-    EsyNetworkCfgRouter m_template_router;          /*!< @brief Template router. */
-    EsyNetworkCfgNI m_template_ni;                  /*!< @brief Template network interface. */
-    std::vector< EsyNetworkCfgRouter > m_router;    /*!< @brief Vector of router configuration item. */
-    std::vector< EsyNetworkCfgNI > m_ni;            /*!< @brief Vector of NI configuration item. */
+    EsyNetCfgRouter m_template_router;          /*!< @brief Template router. */
+    EsyNetCfgNI m_template_ni;                  /*!< @brief Template network interface. */
+    std::vector< EsyNetCfgRouter > m_router;    /*!< @brief Vector of router configuration item. */
+    std::vector< EsyNetCfgNI > m_ni;            /*!< @brief Vector of NI configuration item. */
 
 public:
     /**
@@ -86,13 +82,13 @@ public:
     /**
      * @brief Constructs an empty item with default value.
      */
-    EsyNetworkCfg()
+    EsyNetCfg()
         : m_topology( NT_SWITCH )
         , m_size( 1, 1 )
         , m_template_router()
         , m_template_ni()
-        , m_router( 1, EsyNetworkCfgRouter() )
-        , m_ni( 0, EsyNetworkCfgNI() )
+        , m_router( 1, EsyNetCfgRouter() )
+        , m_ni( 0, EsyNetCfgNI() )
     {}
     /**
      * @brief Constructs an regular network configuration.
@@ -108,7 +104,7 @@ public:
      * @param ni_buffer Size of eject buffer in NI.
      * @param ni_interrupt_delay Delay to response NI interrupt.
      */
-    EsyNetworkCfg( NoCTopology topology, const std::vector< long >& size
+    EsyNetCfg( NoCTopology topology, const std::vector< long >& size
         , double pipe_cycle, long phy_port, long input_vc_num, long output_vc_num, long input_buffer, long output_buffer
         , double ni_pipe_cycle, long ni_buffer, double ni_interrupt_delay
                  );
@@ -116,7 +112,7 @@ public:
      * @brief Constructs an item by copying an exist item.
      * @param t  entity to copy.
      */
-    EsyNetworkCfg( const EsyNetworkCfg & t );
+    EsyNetCfg( const EsyNetCfg & t );
     /**
      * @}
      */
@@ -127,7 +123,7 @@ public:
      * @param net_cfg Network configuration structure.
      * @return output stream.
      */
-    friend std::ostream& operator<<( std::ostream & os, const EsyNetworkCfg & net_cfg );
+    friend std::ostream& operator<<( std::ostream & os, const EsyNetCfg & net_cfg );
 
     /**
      * @name Functions to access variables
@@ -164,43 +160,43 @@ public:
     /**
      * @brief Return template router configuraion.
      */
-    inline const EsyNetworkCfgRouter & templateRouter() const { return m_template_router; }
+    inline const EsyNetCfgRouter & templateRouter() const { return m_template_router; }
     /**
      * @brief Return template router configuraion.
      */
-    inline EsyNetworkCfgRouter & templateRouter() { return m_template_router; }
+    inline EsyNetCfgRouter & templateRouter() { return m_template_router; }
     /**
      * @brief Return template NI configuraion.
      */
-    inline const EsyNetworkCfgNI & templateNI() const { return m_template_ni; }
+    inline const EsyNetCfgNI & templateNI() const { return m_template_ni; }
     /**
      * @brief Return template NI configuraion.
      */
-    inline EsyNetworkCfgNI & templateNI() { return m_template_ni; }
+    inline EsyNetCfgNI & templateNI() { return m_template_ni; }
     /**
      * @brief Return all router configurations.
      */
-    inline const std::vector< EsyNetworkCfgRouter > & router() const { return m_router; }
+    inline const std::vector< EsyNetCfgRouter > & router() const { return m_router; }
     /**
      * @brief Return configuration of specified router.
      */
-    inline const EsyNetworkCfgRouter & router( int id ) const { return m_router[ id ]; }
+    inline const EsyNetCfgRouter & router( int id ) const { return m_router[ id ]; }
     /**
      * @brief Return configuration of specified router.
      */
-    inline EsyNetworkCfgRouter & router( int id ) { return m_router[ id ]; }
+    inline EsyNetCfgRouter & router( int id ) { return m_router[ id ]; }
     /**
      * @brief Return all router configurations.
      */
-    inline const std::vector< EsyNetworkCfgNI > & ni() const { return m_ni; }
+    inline const std::vector< EsyNetCfgNI > & ni() const { return m_ni; }
     /**
      * @brief Return configuration of specified router.
      */
-    inline const EsyNetworkCfgNI & ni( int id ) const { return m_ni[ id ]; }
+    inline const EsyNetCfgNI & ni( int id ) const { return m_ni[ id ]; }
     /**
      * @brief Return configuration of specified router.
      */
-    inline EsyNetworkCfgNI & ni( int id ) { return m_ni[ id ]; }
+    inline EsyNetCfgNI & ni( int id ) { return m_ni[ id ]; }
     /**
      * @}
      */
@@ -228,11 +224,11 @@ public:
     /**
      * @brief Set template router configuration.
      */
-    inline void setTemplateRouter( const EsyNetworkCfgRouter & t ) { m_template_router = t; }
+    inline void setTemplateRouter( const EsyNetCfgRouter & t ) { m_template_router = t; }
     /**
      * @brief Set template NI configuration.
      */
-    inline void setTemplateNI( const EsyNetworkCfgNI & t ) { m_template_ni = t; }
+    inline void setTemplateNI( const EsyNetCfgNI & t ) { m_template_ni = t; }
     /**
      * @}
      */
@@ -295,7 +291,7 @@ public:
      * @param fname  direction of network configuration file.
      * @return  XML error handler.
      */
-    EsyXmlError readXml( const string & fname );
+    EsyXmlError readXml( const std::string & fname );
     /**
      * @brief Write network configuration to XML file.
      * @param root  root of XML structure.
@@ -306,7 +302,7 @@ public:
      * @param fname  direction of network configuration file.
      * @return  XML error handler.
      */
-    EsyXmlError writeXml( const string & fname );
+    EsyXmlError writeXml( const std::string & fname );
     /**
      * @}
      */
@@ -320,20 +316,20 @@ public:
      * @param coord  router coordinary.
      * @return  router id.
      */
-    long coord2Seq( const std::vector< long > & coord );
+    long coord2Seq( const std::vector< long > & coord ) const;
     /**
      * @brief Convert router id to router coordinary based on topology.
      * @param seq  router id.
      * @return  router coordinary.
      */
-    std::vector< long > seq2Coord( long seq );
+    std::vector< long > seq2Coord( long seq ) const;
     /**
      * @brief Calculate the distance between two positions.
      * @param p1  position 1.
      * @param p2  position 2.
      * @return  Mahanten distance between positions.
      */
-    int coordDistance( long p1, long p2 );
+    int coordDistance( long p1, long p2 ) const;
     /**
      * @brief Check the router id is valid or not.
      * @param id router id to check.
@@ -348,6 +344,10 @@ public:
      * @brief Generate configuration of routers and NIs based on general configurations and topology.
      */
     void updateNetwork();
+    /**
+     * @brief Generate configuration of NIs based on general configurations and topology.
+     */
+    void updateNI();
 
 };
 

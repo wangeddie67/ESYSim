@@ -75,7 +75,7 @@ QVariant PathTraceModel::data( const QModelIndex &index, int role ) const
         if ( index.column() == PATHTRACE_IN_PC ||
              index.column() == PATHTRACE_OUT_PC )
         {
-            EsyNetworkCfgRouter routercfg = mp_network_cfg->router(
+            EsyNetCfgRouter routercfg = mp_network_cfg->router(
                         item( index.row(), PATHTRACE_ID )->text().toInt() );
             return QString::fromStdString(
                 routercfg.portName( itemFromIndex( index )->text().toInt() ) );

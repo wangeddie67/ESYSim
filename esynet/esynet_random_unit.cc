@@ -145,7 +145,7 @@ double EsynetSRGen::gauss01()
 {
     static int recalc = 1;
     double in_a, in_b;
-    double out_a;
+    // double out_a;
     static double out_b;
     double modifier;
     double compile_b;
@@ -158,7 +158,7 @@ double EsynetSRGen::gauss01()
         modifier = sqrt( -2.0 * log( in_a ) );
         compile_b = 2.0 * PI * in_b;
 
-        out_a = modifier * cos( compile_b );
+        // out_a = modifier * cos( compile_b );
         out_b = modifier * sin( compile_b );
 
         recalc = 0;

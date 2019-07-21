@@ -82,7 +82,7 @@ public:
 	*/
 	operator string();
 	/*!
-	* \brief Convert enumerate name #str and set current value #m_value.
+	* \brief Convert enumerate name str and set current value #m_value.
 	* \param str  enumerate name.
 	*/
 	void operator =(const string & str);
@@ -175,6 +175,7 @@ public:
 	 * \param var  pointer to variable.
 	 * \param darg dependent argument.
 	 * \param dval value of dependent argument.
+     * \param extension    File extension.
 	 */
 	EsyArgumentItem(
 		const string & opt, ArgumentType type, const string & help, void * var,
@@ -676,6 +677,7 @@ protected:
 	 * \param var   pointer to the variable.
 	 * \param darg dependent argument.
 	 * \param dval value of dependent argument.
+     * \param extension    File extension.
 	 */
 	void insertVariable(const string & opt, EsyArgumentItem::ArgumentType type,
 		const string & help, void * var, const string & darg = "", 

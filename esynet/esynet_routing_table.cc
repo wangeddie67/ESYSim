@@ -28,12 +28,12 @@
 
 #include "esynet_router_unit.h"
 
-#define AX_X EsyNetworkCfg::AX_X
-#define AX_Y EsyNetworkCfg::AX_Y
+#define AX_X EsyNetCfg::AX_X
+#define AX_Y EsyNetCfg::AX_Y
 
 bool EsynetRouter::routingTableCheck()
 {
-    long t_router_count = m_network_cfg->routerCount();
+    long t_router_count = m_network_cfg.routerCount();
 
     for ( std::size_t dst = 0; dst < m_routing_table.size(); dst ++ )
     {
@@ -82,7 +82,7 @@ void EsynetRouter::algorithmTable(long des, long src, long s_ph, long s_vc)
     // If not specified vc, assign to all vc.
     if ( routing_vc.second == -1 )
     {
-        for ( int vc = 0; vc < m_input_port[ routing_vc.first ].size(); vc ++ )
+        for ( std::size_t vc = 0; vc < m_input_port[ routing_vc.first ].size(); vc ++ )
         {
             esynet::EsynetVC routing_vc_t = routing_vc;
             routing_vc_t.second = vc;

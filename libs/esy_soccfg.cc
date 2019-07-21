@@ -507,16 +507,16 @@ void EsySoCCfgTile::writeXml( TiXmlElement* root)
 }
 
 EsySoCCfgNetwork::EsySoCCfgNetwork() :
-	EsyNetworkCfg(), m_network_freq( DEFAULT_NETWORK_FREQ )
+	EsyNetCfg(), m_network_freq( DEFAULT_NETWORK_FREQ )
 {}
 
 EsySoCCfgNetwork::EsySoCCfgNetwork(const EsySoCCfgNetwork& t) :
-	EsyNetworkCfg( t ), m_network_freq( t.networkFreq() )
+	EsyNetCfg( t ), m_network_freq( t.networkFreq() )
 {}
 
 void EsySoCCfgNetwork::readXml(TiXmlElement* root)
 {
-	EsyNetworkCfg::readXml( root );
+	EsyNetCfg::readXml( root );
 	
 	for ( TiXmlNode * p_child = root->FirstChild(); p_child != 0;
 		p_child = p_child->NextSibling() )
@@ -528,19 +528,19 @@ void EsySoCCfgNetwork::readXml(TiXmlElement* root)
 
 void EsySoCCfgNetwork::writeXml(TiXmlElement* root)
 {
-	EsyNetworkCfg::writeXml( root );
+	EsyNetCfg::writeXml( root );
 	writeItem( root, SOC_ARGU_NETWORK_FREQ, m_network_freq );
 }
 
 EsySoCCfg::EsySoCCfg() :
 	m_tile( 0, EsySoCCfgTile() ), m_network()
 {
-	m_network.setTopology( EsyNetworkCfg::NT_IRREGULAR );
+	m_network.setTopology( EsyNetCfg::NT_IRREGULAR );
 	m_network.setSize( 0, 1 );
-	m_network.templateRouter().appendPort( EsyNetworkCfgPort() );
+	m_network.templateRouter().appendPort( EsyNetCfgPort() );
 	m_network.templateRouter().port( 0 ).setNetworkInterface( true );
 	m_network.templateRouter().port( 0 ).setPortDirection(
-		EsyNetworkCfgPort::ROUTER_PORT_NORTHWEST );
+		EsyNetCfgPort::ROUTER_PORT_NORTHWEST );
 }
 EsySoCCfg::EsySoCCfg( const EsySoCCfg & t ) :
 	m_tile( t.tile() ), m_network( t.network() )
@@ -703,21 +703,21 @@ void EsySoCCfg::updateTile()
 				EsySoCCfgTile::NIPosition nipos;
 				switch ( m_network.router( router ).port( phy ).portDirection() )
 				{
-				case EsyNetworkCfgPort::ROUTER_PORT_NORTH:
+				case EsyNetCfgPort::ROUTER_PORT_NORTH:
 					nipos = EsySoCCfgTile::NIPOS_SOUTHEAST; break;
-				case EsyNetworkCfgPort::ROUTER_PORT_SOUTH:
+				case EsyNetCfgPort::ROUTER_PORT_SOUTH:
 					nipos = EsySoCCfgTile::NIPOS_NORTHWEST; break;
-				case EsyNetworkCfgPort::ROUTER_PORT_EAST:
+				case EsyNetCfgPort::ROUTER_PORT_EAST:
 					nipos = EsySoCCfgTile::NIPOS_SOUTHWEST; break;
-				case EsyNetworkCfgPort::ROUTER_PORT_WEST:
+				case EsyNetCfgPort::ROUTER_PORT_WEST:
 					nipos = EsySoCCfgTile::NIPOS_NORTHEAST; break;
-				case EsyNetworkCfgPort::ROUTER_PORT_NORTHWEST:
+				case EsyNetCfgPort::ROUTER_PORT_NORTHWEST:
 					nipos = EsySoCCfgTile::NIPOS_SOUTHEAST; break;
-				case EsyNetworkCfgPort::ROUTER_PORT_NORTHEAST:
+				case EsyNetCfgPort::ROUTER_PORT_NORTHEAST:
 					nipos = EsySoCCfgTile::NIPOS_SOUTHWEST; break;
-				case EsyNetworkCfgPort::ROUTER_PORT_SOUTHWEST:
+				case EsyNetCfgPort::ROUTER_PORT_SOUTHWEST:
 					nipos = EsySoCCfgTile::NIPOS_NORTHEAST; break;
-				case EsyNetworkCfgPort::ROUTER_PORT_SOUTHEAST:
+				case EsyNetCfgPort::ROUTER_PORT_SOUTHEAST:
 					nipos = EsySoCCfgTile::NIPOS_NORTHWEST; break;
 				default:
 					nipos = EsySoCCfgTile::NIPOS_SOUTHEAST; break;

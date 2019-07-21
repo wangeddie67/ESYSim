@@ -14,7 +14,7 @@ void esynetSRGenInit( EsynetSRGen * srgen, EsynetConfig * config )
 	srgen->setSeed( config->randomSeed() );
 }
 
-void esynetNetworkInit2( EsyNetworkCfg * network, EsynetConfig * config )
+void esynetNetworkInit2( EsyNetCfg * network, EsynetConfig * config )
 {
     if (config->eccEnable())
     {
@@ -54,7 +54,7 @@ void esynetNetworkInit2( EsyNetworkCfg * network, EsynetConfig * config )
     }
 }
 
-void esynetNetworkInit( EsyNetworkCfg * network, EsynetConfig * config )
+void esynetNetworkInit( EsyNetCfg * network, EsynetConfig * config )
 {
 	if ( config->networkCfgFileEnable() )
 	{
@@ -69,17 +69,17 @@ void esynetNetworkInit( EsyNetworkCfg * network, EsynetConfig * config )
 	}
 	else
 	{
-		EsyNetworkCfgRouter t_template_router;
+		EsyNetCfgRouter t_template_router;
 		network->setDataPathWidth( config->dataPathWidth() );
-		network->setTopology( EsyNetworkCfg::NOC_TOPOLOGY_2DMESH );
+		network->setTopology( EsyNetCfg::NOC_TOPOLOGY_2DMESH );
 		network->setSize( config->networkSize() );
 		for ( long i = 0; i < config->physicalPortNumber(); i ++ )
 		{
-			EsyNetworkCfgPort::RouterPortDirection port_dir;
+			EsyNetCfgPort::RouterPortDirection port_dir;
 			bool port_ni;
 			if ( i == 0 )
 			{
-				port_dir = EsyNetworkCfgPort::ROUTER_PORT_SOUTHWEST;
+				port_dir = EsyNetCfgPort::ROUTER_PORT_SOUTHWEST;
 				port_ni = true;
 			}
 			else
@@ -87,21 +87,21 @@ void esynetNetworkInit( EsyNetworkCfg * network, EsynetConfig * config )
 				switch ( i % 4 )
 				{
 					case 0:
-						port_dir = EsyNetworkCfgPort::ROUTER_PORT_EAST; 
+						port_dir = EsyNetCfgPort::ROUTER_PORT_EAST; 
 						break;
 					case 1:
-						port_dir = EsyNetworkCfgPort::ROUTER_PORT_NORTH; 
+						port_dir = EsyNetCfgPort::ROUTER_PORT_NORTH; 
 						break;
 					case 2:
-						port_dir = EsyNetworkCfgPort::ROUTER_PORT_SOUTH; 
+						port_dir = EsyNetCfgPort::ROUTER_PORT_SOUTH; 
 						break;
 					case 3:
-						port_dir = EsyNetworkCfgPort::ROUTER_PORT_WEST; 
+						port_dir = EsyNetCfgPort::ROUTER_PORT_WEST; 
 						break;
 				}
 				port_ni = false;
 			}
-			t_template_router.appendPort( EsyNetworkCfgPort( 
+			t_template_router.appendPort( EsyNetCfgPort( 
 				config->virtualChannelNumber(), config->virtualChannelNumber(), 
 				port_dir, config->inbufferSize(),  config->outbufferSize(), 
 				port_ni ) );

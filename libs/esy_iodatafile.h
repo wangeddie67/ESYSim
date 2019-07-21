@@ -93,6 +93,7 @@ public:
 	 *
 	 * \param buf_size   Size of item buffer
 	 * \param file_name  Direction of data file, without extension.
+     * \param extension    File extension.
 	 * \param bin_file   Data file is binary (true) or not (false)
 	 */
 	EsyDataFileIStream(
@@ -376,6 +377,7 @@ public:
 	 *
 	 * \param buf_size     Size of item buffer
 	 * \param file_name    Direction of data file, without extension.
+     * \param extension    File extension.
 	 * \param bin_enable   Binary data file is enabled (true) or not (false)
 	 * \param text_enable  Text data file is binary (true) or not (false)
 	 */

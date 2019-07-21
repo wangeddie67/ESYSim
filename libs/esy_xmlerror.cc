@@ -17,73 +17,68 @@
 
 #include "esy_xmlerror.h"
 
-string EsyXmlError::title()
+std::string EsyXmlError::title()
 {
-    if ( m_error_type == NONEERROR )
-        return string( "No Error" );
-    else if ( m_error_type == FILEOPENERROR )
-        return string( "File Open Error" );
-    else if ( m_error_type == DOMERROR )
-        return string( "XML Dom Error" );
-    else if ( m_error_type == XMLTAGERROR )
-        return string( "XML Tag Error" );
-    else
-        return string( "Unknown Error" );
+    switch ( m_error_type )
+    {
+        case NONEERROR:     return std::string( "No Error" ); break;
+        case FILEOPENERROR: return std::string( "File Open Error" ); break;
+        case DOMERROR:      return std::string( "XML Dom Error" ); break;
+        case XMLTAGERROR:   return std::string( "XML Tag Error" ); break;
+        default: return std::string( "Unknown Error" ); break;
+    }
 }
 
-string EsyXmlError::text()
+std::string EsyXmlError::text()
 {
-    if ( m_error_type == NONEERROR )
+    switch ( m_error_type )
     {
-        return string( "Process success." );
-    }
-    else if ( m_error_type == FILEOPENERROR )
-    {
-        if ( m_error_msg .size() < 1 )
-        {
-            return string( "Error information is not complete." );
-        }
-        else
-        {
-            return string( "Can not open file " + m_error_msg[ 0 ] + "\n" +
-                "Position: " + m_error_class + "::" + m_error_fun );
-        }
-    }
-    else if ( m_error_type == DOMERROR )
-    {
-        if ( m_error_msg .size() < 4 )
-        {
-            return string( "Error information is not complete." );
-        }
-        else
-        {
-            return string( "Word \"" + m_error_msg[ 1 ] + "\"in file " +
-                    m_error_msg[0] + ", line:" + m_error_msg[2] + " Col:" +
-                    m_error_msg[3] + "\n" +
+        case NONEERROR:
+            return std::string( "Process success." );
+            break;
+        case FILEOPENERROR:
+            if ( m_error_msg.size() < 1 )
+            {
+                return std::string( "Error information is not complete." );
+            }
+            else
+            {
+                return std::string( "Can not open file " + m_error_msg[ 0 ] + "\n" + "Position: " + m_error_class + "::" + m_error_fun );
+            }
+            break;
+        case DOMERROR:
+            if ( m_error_msg.size() < 4 )
+            {
+                return std::string( "Error information is not complete." );
+            }
+            else
+            {
+                return std::string( 
+                    "Word \"" + m_error_msg[ 1 ] + "\"in file " + m_error_msg[0] + ", line:" + m_error_msg[2] + " Col:" + m_error_msg[3] + "\n" +
                     "Position: " + m_error_class + "::" + m_error_fun );
-        }
-    }
-    else if ( m_error_type == XMLTAGERROR )
-    {
-        if ( m_error_msg .size() < 2 )
-        {
-            return string( "Error information is not complete." );
-        }
-        else
-        {
-            return string( "Tag \"" + m_error_msg[ 1 ] + "\"in file " +
-                    m_error_msg[0] + "\n" +
-                "Position: " + m_error_class + "::" + m_error_fun );
-        }
-    }
-    else
-    {
-        string t_str( "Error informations: \n" );
-        for ( size_t i = 0; i < m_error_msg .size(); i ++ )
-        {
-            t_str += m_error_msg[ i ] + "\n";
-        }
-        return t_str;
+            }
+            break;
+        case XMLTAGERROR:
+            if ( m_error_msg .size() < 2 )
+            {
+                return std::string( "Error information is not complete." );
+            }
+            else
+            {
+                return std::string( "Tag \"" + m_error_msg[ 1 ] + "\"in file " + m_error_msg[0] + "\n" +
+                    "Position: " + m_error_class + "::" + m_error_fun );
+            }
+            break;
+        default:
+            {
+                std::string t_str( "Error informations: \n" );
+                for ( size_t i = 0; i < m_error_msg .size(); i ++ )
+                {
+                    t_str += m_error_msg[ i ] + "\n";
+                }
+                return t_str;
+            }
+            break;
     }
 }
 

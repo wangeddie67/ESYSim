@@ -56,7 +56,7 @@ EsynetArbiter::EsynetArbiter( esynet::EsynetArbiterType type, int size )
     }
 }
 
-EsynetArbiter::EsynetArbiter(const EsynetArbiter& t) 
+EsynetArbiter::EsynetArbiter( const EsynetArbiter& t )
     : m_type( t.m_type )
     , m_size( t.m_size )
     , m_state_matrix( t.m_state_matrix )
@@ -204,7 +204,7 @@ void EsynetArbiter::setHighestPriority( int port )
 
 void EsynetArbiter::setHighestPriority( const esynet::EsynetVC & port )
 {
-    for ( size_t i = 0; i < m_size; i ++ )
+    for ( int i = 0; i < m_size; i ++ )
     {
         if ( m_vc_map[ i ] == port )
         {
@@ -239,7 +239,7 @@ void EsynetArbiter::setLowestPriority( int port )
 
 void EsynetArbiter::setLowestPriority( const esynet::EsynetVC & port )
 {
-    for ( size_t i = 0; i < m_size; i ++ )
+    for ( long i = 0; i < m_size; i ++ )
     {
         if ( m_vc_map[ i ] == port )
         {
@@ -248,7 +248,7 @@ void EsynetArbiter::setLowestPriority( const esynet::EsynetVC & port )
     }
 }
 
-void EsynetArbiter::setInputPortMap( const EsyNetworkCfgRouter & router_cfg )
+void EsynetArbiter::setInputPortMap( const EsyNetCfgRouter & router_cfg )
 {
     int seq = 0;
     m_vc_map.clear();
@@ -262,7 +262,7 @@ void EsynetArbiter::setInputPortMap( const EsyNetworkCfgRouter & router_cfg )
     }
 }
 
-void EsynetArbiter::setOutputPortMap( const EsyNetworkCfgRouter & router_cfg )
+void EsynetArbiter::setOutputPortMap( const EsyNetCfgRouter & router_cfg )
 {
     int seq = 0;
     m_vc_map.clear();

@@ -9,7 +9,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread() :
 }
 // load event trace
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     long long * total_cycle
 ) :
     m_task( ANALYSE_LOAD ), mp_reader( s ), m_network_cfg( cfg ),
@@ -19,7 +19,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
 }
 // general task
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     long * tpi, long *tpr, long * tfi, long * tfr, long long * tc, long long * tic,
     double *td, long *md, double *tl, long * ml,
     long *appreq, long *appenter, long *appexit
@@ -35,7 +35,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
 }
 // general task
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream<EsyDataItemEventtrace> *s, EsyNetworkCfg *cfg, long *tpi,
+    EsyDataFileIStream<EsyDataItemEventtrace> *s, EsyNetCfg *cfg, long *tpi,
     long *tpr, long *tfi, long *tfr, long long *tc, long long *tic, double *td,
     long *md, double *tl, long *ml, long *appreq, long *appenter, long *appexit,
     QMap<long, QVector<double> > *in_finish_app_list)
@@ -63,7 +63,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
       finish_app_list(in_finish_app_list) {}
 // inject vs time
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     long src_id, long dst_id, long app_id, long long total_cycle,
     long cycle_point, long cycle_scaling,
     QVector< double > * y_pir, QVector< double > * y_fir
@@ -76,7 +76,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
 }
 // traffic vs time
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     long id, long app_id, long long total_cycle,
     long cycle_point, long cycle_scaling,
     QVector< double > * inject, QVector< double > * accept,
@@ -91,7 +91,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
 }
 // distance & latency
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     long src_id, long dst_id, long app_id, long maxdist, long maxlat,
     QVector< double > * dist, QVector< double > * latency
 ) :
@@ -103,7 +103,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
 }
 // traffic vs area
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     long app_id,
     QVector< double > * inject, QVector< double > * accept,
     QVector< double > * through
@@ -116,7 +116,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
 }
 // traffic window
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     long step, long width, long long total_cycle,
     QVector< QVector< double > > * inject, QVector< QVector< double > > * accept,
     QVector< QVector< double > > * through
@@ -130,7 +130,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
 }
 // port traffic
 AnalyseEventtraceThread::AnalyseEventtraceThread(
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     int src, int dst, long app_id,
     long * total_app, QVector< EsyDataItemTraffic > * list
 ) :
@@ -140,7 +140,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread(
 {
 }
 AnalyseEventtraceThread::AnalyseEventtraceThread (	// application
-    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemEventtrace > * s, EsyNetCfg * cfg,
     long app_id, long long totalcycle, long totalapp,
     QVector< double > *appreq, QVector< double > *appenter, QVector< double > *appexit,
     GanttDate  *appevent
@@ -155,7 +155,7 @@ AnalyseEventtraceThread::AnalyseEventtraceThread (	// application
 
 }
 AnalyseEventtraceThread::AnalyseEventtraceThread(  // application
-    EsyDataFileIStream<EsyDataItemEventtrace> *s, EsyNetworkCfg *cfg, long app_id,
+    EsyDataFileIStream<EsyDataItemEventtrace> *s, EsyNetCfg *cfg, long app_id,
     long long totalcycle, long totalapp, QVector<double> *appreq,
     QVector<double> *appenter, QVector<double> *appexit, GanttDate *appevent,
     QMap<long, QVector<double> > *in_finish_app_list,

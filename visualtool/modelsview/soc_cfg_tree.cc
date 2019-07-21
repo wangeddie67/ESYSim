@@ -87,7 +87,7 @@ void SoCCfgModel::setTileCfg( EsySoCCfgTile *cfg )
 	setConfigItems( m_type );
 }
 
-void SoCCfgModel::setRouterCfg( EsyNetworkCfgRouter *cfg )
+void SoCCfgModel::setRouterCfg( EsyNetCfgRouter *cfg )
 {
 	clear();
 
@@ -445,7 +445,7 @@ void SoCCfgModel::setSizeCfg( int l1_row, int start_row, int end_row )
 		{
 			l1_item->insertRow( i + l2_start_row, QList< QStandardItem * >() <<
 				new QStandardItem( QString::fromStdString(
-					EsyNetworkCfg::nocAxisStrVector( i ) ) ) <<
+					EsyNetCfg::nocAxisStrVector( i ) ) ) <<
 				new SoCCfgModelItem( start_row + i, QString::number(
 					mp_network_cfg->size( i ) ) ) );
 		}
@@ -477,7 +477,7 @@ void SoCCfgModel::setPortCfg( int start_row )
 	long port_num = mp_router_cfg->portNum();
 	for ( long port_index = 0; port_index < port_num; port_index ++ )
 	{
-		EsyNetworkCfgPort port_cfg = mp_router_cfg->port( port_index );
+		EsyNetCfgPort port_cfg = mp_router_cfg->port( port_index );
 
 		QStandardItem * port_item = item( port_index + start_row );
 		if ( port_item == 0 )
@@ -892,8 +892,8 @@ bool SoCCfgModel::setData( const QModelIndex &index,
 			setDataDouble( mp_router_cfg->setPosSecond ) break;
 
 		case TOPOLOGY_TOPOLOGY:
-			setDataEnum( mp_network_cfg->setTopology, EsyNetworkCfg::NoCTopology,
-			EsyNetworkCfg::nocTopologyStrVector )
+			setDataEnum( mp_network_cfg->setTopology, EsyNetCfg::NoCTopology,
+			EsyNetCfg::nocTopologyStrVector )
 			setSizeCfg( GLOBALCFG_TOPOLOGY, TOPOLOGY_SIZE_START, TOPOLOGY_SIZE_END );
 			break;
 		case TOPOLOGY_FREQ:
@@ -902,10 +902,10 @@ bool SoCCfgModel::setData( const QModelIndex &index,
 			setDataInt( mp_network_cfg->setDataPathWidth ) break;
 		case TOPOLOGY_SIZE_START:
 			itemFromIndex( index )->setText( QString::number( value.toInt() ) );
-			mp_network_cfg->setSize( EsyNetworkCfg::AX_X, value.toInt() ); break;
+			mp_network_cfg->setSize( EsyNetCfg::AX_X, value.toInt() ); break;
 		case TOPOLOGY_SIZE_END:
 			itemFromIndex( index )->setText( QString::number( value.toInt() ) );
-			mp_network_cfg->setSize( EsyNetworkCfg::AX_Y, value.toInt() ); break;
+			mp_network_cfg->setSize( EsyNetCfg::AX_Y, value.toInt() ); break;
 
         case ASICTILE_NAME:
             setDataString( mp_tile_cfg->setAsicName ) break;
@@ -920,7 +920,7 @@ bool SoCCfgModel::setData( const QModelIndex &index,
 			( m_type == SOCCFG_ROUTER
 			&& index.parent().row() >= ROUTERCFG_PORT_START )  )
 		{
-			EsyNetworkCfgPort * port_cfg;
+			EsyNetCfgPort * port_cfg;
 			if ( m_type == SOCCFG_ROUTER )
 			{
 				port_cfg = &( mp_router_cfg->port(
@@ -942,7 +942,7 @@ bool SoCCfgModel::setData( const QModelIndex &index,
 				port_cfg->setOutputVcNumber( value.toInt() ); break;
 			case PORTCFG_DIRECTION :
 				port_cfg->setPortDirection(
-					(EsyNetworkCfgPort::RouterPortDirection) value.toInt() );
+					(EsyNetCfgPort::RouterPortDirection) value.toInt() );
 				itemFromIndex( index )->setText(
 					QString::fromStdString( port_cfg->portDirectionStr() ) );
 				 break;
@@ -1079,11 +1079,11 @@ QWidget * SoCCfgDelegate::createEditor(QWidget *parent,
 		createComboBox( EsySoCCfgTile::ISA_COUNT,
 			EsySoCCfgTile::coreIsaTypeStrVector ) break;
 	case SoCCfgModel::PORTCFG_DIRECTION:
-		createComboBox( EsyNetworkCfgPort::ROUTER_PORT_NUM,
-			EsyNetworkCfgPort::portDirectionStrVector ) break;
+		createComboBox( EsyNetCfgPort::ROUTER_PORT_NUM,
+			EsyNetCfgPort::portDirectionStrVector ) break;
 	case SoCCfgModel::TOPOLOGY_TOPOLOGY:
-		createComboBox( EsyNetworkCfg::NOC_TOPOLOGY_COUNT,
-			EsyNetworkCfg::nocTopologyStrVector ) break;
+		createComboBox( EsyNetCfg::NOC_TOPOLOGY_COUNT,
+			EsyNetCfg::nocTopologyStrVector ) break;
 	case SoCCfgModel::CACHECFG_DL1_CFG: case SoCCfgModel::CACHECFG_DL2_CFG:
 	case SoCCfgModel::CACHECFG_IL1_CFG: case SoCCfgModel::CACHECFG_IL2_CFG:
 	case SoCCfgModel::MEMCFG_TLB_ITLB_CFG: case SoCCfgModel::MEMCFG_TLB_DTLB_CFG:

@@ -48,13 +48,12 @@ private:
     long m_router;  /*!< @brief Connected router id. */
     long m_port;    /*!< @brief Connected router port. */
 
-    EsyNetworkCfg * m_network_cfg;      /*!< @brief Pointer to network configuration. */
-    EsyNetworkCfgRouter * m_router_cfg; /*!< @brief Pointer to configurtion of connected router. */
-    EsynetConfig * m_argu_cfg;          /*!< @brief Pointer to argument list. */
+    const EsyNetCfg & m_network_cfg;    /*!< @brief Reference to network configuration. */
+    const EsyNetCfgNI & m_ni_cfg;       /*!< @brief Reference to configurtion of network interface. */
 
     std::vector< EsynetFlit > m_inject_queue;   /*!< @brief Injected flit queue. */
-    long m_inject_vc;   /*!< @brief Selected virtual channel. */
-    std::vector< long > m_vc_counter;   /*!< @brief Credit counter */
+    long m_inject_vc;                           /*!< @brief Selected virtual channel. */
+    std::vector< long > m_vc_counter;           /*!< @brief Credit counter */
 
     std::vector< EsynetFlit > m_eject_queue;    /*!< @brief Ejected flit queue */
 
@@ -70,13 +69,12 @@ private:
 public:
     /**
      * @brief Constructor function.
-     * @param network_cfg Pointer to network configuration structure.
+     * @param network_cfg Reference to network configuration structure.
      * @param id NI id.
      * @param router Connected router id.
      * @param port Connected port.
-     * @param argument_cfg Pointer to argument structure.
      */
-    EsynetNI( EsyNetworkCfg * network_cfg, long id, long router, long port, EsynetConfig * argument_cfg );
+    EsynetNI( const EsyNetCfg & network_cfg, long id, long router, long port );
 
     /**
      * @name Function to access variables

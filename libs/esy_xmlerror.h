@@ -21,8 +21,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 /*!
  * \brief Error information interface to handle XML errors.
  */
@@ -41,9 +39,9 @@ public:
 
 protected:
     ErrorCode m_error_type;    /**< \brief error code */
-    vector< string > m_error_msg;  /**< \brief error messages */
-    string m_error_class;          /**< \brief error class */
-    string m_error_fun;            /**< \brief error function */
+    std::vector< std::string > m_error_msg;  /**< \brief error messages */
+    std::string m_error_class;          /**< \brief error class */
+    std::string m_error_fun;            /**< \brief error function */
 
 public:
     /*! @name Constructor */
@@ -51,8 +49,11 @@ public:
     /*!
      * \brief constructs a structure for no error.
      */
-    EsyXmlError() :
-        m_error_type( NONEERROR ), m_error_msg(), m_error_class(), m_error_fun()
+    EsyXmlError()
+        : m_error_type( NONEERROR )
+        , m_error_msg()
+        , m_error_class()
+        , m_error_fun()
     {}
     /*!
      * \brief constructs a structure for one error.
@@ -61,10 +62,11 @@ public:
      * \param pare_class  class where error occurs
      * \param pare_fun    function where error occurs
      */
-    EsyXmlError( ErrorCode err, vector< string > msg,
-                     string pare_class, string pare_fun ) :
-        m_error_type( err ), m_error_msg( msg ),
-        m_error_class( pare_class ), m_error_fun( pare_fun )
+    EsyXmlError( ErrorCode err, const std::vector< std::string > & msg, const std::string & pare_class, const std::string & pare_fun )
+        : m_error_type( err )
+        , m_error_msg( msg )
+        , m_error_class( pare_class )
+        , m_error_fun( pare_fun )
     {}
     /*!
      * \brief constructs a structure for one file error.
@@ -72,9 +74,11 @@ public:
      * \param pare_class  class where error occurs
      * \param pare_fun    function where error occurs
      */
-    EsyXmlError( string file, string pare_class, string pare_fun ) :
-        m_error_type( FILEOPENERROR ), m_error_msg(),
-        m_error_class( pare_class ), m_error_fun( pare_fun )
+    EsyXmlError( const std::string & file, const std::string & pare_class, const std::string & pare_fun )
+        : m_error_type( FILEOPENERROR )
+        , m_error_msg()
+        , m_error_class( pare_class )
+        , m_error_fun( pare_fun )
     {
         m_error_msg.push_back( file );
     }
@@ -87,10 +91,12 @@ public:
      * \param pare_class  class where error occurs
      * \param pare_fun    function where error occurs
      */
-    EsyXmlError( string desc, string file, string row, string col,
-                     string pare_class, string pare_fun ) :
-        m_error_type( DOMERROR ), m_error_msg(),
-        m_error_class( pare_class ), m_error_fun( pare_fun )
+    EsyXmlError( const std::string & desc, const std::string & file, const std::string & row, const std::string & col
+                , const std::string & pare_class, const std::string & pare_fun )
+        : m_error_type( DOMERROR )
+        , m_error_msg()
+        , m_error_class( pare_class )
+        , m_error_fun( pare_fun )
     {
         m_error_msg.push_back( desc );
         m_error_msg.push_back( file );
@@ -104,10 +110,11 @@ public:
      * \param pare_class  class where error occurs
      * \param pare_fun    function where error occurs
      */
-    EsyXmlError( string tag, string file, string pare_class,
-                     string pare_fun ) :
-        m_error_type( XMLTAGERROR ), m_error_msg(),
-        m_error_class( pare_class ), m_error_fun( pare_fun )
+    EsyXmlError( const std::string & tag, const std::string & file, const std::string & pare_class, const std::string & pare_fun )
+        : m_error_type( XMLTAGERROR )
+        , m_error_msg()
+        , m_error_class( pare_class )
+        , m_error_fun( pare_fun )
     {
         m_error_msg.push_back( tag );
         m_error_msg.push_back( file );
@@ -125,34 +132,34 @@ public:
      * \brief Access error message #m_error_msg.
      * \return error message #m_error_msg.
      */
-    const vector< string > & errorMsg() const { return m_error_msg; }
+    const std::vector< std::string > & errorMsg() const { return m_error_msg; }
     /*!
      * \brief Access error class #m_error_class.
      * \return error class #m_error_class.
      */
-    const string errorClass() const { return m_error_class; }
+    const std::string & errorClass() const { return m_error_class; }
     /*!
      * \brief Access error function #m_error_fun.
      * \return error function #m_error_fun.
      */
-    const string errorFun() const { return m_error_fun; }
+    const std::string & errorFun() const { return m_error_fun; }
     ///@}
 
     /*!
      * \brief Check the error code.
      * \return If error code is NoError, return false; otherwise, return true.
      */
-    bool hasError() { return !(m_error_type == NONEERROR); }
+    bool hasError() { return !( m_error_type == NONEERROR ); }
     /*!
      * \brief generate the error title.
      * \return error title.
      */
-    string title();
+    std::string title();
     /*!
      * \brief generate the error text.
      * \return  error text.
      */
-    string text();
+    std::string text();
 };
 
 #endif

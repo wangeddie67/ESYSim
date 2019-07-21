@@ -7,7 +7,7 @@ AnalyseBenchmarkThread::AnalyseBenchmarkThread() :
 {
 }
 AnalyseBenchmarkThread::AnalyseBenchmarkThread(
-    EsyDataFileIStream< EsyDataItemBenchmark > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemBenchmark > * s, EsyNetCfg * cfg,
     long * tpi, long * tfi, long long * cycle, double * dist, long * mdist
 ) :
     m_task( ANALYSE_GENERAL ),
@@ -18,7 +18,7 @@ AnalyseBenchmarkThread::AnalyseBenchmarkThread(
 {
 }
 AnalyseBenchmarkThread::AnalyseBenchmarkThread(
-    EsyDataFileIStream< EsyDataItemBenchmark > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemBenchmark > * s, EsyNetCfg * cfg,
     long src_id, long dst_id, long start, long length,
     QVector< double > * y_pir, QVector< double > * y_fir
 ) :
@@ -30,7 +30,7 @@ AnalyseBenchmarkThread::AnalyseBenchmarkThread(
 {
 }
 AnalyseBenchmarkThread::AnalyseBenchmarkThread(
-    EsyDataFileIStream< EsyDataItemBenchmark > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemBenchmark > * s, EsyNetCfg * cfg,
     long src_id, long dst_id, long start, long length,
     long * md, QVector< double > * y_hop
 ) :
@@ -42,7 +42,7 @@ AnalyseBenchmarkThread::AnalyseBenchmarkThread(
 {
 }
 AnalyseBenchmarkThread::AnalyseBenchmarkThread(
-    EsyDataFileIStream< EsyDataItemBenchmark > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemBenchmark > * s, EsyNetCfg * cfg,
     long id, long start, long length,
     QVector< double > * y_traffic_inject, QVector< double > * y_traffic_accept
 ) :

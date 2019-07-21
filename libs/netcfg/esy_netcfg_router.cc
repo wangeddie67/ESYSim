@@ -35,7 +35,7 @@
 #define NET_ARGU_SIZE   "size"
 #define NET_ARGU_INDEX  "index"
 
-std::string EsyNetworkCfgRouter::portName( long i ) const
+std::string EsyNetCfgRouter::portName( long i ) const
 {
     std::string t_str;
     if ( m_port[ i ].networkInterface() )
@@ -49,7 +49,7 @@ std::string EsyNetworkCfgRouter::portName( long i ) const
     return t_str;
 }
 
-void EsyNetworkCfgRouter::readXml( TiXmlElement * root )
+void EsyNetCfgRouter::readXml( TiXmlElement * root )
 {
     // Loop all item behind root.
     for ( TiXmlNode * p_child = root->FirstChild(); p_child != NULL; p_child = p_child->NextSibling() )
@@ -102,7 +102,7 @@ void EsyNetworkCfgRouter::readXml( TiXmlElement * root )
     }
 }
 
-void EsyNetworkCfgRouter::writeXml( TiXmlElement * root )
+void EsyNetCfgRouter::writeXml( TiXmlElement * root )
 {
     TiXmlElement * t_item;
 
@@ -142,12 +142,12 @@ void EsyNetworkCfgRouter::writeXml( TiXmlElement * root )
     root->LinkEndChild( t_item );
 }
 
-long int EsyNetworkCfgRouter::maxVcNum() const
+long int EsyNetCfgRouter::maxVcNum() const
 {
     return ( maxInputVcNum() > maxOutputVcNum() ) ? maxInputVcNum() : maxOutputVcNum();
 }
 
-long int EsyNetworkCfgRouter::maxInputVcNum() const
+long int EsyNetCfgRouter::maxInputVcNum() const
 {
     long vcnum = 1;
     for ( long i = 0; i < portNum(); i ++ )
@@ -160,7 +160,7 @@ long int EsyNetworkCfgRouter::maxInputVcNum() const
     return vcnum;
 }
 
-long int EsyNetworkCfgRouter::maxOutputVcNum() const
+long int EsyNetCfgRouter::maxOutputVcNum() const
 {
     long vcnum = 1;
     for ( long i = 0; i < portNum(); i ++ )
@@ -173,7 +173,7 @@ long int EsyNetworkCfgRouter::maxOutputVcNum() const
     return vcnum;
 }
 
-long int EsyNetworkCfgRouter::maxInputBuffer() const
+long int EsyNetCfgRouter::maxInputBuffer() const
 {
     long inputbuffer = 1;
     for ( long i = 0; i < portNum(); i ++ )
@@ -186,7 +186,7 @@ long int EsyNetworkCfgRouter::maxInputBuffer() const
     return inputbuffer;
 }
 
-long int EsyNetworkCfgRouter::maxOutputBuffer() const
+long int EsyNetCfgRouter::maxOutputBuffer() const
 {
     long outputbuffer = 1;
     for ( long i = 0; i < portNum(); i ++ )
@@ -199,7 +199,7 @@ long int EsyNetworkCfgRouter::maxOutputBuffer() const
     return outputbuffer;
 }
 
-long int EsyNetworkCfgRouter::totalInputVc() const
+long int EsyNetCfgRouter::totalInputVc() const
 {
     long inputvc = 0;
     for ( long i = 0; i < portNum(); i ++ )
@@ -209,7 +209,7 @@ long int EsyNetworkCfgRouter::totalInputVc() const
     return inputvc;
 }
 
-long int EsyNetworkCfgRouter::totalOutputVc() const
+long int EsyNetCfgRouter::totalOutputVc() const
 {
     long outputvc = 0;
     for ( long i = 0; i < portNum(); i ++ )
@@ -219,7 +219,7 @@ long int EsyNetworkCfgRouter::totalOutputVc() const
     return outputvc;
 }
 
-std::ostream& operator<<( std::ostream & os, const EsyNetworkCfgRouter & router_cfg )
+std::ostream& operator<<( std::ostream & os, const EsyNetCfgRouter & router_cfg )
 {
     os << "Router(" << router_cfg.m_id << ") ";
     os << "pipe_cycle=" << router_cfg.m_pipe_cycle << " ";

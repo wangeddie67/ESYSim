@@ -6,7 +6,7 @@ AnalyseTrafficWindowThread::AnalyseTrafficWindowThread() :
 }
 
 AnalyseTrafficWindowThread::AnalyseTrafficWindowThread(
-    EsyDataFileIStream< EsyDataItemTrafficWindow > * s, EsyNetworkCfg * cfg,
+    EsyDataFileIStream< EsyDataItemTrafficWindow > * s, EsyNetCfg * cfg,
     long * total_cycle, long * window_width, long * window_step,
     long * max_inject, long * max_accept, long * max_through
 ) :

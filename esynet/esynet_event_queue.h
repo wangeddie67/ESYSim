@@ -42,10 +42,10 @@ bool operator<(const EsynetEvent & a, const EsynetEvent & b);
  * @ingroup ESYNET_SIM_ENGINE
  * @brief Event queue.
  */
-class EsynetEventQueue : public multiset< EsynetEvent >
+class EsynetEventQueue : public std::multiset< EsynetEvent >
 {
 private:
-    EsynetConfig * mp_argument_cfg;    /*!< @brief Pointer to option list. */
+    const EsynetConfig & m_argument_cfg;    /*!< @brief Pointer to option list. */
     double m_current_time;  /*!< @brief Simulation time. */
     long m_mess_counter;    /*!< @brief Number of message injected. */
 
@@ -61,7 +61,7 @@ public:
      * @param sim_platform Pointer to simlation platform.
      * @param argument_cfg Pointer to option list.
      */
-    EsynetEventQueue( double start_time, EsynetSimBaseUnit * sim_platform, EsynetConfig * argument_cfg );
+    EsynetEventQueue( double start_time, EsynetSimBaseUnit * sim_platform, const EsynetConfig & argument_cfg );
     /**
      * @brief Destruction function.
      */

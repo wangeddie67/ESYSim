@@ -31,13 +31,13 @@
  * @ingroup networkcfggroup
  * @brief Structure of router configuration item.
  */
-class EsyNetworkCfgRouter
+class EsyNetCfgRouter
 {
 protected:
     long m_id;                                  /*!< @brief Router id. */
     double m_pipe_cycle;                        /*!< @brief Pipeline frequency of one router, used by frequency scaling, unit by cycle. */
     std::pair< double, double > m_pos;          /*!< @brief Position of router in 2D graphics scene, used by GUI. */
-    std::vector< EsyNetworkCfgPort > m_port;    /*!< @brief Vector of port configuration items */
+    std::vector< EsyNetCfgPort > m_port;    /*!< @brief Vector of port configuration items */
 
 public:
     /**
@@ -47,16 +47,16 @@ public:
     /**
      * @brief Constructs an empty item with default value.
      */
-    EsyNetworkCfgRouter()
+    EsyNetCfgRouter()
         : m_id( 0 )
         , m_pipe_cycle( 1.0 )
         , m_pos( 0.0, 0.0 )
-        , m_port( 0, EsyNetworkCfgPort() )
+        , m_port( 0, EsyNetCfgPort() )
     {}
     /**
      * @brief Constructs an item by specified value for arguments.
      */
-    EsyNetworkCfgRouter( long id, double pipe_cycle, std::pair< double, double > pos, const std::vector< EsyNetworkCfgPort >& port )
+    EsyNetCfgRouter( long id, double pipe_cycle, std::pair< double, double > pos, const std::vector< EsyNetCfgPort >& port )
         : m_id( id )
         , m_pipe_cycle( pipe_cycle )
         , m_pos( pos )
@@ -65,17 +65,17 @@ public:
     /**
      * @brief Constructs an item by specified value for some of arguments.
      */
-    EsyNetworkCfgRouter( double pipe_cycle, long phy_port, long input_vc_num, long output_vc_num, long input_buffer, long output_buffer )
+    EsyNetCfgRouter( double pipe_cycle, long phy_port, long input_vc_num, long output_vc_num, long input_buffer, long output_buffer )
         : m_id( 0 )
         , m_pipe_cycle( pipe_cycle )
         , m_pos( 0.0, 0.0 )
-        , m_port( phy_port, EsyNetworkCfgPort( input_vc_num, output_vc_num, input_buffer, output_buffer ) )
+        , m_port( phy_port, EsyNetCfgPort( input_vc_num, output_vc_num, input_buffer, output_buffer ) )
     {}
     /**
      * @brief Constructs an item by copying an exist item.
      * @param t  entity to copy.
      */
-    EsyNetworkCfgRouter( const EsyNetworkCfgRouter & t )
+    EsyNetCfgRouter( const EsyNetCfgRouter & t )
         : m_id( t.m_id )
         , m_pipe_cycle( t.m_pipe_cycle )
         , m_pos( t.m_pos )
@@ -94,7 +94,7 @@ public:
      * @param t  item to compare.
      * @return If t has the same value as this item at all field, return TRUE. 
      */
-    inline bool operator ==( const EsyNetworkCfgRouter & t ) const
+    inline bool operator ==( const EsyNetCfgRouter & t ) const
     {
         if ( m_port == t.port() && m_pipe_cycle == t.pipeCycle() )
         {
@@ -108,7 +108,7 @@ public:
      * @param router_cfg Router configuration structure.
      * @return output stream.
      */
-    friend std::ostream& operator<<( std::ostream & os, const EsyNetworkCfgRouter & router_cfg );
+    friend std::ostream& operator<<( std::ostream & os, const EsyNetCfgRouter & router_cfg );
     /**
      * @}
      */
@@ -132,15 +132,15 @@ public:
     /**
      * @brief Return the configuration of all ports.
      */
-    inline const std::vector< EsyNetworkCfgPort > & port() const { return m_port; }
+    inline const std::vector< EsyNetCfgPort > & port() const { return m_port; }
     /**
      * @brief Return the configuration of specified port.
      */
-    inline const EsyNetworkCfgPort & port( long i ) const { return m_port[ i ]; }
+    inline const EsyNetCfgPort & port( long i ) const { return m_port[ i ]; }
     /**
      * @brief Return the configuration of specified port.
      */
-    inline EsyNetworkCfgPort & port( long i ) { return m_port[ i ]; }
+    inline EsyNetCfgPort & port( long i ) { return m_port[ i ]; }
     /**
      * @brief Return the pipeline frequency of this router.
      */
@@ -176,11 +176,11 @@ public:
     /**
      * @brief Set the configuration of all ports.
      */
-    inline void setPort( const vector< EsyNetworkCfgPort > & port ) { m_port = port; }
+    inline void setPort( const std::vector< EsyNetCfgPort > & port ) { m_port = port; }
     /**
      * @brief Set the configuration of one port.
      */
-    inline void appendPort( const EsyNetworkCfgPort & port ) { m_port.push_back( port ); }
+    inline void appendPort( const EsyNetCfgPort & port ) { m_port.push_back( port ); }
     /**
      * @brief Set pipeline frequency of this router.
      */

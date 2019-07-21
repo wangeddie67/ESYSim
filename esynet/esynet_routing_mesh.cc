@@ -28,8 +28,8 @@
 
 #include "esynet_router_unit.h"
 
-#define AX_X EsyNetworkCfg::AX_X
-#define AX_Y EsyNetworkCfg::AX_Y
+#define AX_X EsyNetCfg::AX_X
+#define AX_Y EsyNetCfg::AX_Y
 
 #define VCLOCAL esynet::EsynetVC(0,0)
 #define VCNORTH esynet::EsynetVC(1,0)
@@ -39,12 +39,12 @@
 
 void EsynetRouter::algorithmTXY(long des, long src, long s_ph, long s_vc)
 {
-    esynet::EsynetAddr des_t = m_network_cfg->seq2Coord( des );
-    esynet::EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    esynet::EsynetAddr des_t = m_network_cfg.seq2Coord( des );
+    esynet::EsynetAddr sor_t = m_network_cfg.seq2Coord( src );
     long xoffset = des_t[ AX_X ] - m_router_addr[ AX_X ];
     long yoffset = des_t[ AX_Y ] - m_router_addr[ AX_Y ];
-    bool xdirection = ( abs( static_cast<int>( xoffset ) ) * 2 <= m_network_cfg->size( AX_X ) ) ? true: false;
-    bool ydirection = ( abs( static_cast<int>( yoffset ) ) * 2 <= m_network_cfg->size( AX_Y ) ) ? true: false;
+    bool xdirection = ( abs( static_cast<int>( xoffset ) ) * 2 <= m_network_cfg.size( AX_X ) ) ? true: false;
+    bool ydirection = ( abs( static_cast<int>( yoffset ) ) * 2 <= m_network_cfg.size( AX_Y ) ) ? true: false;
 
     if ( xoffset == 0 && yoffset == 0 )
     {
@@ -137,8 +137,8 @@ void EsynetRouter::algorithmTXY(long des, long src, long s_ph, long s_vc)
 
 void EsynetRouter::algorithmXY(long des, long src, long s_ph, long s_vc)
 {
-    esynet::EsynetAddr des_t = m_network_cfg->seq2Coord( des );
-    esynet::EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    esynet::EsynetAddr des_t = m_network_cfg.seq2Coord( des );
+    esynet::EsynetAddr sor_t = m_network_cfg.seq2Coord( src );
 
     long dir = PLOCAL;
 
@@ -187,8 +187,8 @@ void EsynetRouter::algorithmXY(long des, long src, long s_ph, long s_vc)
 
 void EsynetRouter::algorithmDyXY(long des, long src, long s_ph, long s_vc)
 {
-    esynet::EsynetAddr des_t = m_network_cfg->seq2Coord( des );
-    esynet::EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    esynet::EsynetAddr des_t = m_network_cfg.seq2Coord( des );
+    esynet::EsynetAddr sor_t = m_network_cfg.seq2Coord( src );
     // IF D=Local then Select <= Local;
     if ( m_router_addr[ AX_Y ] == des_t[ AX_Y ] && m_router_addr[ AX_X ] == des_t[ AX_X ] )
     {

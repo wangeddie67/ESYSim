@@ -13,7 +13,7 @@
 #define PI 3.141592654
 
 qreal RouterGraphicsItem::portdir_angle[
-    EsyNetworkCfgPort::ROUTER_PORT_NUM ] =
+    EsyNetCfgPort::ROUTER_PORT_NUM ] =
 {
     90, // PORTDIR_NORTH,
    270, // PORTDIR_SOUTH,
@@ -26,7 +26,7 @@ qreal RouterGraphicsItem::portdir_angle[
 };
 
 QPointF RouterGraphicsItem::portdir_radio_unit[
-    EsyNetworkCfgPort::ROUTER_PORT_NUM ] =
+    EsyNetCfgPort::ROUTER_PORT_NUM ] =
 {
     QPointF(             0, -           1 ), // PORTDIR_NORTH,
     QPointF(             0,             1 ), // PORTDIR_SOUTH,
@@ -39,7 +39,7 @@ QPointF RouterGraphicsItem::portdir_radio_unit[
 };
 
 QPointF RouterGraphicsItem::portdir_circle_unit[
-    EsyNetworkCfgPort::ROUTER_PORT_NUM ] =
+    EsyNetCfgPort::ROUTER_PORT_NUM ] =
 {
     QPointF(             1,             0 ), // PORTDIR_NORTH,
     QPointF( -           1,             0 ), // PORTDIR_SOUTH,
@@ -52,7 +52,7 @@ QPointF RouterGraphicsItem::portdir_circle_unit[
 };
 
 QPointF RouterGraphicsItem::router_boundary_point[
-    EsyNetworkCfgPort::ROUTER_PORT_NUM ] =
+    EsyNetCfgPort::ROUTER_PORT_NUM ] =
 {
     QPointF(   DRAW_TAN22P5D, -             1 ),
     QPointF(               1, - DRAW_TAN22P5D ),
@@ -67,13 +67,13 @@ QPointF RouterGraphicsItem::router_boundary_point[
 // ---- constructor and deconstructor ---- //
 // constructor
 RouterGraphicsItem::RouterGraphicsItem(
-	const EsyNetworkCfgRouter & router_cfg,GraphicsConfigModel * graphics_cfg
+	const EsyNetCfgRouter & router_cfg,GraphicsConfigModel * graphics_cfg
 ):
 	ProcessorItem( router_cfg.routerId() ),
 	m_router_cfg( router_cfg ), mp_graphics_cfg( graphics_cfg ),
 	m_faulty_flag( false )
 {
-	dir_width.fill( 0.0, EsyNetworkCfgPort::ROUTER_PORT_NUM );
+	dir_width.fill( 0.0, EsyNetCfgPort::ROUTER_PORT_NUM );
 	port_offset.fill( 0.0, m_router_cfg.portNum() );
 	max_dir_width = 0;
 	// width for each direction
@@ -88,7 +88,7 @@ RouterGraphicsItem::RouterGraphicsItem(
 			vc_t * DRAW_VC_WIDTH + DRAW_VC_SPLIT_WIDTH;
 	}
 	// max width
-	for ( int dir = 0; dir < EsyNetworkCfgPort::ROUTER_PORT_NUM; dir ++ )
+	for ( int dir = 0; dir < EsyNetCfgPort::ROUTER_PORT_NUM; dir ++ )
 	{
 		if ( dir_width[ dir ] > max_dir_width )
 		{
@@ -109,13 +109,13 @@ RouterGraphicsItem::RouterGraphicsItem(
 			dir_width[ m_router_cfg.port( port ).portDirection() ] / 2;
 
 		if ( m_router_cfg.port( port ).portDirection() ==
-				EsyNetworkCfgPort::ROUTER_PORT_SOUTH ||
+				EsyNetCfgPort::ROUTER_PORT_SOUTH ||
 			 m_router_cfg.port( port ).portDirection() ==
-				EsyNetworkCfgPort::ROUTER_PORT_EAST  ||
+				EsyNetCfgPort::ROUTER_PORT_EAST  ||
 			 m_router_cfg.port( port ).portDirection() ==
-				EsyNetworkCfgPort::ROUTER_PORT_SOUTHWEST ||
+				EsyNetCfgPort::ROUTER_PORT_SOUTHWEST ||
 			 m_router_cfg.port( port ).portDirection() ==
-				EsyNetworkCfgPort::ROUTER_PORT_SOUTHEAST )
+				EsyNetCfgPort::ROUTER_PORT_SOUTHEAST )
 		{
 			port_offset[ port ] = - port_offset[ port ];
 		}
@@ -142,7 +142,7 @@ RouterGraphicsItem::RouterGraphicsItem(
 			m_assign_table[ port ].resize(
 						m_router_cfg.port( port ).inputVcNumber() );
 
-			EsyNetworkCfgPort::RouterPortDirection dir =
+			EsyNetCfgPort::RouterPortDirection dir =
 					m_router_cfg.port( port ).portDirection();
 
 			// for each vc
@@ -275,21 +275,21 @@ void RouterGraphicsItem::paint( QPainter *painter,
 		painter->setPen( t_pen );
 	}
 	// draw router boundary
-	QPointF router_boundary_point_t[ EsyNetworkCfgPort::ROUTER_PORT_NUM ];
-	for ( int i = 0; i < EsyNetworkCfgPort::ROUTER_PORT_NUM; i ++ )
+	QPointF router_boundary_point_t[ EsyNetCfgPort::ROUTER_PORT_NUM ];
+	for ( int i = 0; i < EsyNetCfgPort::ROUTER_PORT_NUM; i ++ )
 	{
 		router_boundary_point_t[ i ] =
 			router_boundary_point[ i ] * router_width / 2;
 	}
 	painter->drawPolygon( router_boundary_point_t,
-		EsyNetworkCfgPort::ROUTER_PORT_NUM );
+		EsyNetCfgPort::ROUTER_PORT_NUM );
 
 	// draw pe
 	if ( m_task_status != PE_RELEASE )
 	{
 		QPainterPath path;
 		path.moveTo(router_boundary_point[ 0 ]* router_width / 4);
-		for ( int i = 1; i < EsyNetworkCfgPort::ROUTER_PORT_NUM; i ++ )
+		for ( int i = 1; i < EsyNetCfgPort::ROUTER_PORT_NUM; i ++ )
 		{
 			path.lineTo(router_boundary_point[ i ] * router_width / 4);
 		}
@@ -301,7 +301,7 @@ void RouterGraphicsItem::paint( QPainter *painter,
 
 	for( long port = 0; port < m_router_cfg.portNum(); port ++ )
 	{
-		EsyNetworkCfgPort::RouterPortDirection t_dir =
+		EsyNetCfgPort::RouterPortDirection t_dir =
 				m_router_cfg.port( port ).portDirection();
 		if( m_router_cfg.port( port ).inputVcNumber() != 0 )
 		{
@@ -507,7 +507,7 @@ QPointF RouterGraphicsItem::inputPortConnectPos( int phy )
 	}
 	else
 	{
-		EsyNetworkCfgPort::RouterPortDirection dir =
+		EsyNetCfgPort::RouterPortDirection dir =
 			m_router_cfg.port( phy ).portDirection();
 		return portdir_radio_unit[ dir ] * router_width / 2 +
 			portdir_circle_unit[ dir ] * ( port_offset[ phy ] -
@@ -524,7 +524,7 @@ QPointF RouterGraphicsItem::outputPortConnectPos( int phy )
 	}
 	else
 	{
-		EsyNetworkCfgPort::RouterPortDirection dir =
+		EsyNetCfgPort::RouterPortDirection dir =
 			m_router_cfg.port( phy ).portDirection();
 		return portdir_radio_unit[ dir ] * router_width / 2 +
 			portdir_circle_unit[ dir ] * ( port_offset[ phy ] +

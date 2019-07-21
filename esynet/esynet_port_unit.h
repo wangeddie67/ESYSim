@@ -170,12 +170,12 @@ public:
      * @brief Construct one port with specified configuration.
      * @param port_cfg Port configuration structure.
      */
-    EsynetInputPort(EsyNetworkCfgPort * port_cfg)
+    EsynetInputPort( const EsyNetCfgPort & port_cfg)
         : m_neighbor_addr( esynet::VC_NULL )
-        , m_input_buffer_size( port_cfg->inputBuffer() )
+        , m_input_buffer_size( port_cfg.inputBuffer() )
     {
         // generate virtual channel
-        for ( int i = 0; i < port_cfg->inputVcNumber(); i ++ ) 
+        for ( int i = 0; i < port_cfg.inputVcNumber(); i ++ ) 
         {
             push_back( EsynetInputVirtualChannel() );
         }
@@ -260,10 +260,10 @@ public:
      * @brief Construct one port with specified configuration.
      * @param port_cfg Port configuration structure.
      */
-    EsynetOutputVirtualChannel(EsyNetworkCfgPort * port_cfg)
+    EsynetOutputVirtualChannel( const EsyNetCfgPort & port_cfg)
         : m_vc_assign( esynet::VC_NULL )
         , m_vc_usage( esynet::VC_FREE )
-        , m_credit_counter( port_cfg->inputBuffer() )
+        , m_credit_counter( port_cfg.inputBuffer() )
     {}
     /**
      * @}
@@ -350,14 +350,14 @@ public:
      * @brief Construct one port with specified configuration.
      * @param port_cfg Port configuration structure.
      */
-    EsynetOutputPort(EsyNetworkCfgPort * port_cfg)
+    EsynetOutputPort( const EsyNetCfgPort & port_cfg)
         : m_output_buffer()
         , m_out_add()
         , m_neighbor_addr( esynet::VC_NULL )
-        , m_output_buffer_size( port_cfg->outputBuffer() )
+        , m_output_buffer_size( port_cfg.outputBuffer() )
         , m_flit_on_link( false )
     {
-        for ( int i = 0; i < port_cfg->outputVcNumber(); i ++ )
+        for ( int i = 0; i < port_cfg.outputVcNumber(); i ++ )
         {
             push_back( EsynetOutputVirtualChannel(port_cfg) );
         }

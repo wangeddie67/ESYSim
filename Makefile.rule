@@ -20,23 +20,29 @@ DEPS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(DEPS_3)))
 
 # Make rules
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.cc
+	@echo "[CCPP ] " $@
 	$(CCPP) -c  $(CFLAGS) -o $@ $<
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.cpp
+	@echo "[CCPP ] " $@
 	$(CCPP) -c  $(CFLAGS) -o $@ $<
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.c
+	@echo "[CC   ] " $@
 	$(CC)   -c  $(CFLAGS) -o $@ $<
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.cc
+	@echo "[DEP  ] " $@
 	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
 	$(CCPP) -MM $(CFLAGS) $< >> $@
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.cpp
+	@echo "[DEP  ] " $@
 	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
 	$(CCPP) -MM $(CFLAGS) $< >> $@
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.c
+	@echo "[DEP  ] " $@
 	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
 	$(CC)   -MM $(CFLAGS) $< >> $@
 

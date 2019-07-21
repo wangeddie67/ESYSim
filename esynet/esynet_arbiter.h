@@ -79,12 +79,12 @@ public:
      * @brief Set map between request signals and input ports.
      * @param router_cfg Const reference to router configuration structure.
      */
-    void setInputPortMap( const EsyNetworkCfgRouter & router_cfg );
+    void setInputPortMap( const EsyNetCfgRouter & router_cfg );
     /**
      * @brief Set map between request signals and output ports.
      * @param router_cfg Const reference to router configuration structure.
      */
-    void setOutputPortMap( const EsyNetworkCfgRouter & router_cfg );
+    void setOutputPortMap( const EsyNetCfgRouter & router_cfg );
     /**
      * @}
      */
@@ -104,7 +104,7 @@ public:
     /**
      * @brief Clear all request signals.
      */
-    inline void clearRequest() { for ( size_t i = 0; i < m_size; i ++ ) m_request[ i ] = false; }
+    inline void clearRequest() { for ( int i = 0; i < m_size; i ++ ) m_request[ i ] = false; }
     /**
      * @brief Set the request signal specified by index a.
      */
@@ -114,7 +114,7 @@ public:
      */
     inline void setRequest( const esynet::EsynetVC & a ) 
     {
-        for ( size_t i = 0; i < m_size; i ++ )
+        for ( int i = 0; i < m_size; i ++ )
         {
             if ( m_vc_map[ i ] == a )
             {
@@ -135,7 +135,7 @@ public:
      */
     inline void clearRequest( const esynet::EsynetVC & a )
     { 
-        for ( size_t i = 0; i < m_size; i ++ ) 
+        for ( int i = 0; i < m_size; i ++ ) 
         {
             if ( m_vc_map[ i ] == a ) 
             {

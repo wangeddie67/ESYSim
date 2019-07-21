@@ -56,7 +56,7 @@ int main( int argc, char *argv[] )
     EsynetSRGen random_gen( argu_list.randomSeed() );
 
     // Generate network configuration.
-    EsyNetworkCfg network_cfg;
+    EsyNetCfg network_cfg;
     if ( argu_list.networkCfgFileEnable() )
     {
         EsyXmlError t_err = network_cfg.readXml( argu_list.networkCfgFileName() );
@@ -68,23 +68,23 @@ int main( int argc, char *argv[] )
     }
     else
     {
-        network_cfg = EsyNetworkCfg( argu_list.topology(),
-                                     argu_list.networkSize(),
-                                     1.0,
-                                     argu_list.physicalPortNumber(),
-                                     argu_list.virtualChannelNumber(),
-                                     argu_list.virtualChannelNumber(),
-                                     argu_list.inbufferSize(),
-                                     argu_list.outbufferSize(),
-                                     1.0,
-                                     argu_list.niBufferSize(),
-                                     argu_list.niReadDelay()
-                                   );
+        network_cfg = EsyNetCfg( argu_list.topology(),
+                                 argu_list.networkSize(),
+                                 1.0,
+                                 argu_list.physicalPortNumber(),
+                                 argu_list.virtualChannelNumber(),
+                                 argu_list.virtualChannelNumber(),
+                                 argu_list.inbufferSize(),
+                                 argu_list.outbufferSize(),
+                                 1.0,
+                                 argu_list.niBufferSize(),
+                                 argu_list.niReadDelay()
+                                );
     }
 
+    cout << network_cfg;
     // Network simulation platform 
-    EsynetFoundation sim_net( &network_cfg, &argu_list );
-    cout << sim_net;
+    EsynetFoundation sim_net( network_cfg, argu_list );
 
     // Print network configuration to file.
     if ( argu_list.networkCfgOutputFileEnable() )
@@ -98,7 +98,7 @@ int main( int argc, char *argv[] )
     }
 
     // Message queue 
-    EsynetEventQueue network_mess_queue( 0.0, &sim_net, &argu_list );
+    EsynetEventQueue network_mess_queue( 0.0, &sim_net, argu_list );
 
     // Simulation begin
     cout << "**** simulation begin ****" << endl;

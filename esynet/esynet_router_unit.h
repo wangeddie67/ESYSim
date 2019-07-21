@@ -44,9 +44,8 @@
 class EsynetRouter : public EsynetSimBaseUnit
 {
 private:
-    EsyNetworkCfg * m_network_cfg;      /*!< @brief Pointer to network configuration structure. */
-    EsyNetworkCfgRouter * m_router_cfg; /*!< @brief Pointer to router configuration structure. */
-    EsynetConfig * m_argu_cfg;          /*!< @brief Pointer to argument list. */
+    const EsyNetCfg & m_network_cfg;      /*!< @brief Reference to network configuration structure. */
+    const EsyNetCfgRouter & m_router_cfg; /*!< @brief Reference to router configuration structure. */
 
     long m_router_id;   /*!< @brief Router id. */
     esynet::EsynetAddr m_router_addr;   /*!< @brief Router address in axis. */
@@ -62,29 +61,19 @@ private:
     std::vector< EsynetArbiter > m_port_output_arbiter; /*!< @brief Port arbiter at input ports. */
 
     esynet::EsynetSwitchType m_switch_method;   /*!< @brief Flow control method. */
+    esynet::EsynetCrossbarType m_crossbar;      /*!< @brief Crossbar type. */
     void (EsynetRouter::*m_curr_algorithm)(long, long, long, long); /*!< @brief Routing algorithm function. */
 
     std::vector< std::vector< std::pair< long, esynet::EsynetVC > > > m_routing_table; /*!< @brief Routing table. First index is destination address. First item in pair is source address, second item in pair is routing decision. */
 
 public:
     /**
-     * @name Construction function
-     * @{
-     */
-    /**
-     * @brief Construct empty instance.
-     */
-    EsynetRouter();
-    /**
      * @brief Constructor a router.
-     * @param network_cfg Pointer to network configurations structure.
+     * @param network_cfg Reference to network configurations structure.
      * @param router_id Router id.
-     * @param argument_cfg Pointer to argument list.
+     * @param argument_cfg Reference to argument list.
      */
-    EsynetRouter( EsyNetworkCfg * network_cfg, long router_id, EsynetConfig * argument_cfg );
-    /**
-     * @}
-     */
+    EsynetRouter( const EsyNetCfg & network_cfg, long router_id, const EsynetConfig & argument_cfg );
 
     /**
      * @name Function to access and set variables
@@ -295,11 +284,6 @@ private:
     /**
      * @}
      */
-
-    /**
-     * @brief print configuration of router to stream
-     */
-    friend ostream& operator<<(ostream& os, const EsynetRouter & sr);
 };
 
 

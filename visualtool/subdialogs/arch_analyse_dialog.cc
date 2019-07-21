@@ -26,8 +26,8 @@ AnalyseDialog::AnalyseDialog( ResultTypeEnum type, const EsySoCCfg & cfg ) :
     mp_analyse_record_thread( 0 ), mp_record_reader( 0 )
 {
 	mp_result_plot = new AnalysePlot(
-        m_soc_cfg.network().size( EsyNetworkCfg::AX_X ),
-        m_soc_cfg.network().size( EsyNetworkCfg::AX_Y ),
+        m_soc_cfg.network().size( EsyNetCfg::AX_X ),
+        m_soc_cfg.network().size( EsyNetCfg::AX_Y ),
         this );
 
 	mp_task_combobox = new QComboBox();
@@ -269,7 +269,7 @@ void AnalyseDialog::drawPlotHandler()
 	{
         int index = mp_variable_combobox->currentIndex();
         mp_result_plot->attachSpectrogram( m_y_area_variables[ index ],
-            m_soc_cfg.network().size( EsyNetworkCfg::AX_X ) );
+            m_soc_cfg.network().size( EsyNetCfg::AX_X ) );
 	}
 
 	bool wheelenable =
@@ -293,9 +293,9 @@ void AnalyseDialog::drawPlotHandler()
 	bool trafficdrawenable = (
          (m_current_task == VAR_AREA || m_current_task == VAR_WINDOW) &&
          ( m_soc_cfg.network().topology() ==
-		   EsyNetworkCfg::NOC_TOPOLOGY_2DMESH ||
+		   EsyNetCfg::NOC_TOPOLOGY_2DMESH ||
            m_soc_cfg.network().topology() ==
-		   EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS ) );
+		   EsyNetCfg::NOC_TOPOLOGY_2DTORUS ) );
 	mp_traffic_draw_label->setVisible( trafficdrawenable );
 	mp_traffic_draw_combobox->setVisible( trafficdrawenable );
 

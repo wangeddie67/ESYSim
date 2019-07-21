@@ -180,8 +180,13 @@ if __name__ == "__main__" :
                         title = "Modify port {0} of router {1}".format( port_id, router_id )
                         port_cfg_dict_new = pages.pagePort(d, title, port_cfg_dict, True )
                         if port_cfg_dict_new:
+                            if port_cfg_dict[ 'ni' ] != port_cfg_dict_new[ 'ni' ] :
+                                # Update
+                                update = pages.pageUpdate( d, title )
+                            else :
+                                update = False
                             # Modify port configuration
-                            port_cfg_out = cmds.modifyPortCfg( path, port_cfg_dict_new, port_id=port_id, router_id=router_id )
+                            port_cfg_out = cmds.modifyPortCfg( path, port_cfg_dict_new, port_id=port_id, router_id=router_id, update=update )
                             if port_cfg_out :
                                 d.scrollbox( title=title, text=port_cfg_out )
                 else :

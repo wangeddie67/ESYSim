@@ -30,29 +30,33 @@
 #include "esynet_random_unit.h"
 
 
-EsynetPacketGenerator::EsynetPacketGenerator( EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg )
+EsynetPacketGenerator::EsynetPacketGenerator( const EsyNetCfg & network_cfg, const EsynetConfig & argument_cfg )
     : m_network_cfg( network_cfg )
-    , m_argu_cfg( argument_cfg )
     , m_tracein( NULL )
-    , m_enable( !argument_cfg->trafficInjectDisable() )
+    , m_traffic_profile( argument_cfg.trafficRule() )
+    , m_packet_inject_rate( argument_cfg.trafficPir() )
+    , m_packet_size( argument_cfg.packetSize() )
+    , m_input_trace_enable( argument_cfg.inputTraceEnable() )
+    , m_injected_packet( argument_cfg.injectedPacket() )
+    , m_enable( !argument_cfg.trafficInjectDisable() )
     , m_count( 0 )
 {
-    if ( argument_cfg->inputTraceEnable() )
+    if ( argument_cfg.inputTraceEnable() )
     {
         // open becnhmark trace
         m_tracein = new EsyDataFileIStream< EsyDataItemBenchmark >(
-            argument_cfg->inputTraceBufferSize(), argument_cfg->inputTraceFileName(), BENCHMARK_EXTENSION, !argument_cfg->inputTraceTextEnable() );
+            argument_cfg.inputTraceBufferSize(), argument_cfg.inputTraceFileName(), BENCHMARK_EXTENSION, !argument_cfg.inputTraceTextEnable() );
         // open failure, close traffic generator
         if ( !m_tracein->openSuccess() )
         {
-            cout << "Cannot open traffic trace file (T1) " << argument_cfg->inputTraceFileName() << endl;
+            cout << "Cannot open traffic trace file (T1) " << argument_cfg.inputTraceFileName() << endl;
             m_enable = false;
         }
         // benchmark is empty, close traffic generator
         m_item = m_tracein->getNextItem();
         if ( m_item.time() == -1 )
         {
-            cout << "Cannot open traffic trace file (T2) " << argument_cfg->inputTraceFileName() << endl;
+            cout << "Cannot open traffic trace file (T2) " << argument_cfg.inputTraceFileName() << endl;
             m_enable = false;
         }
     }
@@ -123,7 +127,7 @@ EsynetPacketGenerator::generatePacket(double sim_cycle)
     if ( m_enable )
     {
         // if enable input trace, read from file
-        if ( m_argu_cfg->inputTraceEnable() )
+        if ( m_input_trace_enable )
         {
             /* loop all the packages before simulation cycle */
             while ( sim_cycle >= m_item.time() )
@@ -143,14 +147,14 @@ EsynetPacketGenerator::generatePacket(double sim_cycle)
         // otherwise, generate by traffic profiles.
         else
         {
-            for ( int id = 0; id < m_network_cfg->niCount(); id ++ )
+            for ( long id = 0; id < m_network_cfg.niCount(); id ++ )
             {
                 std::vector< EsynetFlit > pac_list_one = genPacketTrafficProfiles( id );
-                for ( int i = 0; i < pac_list_one.size(); i ++ )
+                for ( std::size_t i = 0; i < pac_list_one.size(); i ++ )
                 {
                     pac_list.push_back( pac_list_one[ i ] );
                 }
-                if ( m_argu_cfg->injectedPacket() >= 0 && m_count >= m_argu_cfg->injectedPacket() )
+                if ( m_injected_packet >= 0 && m_count >= m_injected_packet )
                 {
                     m_enable = false;
                 }
@@ -168,38 +172,38 @@ EsynetPacketGenerator::genPacketTrafficProfiles( long id )
     {
         // detemine if there is a new packet, if the random number is lower then pir, shot will be TRUE;
         // Thus, the packet inject rate ranges from 0 to 1 packet/cycle/router.
-        bool shot = ( EsynetSRGenFlatDouble( 0, 1 ) < m_argu_cfg->trafficPir() );
+        bool shot = ( EsynetSRGenFlatDouble( 0, 1 ) < m_packet_inject_rate );
         /* if there is a new packet, determine each field for the new packet. */
         if ( shot )
         {
             // coordinate of source id.
-            int nbits = (int)log2Ceil( m_network_cfg->niCount() );
-            std::vector< long > src_cord = m_network_cfg->seq2Coord( id );
+            int nbits = (int)log2Ceil( m_network_cfg.niCount() );
+            std::vector< long > src_cord = m_network_cfg.seq2Coord( id );
 
             // generate new packet.
             int dst = id;
-            switch ( (esynet::EsynetTrafficProfile)m_argu_cfg->trafficRule() )
+            switch ( m_traffic_profile )
             {
             // Determine the destination in new packet according to Random rule.
             case esynet::TP_UNIFORM : 
-                dst = EsynetSRGenFlatLong( 0, m_network_cfg->niCount() );
+                dst = EsynetSRGenFlatLong( 0, m_network_cfg.niCount() );
                 break;
             // Determine the destination in new packet according to Transpose1 rule (x,y) -> (Y-1-y,X-1-x), X,Y is the size of network.
             case esynet::TP_TRANSPOSE1: 
                 {
                     vector< long > dst_cord( 2, 0 );
-                    dst_cord[ EsyNetworkCfg::AX_X ] = m_network_cfg->size( EsyNetworkCfg::AX_Y ) - 1 - src_cord[ EsyNetworkCfg::AX_Y ];
-                    dst_cord[ EsyNetworkCfg::AX_Y ] = m_network_cfg->size( EsyNetworkCfg::AX_X ) - 1 - src_cord[ EsyNetworkCfg::AX_X ];
-                    dst = m_network_cfg->coord2Seq( dst_cord );
+                    dst_cord[ EsyNetCfg::AX_X ] = m_network_cfg.size( EsyNetCfg::AX_Y ) - 1 - src_cord[ EsyNetCfg::AX_Y ];
+                    dst_cord[ EsyNetCfg::AX_Y ] = m_network_cfg.size( EsyNetCfg::AX_X ) - 1 - src_cord[ EsyNetCfg::AX_X ];
+                    dst = m_network_cfg.coord2Seq( dst_cord );
                 }
                 break;
             // Determine the destination in new packet according to Transpose2 rule (x,y) -> (y,x).
             case esynet::TP_TRANSPOSE2: 
                 {
                     vector< long > dst_cord( 2, 0 );
-                    dst_cord[ EsyNetworkCfg::AX_X ] = src_cord[ EsyNetworkCfg::AX_Y ];
-                    dst_cord[ EsyNetworkCfg::AX_Y ] = src_cord[ EsyNetworkCfg::AX_X ];
-                    dst = m_network_cfg->coord2Seq( dst_cord );
+                    dst_cord[ EsyNetCfg::AX_X ] = src_cord[ EsyNetCfg::AX_Y ];
+                    dst_cord[ EsyNetCfg::AX_Y ] = src_cord[ EsyNetCfg::AX_X ];
+                    dst = m_network_cfg.coord2Seq( dst_cord );
                 }
                 break;
             // Determine the destination in new packet according to bit reversal rule.
@@ -237,9 +241,9 @@ EsynetPacketGenerator::genPacketTrafficProfiles( long id )
                 break;
             }
             // insert new packets
-            EsynetFlit flit_t(m_count, m_argu_cfg->packetSize(), EsynetFlit::FLIT_HEAD, id, dst, -1, esynet::EsynetPayload());
+            EsynetFlit flit_t( m_count, m_packet_size, EsynetFlit::FLIT_HEAD, id, dst, -1, esynet::EsynetPayload() );
             m_count += 1;
-            pac_list.push_back(flit_t);
+            pac_list.push_back( flit_t );
         }
     }
     return pac_list;

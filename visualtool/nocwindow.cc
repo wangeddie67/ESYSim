@@ -342,7 +342,7 @@ void Integrator::flowEventHandler( QAction * event )
 		// choose network template file or network file
 		if ( name == FT_NETWORK_NEW )
 		{
-			m_network_cfg = EsyNetworkCfg();
+			m_network_cfg = EsyNetCfg();
 			m_network_file_name = "";
 			setOperateState( OPERATE_NEWFILE );
 		}

@@ -8,7 +8,7 @@ NoCDialog::NoCDialog() :
 	m_trace_fname( "" ),
 	m_current_step( 0 )
 {
-	mp_network_cfg = new EsyNetworkCfg();
+	mp_network_cfg = new EsyNetCfg();
 	// initialize noc sence
 	mp_noc_scene = new NoCScene( mp_network_cfg, new GraphicsConfigModel( this ), this );
     // add components
@@ -17,7 +17,7 @@ NoCDialog::NoCDialog() :
 	mp_noc_view->setScene(mp_noc_scene);
 }
 
-NoCDialog::NoCDialog( ResultTypeEnum type, EsyNetworkCfg* network_cfg,
+NoCDialog::NoCDialog( ResultTypeEnum type, EsyNetCfg* network_cfg,
 					  GraphicsConfigModel * graphics_cfg ) :
 	// initialization value
 	ResultBaseDialog( type ),
@@ -328,15 +328,15 @@ void NoCDialog::keyReleaseEventHandler(QKeyEvent * event)
 		case Qt::Key_Enter: nextCycle(); break;
 		case Qt::Key_Up: 
 			if ( mp_network_cfg->topology() ==
-				 EsyNetworkCfg::NOC_TOPOLOGY_2DMESH ||
+				 EsyNetCfg::NOC_TOPOLOGY_2DMESH ||
 				 mp_network_cfg->topology() ==
-				 EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS )
+				 EsyNetCfg::NOC_TOPOLOGY_2DTORUS )
 			{
 				if ( m_watch_router >=
-					 mp_network_cfg->size( EsyNetworkCfg::AX_X ) )
+					 mp_network_cfg->size( EsyNetCfg::AX_X ) )
 				{
 					m_watch_router -=
-							mp_network_cfg->size( EsyNetworkCfg::AX_X );
+							mp_network_cfg->size( EsyNetCfg::AX_X );
 				}
 			}
 			else
@@ -349,21 +349,21 @@ void NoCDialog::keyReleaseEventHandler(QKeyEvent * event)
 			break;
 		case Qt::Key_Down: 
 			if ( mp_network_cfg->topology() ==
-				 EsyNetworkCfg::NOC_TOPOLOGY_2DMESH ||
+				 EsyNetCfg::NOC_TOPOLOGY_2DMESH ||
 				 mp_network_cfg->topology() ==
-				 EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS )
+				 EsyNetCfg::NOC_TOPOLOGY_2DTORUS )
 			{
 				if ( m_watch_router < mp_network_cfg->routerCount() -
-					 mp_network_cfg->size( EsyNetworkCfg::AX_X ) - 1 )
+					 mp_network_cfg->size( EsyNetCfg::AX_X ) - 1 )
 				{
 					m_watch_router +=
-						 mp_network_cfg->size( EsyNetworkCfg::AX_X );
+						 mp_network_cfg->size( EsyNetCfg::AX_X );
 				}
 			}
 			else
 			{
 				if ( m_watch_router <
-					 mp_network_cfg->size( EsyNetworkCfg::AX_X ) - 1 )
+					 mp_network_cfg->size( EsyNetCfg::AX_X ) - 1 )
 				{
 					m_watch_router ++;
 				}
@@ -375,9 +375,9 @@ void NoCDialog::keyReleaseEventHandler(QKeyEvent * event)
 			break;
 		case Qt::Key_Right: 
 			if ( mp_network_cfg->topology() ==
-				 EsyNetworkCfg::NOC_TOPOLOGY_2DMESH ||
+				 EsyNetCfg::NOC_TOPOLOGY_2DMESH ||
 				 mp_network_cfg->topology() ==
-				 EsyNetworkCfg::NOC_TOPOLOGY_2DTORUS )
+				 EsyNetCfg::NOC_TOPOLOGY_2DTORUS )
 			{
 				if ( m_watch_router < mp_network_cfg->routerCount() - 1 )
 				{
@@ -387,7 +387,7 @@ void NoCDialog::keyReleaseEventHandler(QKeyEvent * event)
 			else
 			{
 				if ( m_watch_router <
-					 mp_network_cfg->size( EsyNetworkCfg::AX_X ) - 1 )
+					 mp_network_cfg->size( EsyNetCfg::AX_X ) - 1 )
 				{
 					m_watch_router ++;
 				}

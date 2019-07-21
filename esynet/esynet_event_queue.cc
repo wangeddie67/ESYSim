@@ -33,8 +33,8 @@ bool operator<( const EsynetEvent & a, const EsynetEvent & b )
     return a.eventStart() < b.eventStart();
 }
 
-EsynetEventQueue::EsynetEventQueue( double start_time, EsynetSimBaseUnit * sim_platform, EsynetConfig * argument_cfg )
-    : mp_argument_cfg( argument_cfg )
+EsynetEventQueue::EsynetEventQueue( double start_time, EsynetSimBaseUnit * sim_platform, const EsynetConfig & argument_cfg )
+    : m_argument_cfg( argument_cfg )
     , m_current_time( start_time )
     , m_mess_counter( 0 )
     , mp_sim_platform( sim_platform )
@@ -46,12 +46,12 @@ EsynetEventQueue::EsynetEventQueue( double start_time, EsynetSimBaseUnit * sim_p
     insert( EsynetEvent::generateRouterEvent( 0, PIPE_DELAY_, EsynetEvent::ROUTER ) );
 
     // open event trace
-    if ( mp_argument_cfg->eventTraceEnable() )
+    if ( m_argument_cfg.eventTraceEnable() )
     {
         openEventTrace();
     }
     // open output trace
-    if ( mp_argument_cfg->outputTraceEnable() )
+    if ( m_argument_cfg.outputTraceEnable() )
     {
         openOutputTrace();
     }
@@ -60,12 +60,12 @@ EsynetEventQueue::EsynetEventQueue( double start_time, EsynetSimBaseUnit * sim_p
 EsynetEventQueue::~EsynetEventQueue()
 {
     // close event trace
-    if ( mp_argument_cfg->eventTraceEnable() )
+    if ( m_argument_cfg.eventTraceEnable() )
     {
         closeEventTrace();
     }
     // close output trace
-    if ( mp_argument_cfg->outputTraceEnable() )
+    if ( m_argument_cfg.outputTraceEnable() )
     {
         closeOutputTrace();
     }
@@ -92,7 +92,7 @@ void EsynetEventQueue::simulator( long long int sim_cycle )
         if ( current_message.type() >= EVENT_TRACE_START )
         {
             // print out event if event trace is enabled
-            if ( mp_argument_cfg->eventTraceEnable() && ( mp_eventtrace != 0 ) )
+            if ( m_argument_cfg.eventTraceEnable() && ( mp_eventtrace != 0 ) )
             {
                 // Construct a new event trace item in event trace equal to the message
                 EsyDataItemEventtrace * t_item = new EsyDataItemEventtrace( 
@@ -116,7 +116,7 @@ void EsynetEventQueue::simulator( long long int sim_cycle )
                 mp_eventtrace->addNextItem( *t_item );
                 delete t_item;
             }
-            if ( mp_argument_cfg->eventTraceCoutEnable() )
+            if ( m_argument_cfg.eventTraceCoutEnable() )
             {
                 // Construct a new event trace item in event trace equal to the message
                 EsyDataItemEventtrace * t_item = new EsyDataItemEventtrace( 
@@ -140,7 +140,7 @@ void EsynetEventQueue::simulator( long long int sim_cycle )
                 LINK_TRACE_PRINT( itemstr )
                 delete t_item;
             }
-            if ( mp_argument_cfg->outputTraceEnable() && ( mp_outputtrace != 0 ) && ( current_message.type() == ET_PACKET_INJECT ) )
+            if ( m_argument_cfg.outputTraceEnable() && ( mp_outputtrace != 0 ) && ( current_message.type() == ET_PACKET_INJECT ) )
             {
                 EsyDataItemBenchmark * t_item = new EsyDataItemBenchmark(
                     current_message.eventStart(),
@@ -167,8 +167,8 @@ bool EsynetEventQueue::openEventTrace()
 {
     // construct new entity of interface to event trace.
     mp_eventtrace = new EsyDataFileOStream< EsyDataItemEventtrace >(
-        mp_argument_cfg->eventTraceBufferSize(), mp_argument_cfg->eventTraceFileName(),
-        EVENTTRACE_EXTENSION, true, mp_argument_cfg->eventTraceTextEnable() );
+        m_argument_cfg.eventTraceBufferSize(), m_argument_cfg.eventTraceFileName(),
+        EVENTTRACE_EXTENSION, true, m_argument_cfg.eventTraceTextEnable() );
     return true;
 }
 
@@ -187,8 +187,8 @@ bool EsynetEventQueue::openOutputTrace()
 {
     // construct new entity of interface to event trace.
     mp_outputtrace = new EsyDataFileOStream< EsyDataItemBenchmark >(
-        mp_argument_cfg->outputTraceBufferSize(), mp_argument_cfg->outputTraceFileName(),
-        BENCHMARK_EXTENSION, true, mp_argument_cfg->outputTraceTextEnable() );
+        m_argument_cfg.outputTraceBufferSize(), m_argument_cfg.outputTraceFileName(),
+        BENCHMARK_EXTENSION, true, m_argument_cfg.outputTraceTextEnable() );
     return true;
 }
 

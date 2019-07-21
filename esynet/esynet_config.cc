@@ -32,7 +32,7 @@
 #include "esy_faultcfg.h"
 
 EsynetConfig::EsynetConfig( EsynetConfig::ConfigType type )
-    : m_topology( EsyNetworkCfg::NT_MESH_2D )
+    : m_topology( EsyNetCfg::NT_MESH_2D )
     , m_network_size( 2, 8 )
     , m_physical_port_number( 5 )
     , m_virtual_channel_number( 1 )
@@ -79,7 +79,7 @@ EsynetConfig::EsynetConfig( EsynetConfig::ConfigType type )
 }
 
 EsynetConfig::EsynetConfig( int argc, char * const argv[], ConfigType type )
-    : m_topology( EsyNetworkCfg::NT_MESH_2D )
+    : m_topology( EsyNetCfg::NT_MESH_2D )
     , m_network_size( 2, 8 )
     , m_physical_port_number( 5 )
     , m_virtual_channel_number( 1 )
@@ -141,7 +141,7 @@ bool EsynetConfig::preDefineCheck()
 {
     switch (m_topology)
     {
-        case EsyNetworkCfg::NT_SWITCH :
+        case EsyNetCfg::NT_SWITCH :
             {
                 m_network_size.resize( 1 );
                 m_network_size[ 0 ] = 1;
@@ -152,7 +152,7 @@ bool EsynetConfig::preDefineCheck()
                 }
             }
             break;
-        case EsyNetworkCfg::NT_RING :
+        case EsyNetCfg::NT_RING :
             {
                 m_network_size.resize( 1 );
                 if ( m_physical_port_number < 3 )
@@ -168,7 +168,7 @@ bool EsynetConfig::preDefineCheck()
                 }
             }
             break;
-        case EsyNetworkCfg::NT_MESH_2D :
+        case EsyNetCfg::NT_MESH_2D :
             {
                 m_network_size.resize( 2 );
                 if ( m_network_size[ 1 ] == 0 )
@@ -188,7 +188,7 @@ bool EsynetConfig::preDefineCheck()
                 }
             }
             break;
-        case EsyNetworkCfg::NT_TORUS_2D :
+        case EsyNetCfg::NT_TORUS_2D :
             {
                 m_network_size.resize( 2 );
                 if ( m_network_size[ 1 ] == 0 )
@@ -215,7 +215,7 @@ bool EsynetConfig::preDefineCheck()
                 }
             }
             break;
-        case EsyNetworkCfg::NT_MESH_DIA :
+        case EsyNetCfg::NT_MESH_DIA :
             {
                 long idea_phy = m_network_size.size() * 2 + 1;
                 if ( m_physical_port_number < idea_phy )
@@ -231,7 +231,7 @@ bool EsynetConfig::preDefineCheck()
                 }
             }
             break;
-        case EsyNetworkCfg::NT_TORUS_DIA :
+        case EsyNetCfg::NT_TORUS_DIA :
             {
                 long idea_phy = m_network_size.size() * 2 + 1;
                 if ( m_physical_port_number < idea_phy )
@@ -276,12 +276,12 @@ void EsynetConfig::insertVariables(ConfigType type)
     if (( type & CONFIG_NETWORK_CFG ) > 0 )
     {
         // Topology
-        m_topology.addOption( EsyNetworkCfg::NT_SWITCH,    "Switch" );
-        m_topology.addOption( EsyNetworkCfg::NT_RING,      "Ring" );
-        m_topology.addOption( EsyNetworkCfg::NT_MESH_2D,   "2DMesh" );
-        m_topology.addOption( EsyNetworkCfg::NT_TORUS_2D,  "2DTorus" );
-        m_topology.addOption( EsyNetworkCfg::NT_MESH_DIA,  "DiaMesh" );
-        m_topology.addOption( EsyNetworkCfg::NT_TORUS_DIA, "DiaTorus" );
+        m_topology.addOption( EsyNetCfg::NT_SWITCH,    "Switch" );
+        m_topology.addOption( EsyNetCfg::NT_RING,      "Ring" );
+        m_topology.addOption( EsyNetCfg::NT_MESH_2D,   "2DMesh" );
+        m_topology.addOption( EsyNetCfg::NT_TORUS_2D,  "2DTorus" );
+        m_topology.addOption( EsyNetCfg::NT_MESH_DIA,  "DiaMesh" );
+        m_topology.addOption( EsyNetCfg::NT_TORUS_DIA, "DiaTorus" );
         insertEnum( "-topology", "Code for topology", &m_topology);
         // Network size
         insertLongVector( "-network_size", "Size of network in diamension", &m_network_size

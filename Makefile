@@ -4,19 +4,24 @@ include Makefile.include
 SUBMODULE := esynet libs tools
 
 all:
-	@echo Make Dependence Files
-	$(MAKE) depend
+	@$(MAKE) depend
 
-	@echo Compile Object Files
-	$(MAKE) objs
+	@$(MAKE) objs
 
-	@echo Link Executable Files
-	$(MKDIR) $(BIN_DIR)
-	$(CCPP) $(OFLAGS) -o $(BIN_DIR)$(X)esynet \
+	@$(MKDIR) $(BIN_DIR)
+	@$(MAKE) .esynet
+
+.esynet: $(BIN_DIR)$(X)esynet $(BIN_DIR)$(X)netcfgeditor
+
+$(BIN_DIR)$(X)esynet: $(LINK_OBJ) $(BUILD_DIR)$(X)esynet$(X)*.$(OEXT) $(BUILD_DIR)$(X)esynet$(X)orion$(X)*.$(OEXT)
+	@echo "[LINK ] " $@
+	$(CCPP) $(OFLAGS) -o $@ \
 		$(BUILD_DIR)$(X)esynet$(X)*.$(OEXT) \
-		$(BUILD_DIR)$(X)esynet$(X)orion$(X)*.$(OEXT) 
+		$(BUILD_DIR)$(X)esynet$(X)orion$(X)*.$(OEXT)
 
-	$(CCPP) $(OFLAGS) -o $(BIN_DIR)$(X)netcfgeditor \
+$(BIN_DIR)$(X)netcfgeditor: $(LINK_OBJ) $(BUILD_DIR)$(X)tools$(X)netcfgeditor$(X)*.$(OEXT)
+	@echo "[LINK ] " $@
+	$(CCPP) $(OFLAGS) -o $@ \
 		$(BUILD_DIR)$(X)tools$(X)netcfgeditor$(X)*.$(OEXT)
 
 include Makefile.rule

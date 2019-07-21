@@ -42,10 +42,15 @@
 class EsynetPacketGenerator
 {
 private:
-    EsyNetworkCfg * m_network_cfg;  /*!< @brief Pointer to network configuration structure. */
-    EsynetConfig * m_argu_cfg;  /*!< @brief Pointer to argument list .*/
+    const EsyNetCfg & m_network_cfg;  /*!< @brief Pointer to network configuration structure. */
 
     EsyDataFileIStream< EsyDataItemBenchmark > * m_tracein; /*!< @brief Pointer to benchmark trace interface. */
+
+    esynet::EsynetTrafficProfile m_traffic_profile;
+    double m_packet_inject_rate;
+    long m_packet_size;
+    bool m_input_trace_enable;
+    long m_injected_packet;
 
     bool m_enable;  /*!< @brief True if packet generator is enabled. */
     long m_count;   /*!< @brief Counter of injected packets. */
@@ -55,10 +60,10 @@ private:
 public:
     /**
      * @brief constructor function
-     * @param network_cfg Pointer to network configuration structure.
-     * @param argument_cfg Pointer to option list.
+     * @param network_cfg Reference to network configuration structure.
+     * @param argument_cfg Reference to option list.
      */
-    EsynetPacketGenerator( EsyNetworkCfg * network_cfg, EsynetConfig * argument_cfg );
+    EsynetPacketGenerator( const EsyNetCfg & network_cfg, const EsynetConfig & argument_cfg );
     /**
      * @brief destructor function
      */

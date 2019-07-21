@@ -870,10 +870,10 @@ protected:
  *   <td> #end() </td>
  * </tr>
  * <tr>
- *   <td> vector< long > #m_traffic </td>
+ *   <td> vector< long > m_traffic </td>
  *   <td> DataFormatItem::LONG_VECTOR_TYPE </td>
  *   <td> Traffic distribution. Flit switched in routers. </td>
- *   <td> #traffic() </td>
+ *   <td> traffic() </td>
  * </tr>
  * </table>
  */
@@ -907,7 +907,7 @@ public:
      * \brief Constructs an item with specified value for start and end cycle. 
      * \param start  Start cycle of this window. 
      * \param end    End cycle of this window.
-     * \param size   Number of routers. Size of #m_traffic.
+     * \param size   Number of routers. Size of m_traffic.
      */
     EsyDataItemTrafficWindow( double start, double end, long size );
     /*!
@@ -935,7 +935,7 @@ public:
      */
     const vector< long > & injectTraffic() const { return m_inject; }
     /*!
-     * \brief Increase the number of flit injected by router #id.
+     * \brief Increase the number of flit injected by router id.
      * \param id  router id.
      * \param a   Inject flit.
      */
@@ -946,7 +946,7 @@ public:
      */
     const vector< long > & acceptTraffic() const { return m_accept; }
     /*!
-     * \brief Increase the number of flit accepted by router #id.
+     * \brief Increase the number of flit accepted by router id.
      * \param id  router id.
      * \param a   Accept flit.
      */
@@ -957,7 +957,7 @@ public:
      */
     const vector< long > & throughTraffic() const { return m_through; }
     /*!
-     * \brief Increase the number of flit through router #id.
+     * \brief Increase the number of flit through router id.
      * \param id  router id.
      * \param a   Through flit.
      */
@@ -966,7 +966,6 @@ public:
 protected:
     /*!
      * \brief Register the variables in the item.
-     * \param size  Number of router. Size of traffics.
      */
     void insertVariables();
 };
@@ -1103,7 +1102,7 @@ public:
      * \brief Constructs an item with specified value for start and end cycle. 
      * \param start  Start cycle of this window. 
      * \param end    End cycle of this window.
-     * \param size   Number of routers. Size of #m_traffic.
+     * \param size   Number of routers. Size of m_traffic.
      */
     EsyDataItemRecordWindow( double start, double end, long size );
     /*!
@@ -1181,7 +1180,6 @@ public:
 protected:
     /*!
      * \brief Register the variables in the item.
-     * \param size  Number of router. Size of traffics.
      */
     void insertVariables();
 };

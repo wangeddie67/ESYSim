@@ -47,7 +47,7 @@ void EsynetRouter::algorithmSingleRing( long des, long src, long s_ph, long s_vc
     }
 
     // assign to all virtual channl.
-    for ( int vc = 0; vc < m_input_port[ phy ].size(); vc ++ )
+    for ( std::size_t vc = 0; vc < m_input_port[ phy ].size(); vc ++ )
     {
         m_input_port[ s_ph ][ s_vc ].addRouting( esynet::EsynetVC( phy, vc ) );
     }
@@ -57,7 +57,7 @@ void EsynetRouter::algorithmDoubleRing( long des, long src, long s_ph, long s_vc
 {
     // routing direction, two direction.
     long offset = des - m_router_id;
-    bool direction = ( abs( static_cast<int>( offset ) ) * 2 <= m_network_cfg->routerCount() ) ? true: false;
+    bool direction = ( abs( static_cast<int>( offset ) ) * 2 <= m_network_cfg.routerCount() ) ? true: false;
 
     long phy = PORT_LOCAL;
     // if destination == current id, turn to local
@@ -79,7 +79,7 @@ void EsynetRouter::algorithmDoubleRing( long des, long src, long s_ph, long s_vc
     }
 
     // assign to all virtual channel.
-    for ( int vc = 0; vc < m_input_port[ phy ].size(); vc ++ )
+    for ( std::size_t vc = 0; vc < m_input_port[ phy ].size(); vc ++ )
     {
         m_input_port[ s_ph ][ s_vc ].addRouting( esynet::EsynetVC( phy, vc ) );
     }

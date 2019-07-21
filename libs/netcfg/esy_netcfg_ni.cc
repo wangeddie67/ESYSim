@@ -30,7 +30,7 @@
 #define NET_ARGU_NI_BUFFER_SIZE     "buffer_size"
 #define NET_ARGU_NI_INTERRUPT_DELAY "interrupt_delay"
 
-void EsyNetworkCfgNI::readXml( TiXmlElement * root )
+void EsyNetCfgNI::readXml( TiXmlElement * root )
 {
     // Loop all item behind root.
     for ( TiXmlNode * p_child = root->FirstChild(); p_child != NULL; p_child = p_child->NextSibling() )
@@ -80,7 +80,7 @@ t_##var##_item->LinkEndChild( \
     new TiXmlText( EsyConvert( var ).c_str() ) ); \
 root->LinkEndChild( t_##var##_item ); \
 
-void EsyNetworkCfgNI::writeXml( TiXmlElement * root )
+void EsyNetCfgNI::writeXml( TiXmlElement * root )
 {
     TiXmlElement * t_item;
 
@@ -115,7 +115,7 @@ void EsyNetworkCfgNI::writeXml( TiXmlElement * root )
     root->LinkEndChild( t_item );
 }
 
-std::ostream& operator<<( std::ostream & os, const EsyNetworkCfgNI & ni_cfg )
+std::ostream& operator<<( std::ostream & os, const EsyNetCfgNI & ni_cfg )
 {
     os << "NI(" << ni_cfg.m_id << ") ";
     os << "connecion=(" << ni_cfg.m_connect_router << "," << ni_cfg.m_connect_port << ") ";

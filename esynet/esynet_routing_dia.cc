@@ -30,24 +30,24 @@
 
 void EsynetRouter::algorithmDiaTorus(long des, long src, long s_ph, long s_vc)
 {
-    esynet::EsynetAddr des_t = m_network_cfg->seq2Coord( des );
-    esynet::EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    esynet::EsynetAddr des_t = m_network_cfg.seq2Coord( des );
+    esynet::EsynetAddr sor_t = m_network_cfg.seq2Coord( src );
 
     long phy = 0;
-    for ( int dia = 0; dia < m_network_cfg->dim(); dia ++ )
+    for ( int dia = 0; dia < m_network_cfg.dim(); dia ++ )
     {
         long offset = des_t[ dia ] - m_router_addr[ dia ];
-        bool direction = ( abs( static_cast<int>( offset ) ) * 2 <= m_network_cfg->size( dia ) ) ? true : false;
+        bool direction = ( abs( static_cast<int>( offset ) ) * 2 <= m_network_cfg.size( dia ) ) ? true : false;
         // hand to direction with down direction
         if ( offset < 0 )
         {
-            phy = direction ? ( 2 * ( m_network_cfg->dim() - dia - 1 ) + 1 ) : ( 2 * ( m_network_cfg->dim() - dia - 1 ) + 2 );
+            phy = direction ? ( 2 * ( m_network_cfg.dim() - dia - 1 ) + 1 ) : ( 2 * ( m_network_cfg.dim() - dia - 1 ) + 2 );
             break;
         }
         // hand to direction with up direction
         else if ( offset > 0 )
         {
-            phy = direction ? ( 2 * ( m_network_cfg->dim() - dia - 1 ) + 2 ) : ( 2 * ( m_network_cfg->dim() - dia - 1 ) + 1 );
+            phy = direction ? ( 2 * ( m_network_cfg.dim() - dia - 1 ) + 2 ) : ( 2 * ( m_network_cfg.dim() - dia - 1 ) + 1 );
             break;
         }
         // if one the same position, next diamension.
@@ -65,22 +65,22 @@ void EsynetRouter::algorithmDiaTorus(long des, long src, long s_ph, long s_vc)
 
 void EsynetRouter::algorithmDiaMesh(long des, long src, long s_ph, long s_vc)
 {
-    esynet::EsynetAddr des_t = m_network_cfg->seq2Coord( des );
-    esynet::EsynetAddr sor_t = m_network_cfg->seq2Coord( src );
+    esynet::EsynetAddr des_t = m_network_cfg.seq2Coord( des );
+    esynet::EsynetAddr sor_t = m_network_cfg.seq2Coord( src );
 
     long phy = 0;
-    for ( int dia = 0; dia < m_network_cfg->dim(); dia ++ )
+    for ( int dia = 0; dia < m_network_cfg.dim(); dia ++ )
     {
         // hand to port with down direction
         if ( des_t[ dia ] < m_router_addr[ dia ] )
         {
-            phy = 2 * ( m_network_cfg->dim() - dia - 1 ) + 1;
+            phy = 2 * ( m_network_cfg.dim() - dia - 1 ) + 1;
             break;
         }
         // hand to port with up direction
         else if ( des_t[ dia ] > m_router_addr[ dia ] )
         {
-            phy = 2 * ( m_network_cfg->dim() - dia - 1 ) + 2;
+            phy = 2 * ( m_network_cfg.dim() - dia - 1 ) + 2;
             break;
         }
         // if one the same position, next diamension.

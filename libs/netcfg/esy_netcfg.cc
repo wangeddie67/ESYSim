@@ -40,11 +40,11 @@
 #define NET_ARGU_SIZE   "size"
 #define NET_ARGU_INDEX  "index"
 
-std::string EsyNetworkCfg::const_noc_topology[ NT_COUNT ] =
+std::string EsyNetCfg::const_noc_topology[ NT_COUNT ] =
     { "Switch", "Ring", "2D-Mesh", "2D-Torus", "MD-Mesh", "MD-Torus", "Irregular" };
-std::string EsyNetworkCfg::const_axis_dir[ AX_NUM ] = { "X", "Y", "Z" };
+std::string EsyNetCfg::const_axis_dir[ AX_NUM ] = { "X", "Y", "Z" };
 
-EsyNetworkCfg::EsyNetworkCfg( const EsyNetworkCfg & t )
+EsyNetCfg::EsyNetCfg( const EsyNetCfg & t )
     : m_topology( t.m_topology )
     , m_size( t.m_size )
     , m_template_router( t.m_template_router )
@@ -53,7 +53,7 @@ EsyNetworkCfg::EsyNetworkCfg( const EsyNetworkCfg & t )
     , m_ni( t.m_ni )
 {}
 
-EsyNetworkCfg::EsyNetworkCfg( NoCTopology topology, const std::vector< long >& size
+EsyNetCfg::EsyNetCfg( NoCTopology topology, const std::vector< long >& size
         , double pipe_cycle, long phy_port, long input_vc_num, long output_vc_num, long input_buffer, long output_buffer
         , double ni_pipe_cycle, long ni_buffer, double ni_interrupt_delay
 )
@@ -74,7 +74,7 @@ EsyNetworkCfg::EsyNetworkCfg( NoCTopology topology, const std::vector< long >& s
     // Configure ports.
     for ( int t_port = 0; t_port < phy_port; t_port ++ )
     {
-        EsyNetworkCfgPort& port = m_template_router.port( t_port );
+        EsyNetCfgPort& port = m_template_router.port( t_port );
 
         // Set parameters: input/output virtual channel, input/output buffer size.
         port.setInputVcNumber( input_vc_num );
@@ -86,8 +86,8 @@ EsyNetworkCfg::EsyNetworkCfg( NoCTopology topology, const std::vector< long >& s
         if ( t_port == 0 || m_topology == NT_SWITCH )
         {
             port.setPortAxis( 0 );
-            port.setPortAxisDir( EsyNetworkCfgPort::AXDIR_DOWN );
-            port.setPortDirection( EsyNetworkCfgPort::ROUTER_PORT_SOUTHWEST );
+            port.setPortAxisDir( EsyNetCfgPort::AXDIR_DOWN );
+            port.setPortDirection( EsyNetCfgPort::ROUTER_PORT_SOUTHWEST );
             port.setNetworkInterface( true );
             continue;
         }
@@ -102,19 +102,19 @@ EsyNetworkCfg::EsyNetworkCfg( NoCTopology topology, const std::vector< long >& s
         long t_axis = t_dim - 1 - ( ( t_port - 1 ) / 2 ) % t_dim;
         port.setPortAxis( t_axis );
         // If port is even, increase direction; otherwise, decrease direction.
-        port.setPortAxisDir( ( t_port % 2 == 1 ) ? EsyNetworkCfgPort::AXDIR_DOWN : EsyNetworkCfgPort::AXDIR_UP );
+        port.setPortAxisDir( ( t_port % 2 == 1 ) ? EsyNetCfgPort::AXDIR_DOWN : EsyNetCfgPort::AXDIR_UP );
         // Set direction on GUI
         if ( t_2d )
         {
             if ( port.portAxis() == 0 )
             {
-                port.setPortDirection( ( port.portAxisDir() == EsyNetworkCfgPort::AXDIR_DOWN ) ?
-                    EsyNetworkCfgPort::ROUTER_PORT_NORTH : EsyNetworkCfgPort::ROUTER_PORT_SOUTH );
+                port.setPortDirection( ( port.portAxisDir() == EsyNetCfgPort::AXDIR_DOWN ) ?
+                    EsyNetCfgPort::ROUTER_PORT_NORTH : EsyNetCfgPort::ROUTER_PORT_SOUTH );
             }
             else
             {
-                port.setPortDirection( ( port.portAxisDir() == EsyNetworkCfgPort::AXDIR_DOWN ) ?
-                    EsyNetworkCfgPort::ROUTER_PORT_WEST : EsyNetworkCfgPort::ROUTER_PORT_EAST );
+                port.setPortDirection( ( port.portAxisDir() == EsyNetCfgPort::AXDIR_DOWN ) ?
+                    EsyNetCfgPort::ROUTER_PORT_WEST : EsyNetCfgPort::ROUTER_PORT_EAST );
             }
         }
         // 3D topology, North, south, northwest, southeast, west, east;
@@ -122,25 +122,25 @@ EsyNetworkCfg::EsyNetworkCfg( NoCTopology topology, const std::vector< long >& s
         {
             if ( port.portAxis() == 0 )
             {
-                port.setPortDirection( ( port.portAxisDir() == EsyNetworkCfgPort::AXDIR_DOWN ) ?
-                    EsyNetworkCfgPort::ROUTER_PORT_NORTH : EsyNetworkCfgPort::ROUTER_PORT_SOUTH );
+                port.setPortDirection( ( port.portAxisDir() == EsyNetCfgPort::AXDIR_DOWN ) ?
+                    EsyNetCfgPort::ROUTER_PORT_NORTH : EsyNetCfgPort::ROUTER_PORT_SOUTH );
             }
             else if ( port.portAxis() == 1 )
             {
-                port.setPortDirection( ( port.portAxisDir() == EsyNetworkCfgPort::AXDIR_DOWN ) ?
-                    EsyNetworkCfgPort::ROUTER_PORT_NORTHWEST : EsyNetworkCfgPort::ROUTER_PORT_SOUTHEAST );
+                port.setPortDirection( ( port.portAxisDir() == EsyNetCfgPort::AXDIR_DOWN ) ?
+                    EsyNetCfgPort::ROUTER_PORT_NORTHWEST : EsyNetCfgPort::ROUTER_PORT_SOUTHEAST );
             }
             else if ( port.portAxis() == 2 )
             {
-                port.setPortDirection( ( port.portAxisDir() == EsyNetworkCfgPort::AXDIR_DOWN ) ?
-                    EsyNetworkCfgPort::ROUTER_PORT_WEST : EsyNetworkCfgPort::ROUTER_PORT_EAST );
+                port.setPortDirection( ( port.portAxisDir() == EsyNetCfgPort::AXDIR_DOWN ) ?
+                    EsyNetCfgPort::ROUTER_PORT_WEST : EsyNetCfgPort::ROUTER_PORT_EAST );
             }
         }
         // otherwise topology, North, south
         else
         {
-            port.setPortDirection( ( port.portAxisDir() == EsyNetworkCfgPort::AXDIR_DOWN ) ?
-                EsyNetworkCfgPort::ROUTER_PORT_NORTH : EsyNetworkCfgPort::ROUTER_PORT_SOUTH );
+            port.setPortDirection( ( port.portAxisDir() == EsyNetCfgPort::AXDIR_DOWN ) ?
+                EsyNetCfgPort::ROUTER_PORT_NORTH : EsyNetCfgPort::ROUTER_PORT_SOUTH );
         }
 
         // set Size of input and output buffer
@@ -152,7 +152,7 @@ EsyNetworkCfg::EsyNetworkCfg( NoCTopology topology, const std::vector< long >& s
     updateNetwork();
 }
 
-void EsyNetworkCfg::readXml( TiXmlElement * root )
+void EsyNetCfg::readXml( TiXmlElement * root )
 {
     // Loop all item behind root.
     for ( TiXmlNode * p_child = root->FirstChild(); p_child != NULL; p_child = p_child->NextSibling() )
@@ -217,7 +217,7 @@ void EsyNetworkCfg::readXml( TiXmlElement * root )
     }
 }
 
-void EsyNetworkCfg::writeXml( TiXmlElement * root )
+void EsyNetCfg::writeXml( TiXmlElement * root )
 {
     // Topology element.
     TiXmlElement * t_item = new TiXmlElement( NET_ARGU_TOPOLOGY );
@@ -272,21 +272,21 @@ void EsyNetworkCfg::writeXml( TiXmlElement * root )
     root->LinkEndChild( t_ni_list_item );
 }
 
-EsyXmlError EsyNetworkCfg::readXml( const std::string & fname )
+EsyXmlError EsyNetCfg::readXml( const std::string & fname )
 {
     // Open and parse file.
     std::string tname = fname + "." + NETCFG_EXTENSION;
     TiXmlDocument t_doc( tname.c_str() );
     if ( !t_doc.LoadFile() )
     {
-        return EsyXmlError( t_doc.ErrorDesc(), fname, EsyConvert( t_doc.ErrorRow() ), EsyConvert( t_doc.ErrorCol() ), "EsyNetworkCfg", "readXml" );
+        return EsyXmlError( t_doc.ErrorDesc(), fname, EsyConvert( t_doc.ErrorRow() ), EsyConvert( t_doc.ErrorCol() ), "EsyNetCfg", "readXml" );
     }
 
     // Check root element.
     TiXmlElement * t_head = t_doc.RootElement();
     if ( t_head->Value() != std::string( NET_ARGU_ROOT ) )
     {
-        return EsyXmlError( t_head->Value(), fname, "EsyNetworkCfg", "readXml" );
+        return EsyXmlError( t_head->Value(), fname, "EsyNetCfg", "readXml" );
     }
 
     // Read network configuration.
@@ -298,7 +298,7 @@ EsyXmlError EsyNetworkCfg::readXml( const std::string & fname )
     return EsyXmlError();
 }
 
-EsyXmlError EsyNetworkCfg::writeXml( const std::string & fname )
+EsyXmlError EsyNetCfg::writeXml( const std::string & fname )
 {
     // Document structure.
     TiXmlDocument t_doc;
@@ -323,7 +323,7 @@ EsyXmlError EsyNetworkCfg::writeXml( const std::string & fname )
     return EsyXmlError();
 }
 
-void EsyNetworkCfg::setTopology( NoCTopology topology )
+void EsyNetCfg::setTopology( NoCTopology topology )
 {
     m_topology = topology;
     // If the topology is 2D mesh/torus, resize diamension to 2D.
@@ -366,7 +366,7 @@ void EsyNetworkCfg::setTopology( NoCTopology topology )
     }
 }
 
-long EsyNetworkCfg::coord2Seq( const std::vector< long > & coord )
+long EsyNetCfg::coord2Seq( const std::vector< long > & coord ) const
 {
     long seq_t = coord[ m_size.size() - 1 ];
     for ( std::size_t i = 1; i < m_size.size(); i ++ )
@@ -377,7 +377,7 @@ long EsyNetworkCfg::coord2Seq( const std::vector< long > & coord )
     return seq_t;
 }
 
-std::vector< long > EsyNetworkCfg::seq2Coord( long seq )
+std::vector< long > EsyNetCfg::seq2Coord( long seq ) const
 {
     long seq_t = seq;
     std::vector< long > coord;
@@ -389,7 +389,7 @@ std::vector< long > EsyNetworkCfg::seq2Coord( long seq )
     return coord;
 }
 
-int EsyNetworkCfg::coordDistance( long p1, long p2 )
+int EsyNetCfg::coordDistance( long p1, long p2 ) const
 {
     std::vector< long > t_p1 = seq2Coord( p1 );
     std::vector< long > t_p2 = seq2Coord( p2 );
@@ -401,7 +401,7 @@ int EsyNetworkCfg::coordDistance( long p1, long p2 )
     return dist;
 }
 
-void EsyNetworkCfg::updateNetwork()
+void EsyNetCfg::updateNetwork()
 {
     // Clear routers and NIs
     m_router.clear();
@@ -409,7 +409,7 @@ void EsyNetworkCfg::updateNetwork()
 
     // Calculate router count;
     long router_count = 1;
-    for ( int i = 0; i < m_size.size(); i ++ )
+    for ( std::size_t i = 0; i < m_size.size(); i ++ )
     {
         router_count *= m_size[ i ];
     }
@@ -418,7 +418,7 @@ void EsyNetworkCfg::updateNetwork()
     for ( long id = 0; id < router_count; id ++ )
     {
         // Copy router configuration from template router.
-        EsyNetworkCfgRouter t_router_cfg( id, m_template_router.pipeCycle(), m_template_router.pos(), m_template_router.port() );
+        EsyNetCfgRouter t_router_cfg( id, m_template_router.pipeCycle(), m_template_router.pos(), m_template_router.port() );
 
         // Ger coordinary of the router.
         std::vector< long > t_ax = seq2Coord( t_router_cfg.routerId() );
@@ -430,11 +430,11 @@ void EsyNetworkCfg::updateNetwork()
             {
                 long ni_id = m_ni.size();
                 // generate ni structure
-                EsyNetworkCfgNI t_ni_cfg( ni_id, id, t_port_index
+                EsyNetCfgNI t_ni_cfg( ni_id, id, t_port_index
                     , m_template_ni.pipeCycle(), m_template_ni.bufferSize(), m_template_ni.interruptDelay() );
                 m_ni.push_back( t_ni_cfg );
                 // assign connection
-                EsyNetworkCfgPort& t_port = t_router_cfg.port( t_port_index );
+                EsyNetCfgPort& t_port = t_router_cfg.port( t_port_index );
                 t_port.setNeighborRouter( ni_id );
                 t_port.setNeighborPort( 0 );
                 continue;
@@ -446,12 +446,16 @@ void EsyNetworkCfg::updateNetwork()
         {
             for ( long t_port_index = 0; t_port_index < t_router_cfg.portNum(); t_port_index ++ )
             {
-                EsyNetworkCfgPort& t_port = t_router_cfg.port( t_port_index );
+                EsyNetCfgPort& t_port = t_router_cfg.port( t_port_index );
+                if ( t_port.networkInterface() )
+                {
+                    continue;
+                }
                 // The decrease direction port at the first router on the axis or the increase direction port at the last router on the axis,
                 // reset the vc number to 0 to close the port.
                 long t_port_axis = t_port.portAxis();
-                if ( ( t_ax[ t_port_axis ] == 0 && t_port.portAxisDir() == EsyNetworkCfgPort::AXDIR_DOWN )
-                    || ( t_ax[ t_port_axis ]  == m_size[ t_port_axis ] - 1 && t_port.portAxisDir() == EsyNetworkCfgPort::AXDIR_UP )  )
+                if ( ( t_ax[ t_port_axis ] == 0 && t_port.portAxisDir() == EsyNetCfgPort::AXDIR_DOWN )
+                    || ( t_ax[ t_port_axis ]  == m_size[ t_port_axis ] - 1 && t_port.portAxisDir() == EsyNetCfgPort::AXDIR_UP )  )
                 {
                     t_port.setInputVcNumber( 0 );
                     t_port.setOutputVcNumber( 0 );
@@ -462,9 +466,9 @@ void EsyNetworkCfg::updateNetwork()
         // Assign port.
         for ( long t_port_index = 0; t_port_index < t_router_cfg.portNum(); t_port_index ++ )
         {
-            EsyNetworkCfgPort& t_port = t_router_cfg.port( t_port_index );
+            EsyNetCfgPort& t_port = t_router_cfg.port( t_port_index );
             long t_port_axis = t_port.portAxis();
-            // Port connects to NI, connect to the same port.
+            // Port connects to NI, do not change.
             if ( t_port.networkInterface() )
             {
             }
@@ -475,7 +479,7 @@ void EsyNetworkCfg::updateNetwork()
                 t_port.setNeighborPort( t_port_index );
             }
             // Decrease port, connect to the previous router on the axis, port + 1.
-            else if ( t_port.portAxisDir() == EsyNetworkCfgPort::AXDIR_DOWN )
+            else if ( t_port.portAxisDir() == EsyNetCfgPort::AXDIR_DOWN )
             {
                 std::vector< long > t_neighbor_ax = t_ax;
                 if ( t_ax[ t_port_axis ] > 0 )
@@ -494,7 +498,7 @@ void EsyNetworkCfg::updateNetwork()
                 }
             }
             // Increase port, connect to the next router on the axis, port - 1.
-            else if ( t_port.portAxisDir() == EsyNetworkCfgPort::AXDIR_UP )
+            else if ( t_port.portAxisDir() == EsyNetCfgPort::AXDIR_UP )
             {
                 std::vector< long > t_neighbor_ax = t_ax;
                 if ( t_ax[ t_port_axis ] < m_size[ t_port_axis ] - 1 )
@@ -518,7 +522,40 @@ void EsyNetworkCfg::updateNetwork()
     }
 }
 
-long int EsyNetworkCfg::maxPcNum() const
+
+void EsyNetCfg::updateNI()
+{
+    // NIs
+    m_ni.clear();
+
+    // Generate router and NIs
+    for ( long router_id = 0; router_id < routerCount(); router_id ++ )
+    {
+        // Copy router configuration from template router.
+        EsyNetCfgRouter& t_router_cfg = router( router_id );
+
+        // generate NI structure
+        for ( long t_port_index = 0; t_port_index < t_router_cfg.portNum(); t_port_index ++ )
+        {
+            if ( t_router_cfg.port( t_port_index ).networkInterface() )
+            {
+                long ni_id = m_ni.size();
+                // generate ni structure
+                EsyNetCfgNI t_ni_cfg( ni_id, router_id, t_port_index
+                    , m_template_ni.pipeCycle(), m_template_ni.bufferSize(), m_template_ni.interruptDelay() );
+                m_ni.push_back( t_ni_cfg );
+                // assign connection
+                EsyNetCfgPort& t_port = t_router_cfg.port( t_port_index );
+                t_port.setNeighborRouter( ni_id );
+                t_port.setNeighborPort( 0 );
+            }
+        }
+
+        m_router.push_back( t_router_cfg );
+    }
+}
+
+long int EsyNetCfg::maxPcNum() const
 {
     long pcnum = 1;
     for ( long i = 0; i < routerCount(); i ++ )
@@ -531,7 +568,7 @@ long int EsyNetworkCfg::maxPcNum() const
     return pcnum;
 }
 
-long int EsyNetworkCfg::maxInputVcNum() const
+long int EsyNetCfg::maxInputVcNum() const
 {
     long vcnum = 1;
     for ( long i = 0; i < routerCount(); i ++ )
@@ -544,7 +581,7 @@ long int EsyNetworkCfg::maxInputVcNum() const
     return vcnum;
 }
 
-long int EsyNetworkCfg::maxOutputVcNum() const
+long int EsyNetCfg::maxOutputVcNum() const
 {
     long vcnum = 1;
     for ( long i = 0; i < routerCount(); i ++ )
@@ -557,7 +594,7 @@ long int EsyNetworkCfg::maxOutputVcNum() const
     return vcnum;
 }
 
-long int EsyNetworkCfg::maxInputBuffer() const
+long int EsyNetCfg::maxInputBuffer() const
 {
     long inputbuffer = 1;
     for ( long i = 0; i < routerCount(); i ++ )
@@ -570,7 +607,7 @@ long int EsyNetworkCfg::maxInputBuffer() const
     return inputbuffer;
 }
 
-long int EsyNetworkCfg::maxOutputBuffer() const
+long int EsyNetCfg::maxOutputBuffer() const
 {
     long outputbuffer = 1;
     for ( long i = 0; i < routerCount(); i ++ )
@@ -583,7 +620,7 @@ long int EsyNetworkCfg::maxOutputBuffer() const
     return outputbuffer;
 }
 
-std::ostream& operator<<( std::ostream & os, const EsyNetworkCfg & net_cfg )
+std::ostream& operator<<( std::ostream & os, const EsyNetCfg & net_cfg )
 {
     os << "Topology=" << net_cfg.topologyStr() << std::endl;
     os << "Size={" << net_cfg.size( 0 );
@@ -601,7 +638,7 @@ std::ostream& operator<<( std::ostream & os, const EsyNetworkCfg & net_cfg )
 
     for ( int i = 0; i < net_cfg.routerCount(); i ++ )
     {
-        const EsyNetworkCfgRouter& router_cfg = net_cfg.router( i );
+        const EsyNetCfgRouter& router_cfg = net_cfg.router( i );
         for ( int i = 0; i < router_cfg.portNum(); i ++ )
         {
             if ( i == 0 )
@@ -614,7 +651,7 @@ std::ostream& operator<<( std::ostream & os, const EsyNetworkCfg & net_cfg )
                 os << "              |";
             }
 
-            const EsyNetworkCfgPort& port_cfg = router_cfg.port( i );
+            const EsyNetCfgPort& port_cfg = router_cfg.port( i );
             os << setw(4) << i << " ";
             os << setw(4) << port_cfg.inputVcNumber() << " ";
             os << setw(4) << port_cfg.inputBuffer() << " ";
@@ -625,7 +662,7 @@ std::ostream& operator<<( std::ostream & os, const EsyNetworkCfg & net_cfg )
             if ( router_cfg.port( i ).networkInterface() )
             {
                 os << "  NI" << "      |";
-                const EsyNetworkCfgNI& ni_cfg = net_cfg.ni( port_cfg.neighborRouter() );
+                const EsyNetCfgNI& ni_cfg = net_cfg.ni( port_cfg.neighborRouter() );
                 os << setw(4) << ni_cfg.niId() << " ";
                 os << setw(8) << fixed << ni_cfg.pipeCycle() << " ";
                 os << setw(4) << ni_cfg.connectRouter() << " ";
