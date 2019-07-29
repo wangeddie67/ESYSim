@@ -33,18 +33,15 @@ $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.c
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.cc
 	@echo "[DEP  ] " $@
-	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
-	$(CCPP) -MM $(CFLAGS) $< >> $@
+	$(CCPP) -MM $(CFLAGS) $< | sed "s?$(patsubst %.cc,%.$(OEXT),$<)?$(patsubst %.d,%.$(OEXT),$@)?" > $@
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.cpp
 	@echo "[DEP  ] " $@
-	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
-	$(CCPP) -MM $(CFLAGS) $< >> $@
+	$(CCPP) -MM $(CFLAGS) $< | sed "s?$(patsubst %.cpp,%.$(OEXT),$<)?$(patsubst %.d,%.$(OEXT),$@)?" > $@
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.c
 	@echo "[DEP  ] " $@
-	echo -n $(BUILD_DIR)$(X)$(MODULE)$(X) > $@
-	$(CC)   -MM $(CFLAGS) $< >> $@
+	$(CC)   -MM $(CFLAGS) $< | sed "s?$(patsubst %.c,%.$(OEXT),$<)?$(patsubst %.d,%.$(OEXT),$@)?" > $@
 
 # Rules
 .PHONY: clean
