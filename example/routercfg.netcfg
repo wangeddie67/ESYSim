@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <networkcfg>
-    <topology>2</topology>
-    <size size="2">
-        <data index="0">4</data>
-        <data index="1">4</data>
+    <topology>4</topology>
+    <size size="3">
+        <data index="0">3</data>
+        <data index="1">3</data>
+        <data index="2">2</data>
     </size>
     <template_router_cfg>
         <id>0</id>
@@ -11,7 +12,7 @@
             <x>0</x>
             <y>0</y>
         </position>
-        <port_cfg size="5">
+        <port_cfg size="7">
             <data index="0">
                 <input_vc>1</input_vc>
                 <output_vc>1</output_vc>
@@ -28,7 +29,7 @@
                 <input_vc>1</input_vc>
                 <output_vc>1</output_vc>
                 <port_dir>2</port_dir>
-                <port_axis>1</port_axis>
+                <port_axis>2</port_axis>
                 <port_axis_dir>1</port_axis_dir>
                 <neighbor_id>-1</neighbor_id>
                 <neighbor_port>-1</neighbor_port>
@@ -40,7 +41,7 @@
                 <input_vc>1</input_vc>
                 <output_vc>1</output_vc>
                 <port_dir>3</port_dir>
-                <port_axis>1</port_axis>
+                <port_axis>2</port_axis>
                 <port_axis_dir>0</port_axis_dir>
                 <neighbor_id>-1</neighbor_id>
                 <neighbor_port>-1</neighbor_port>
@@ -49,6 +50,30 @@
                 <ni>0</ni>
             </data>
             <data index="3">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>4</port_dir>
+                <port_axis>1</port_axis>
+                <port_axis_dir>1</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>10</input_buffer>
+                <output_buffer>10</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="4">
+                <input_vc>1</input_vc>
+                <output_vc>1</output_vc>
+                <port_dir>7</port_dir>
+                <port_axis>1</port_axis>
+                <port_axis_dir>0</port_axis_dir>
+                <neighbor_id>-1</neighbor_id>
+                <neighbor_port>-1</neighbor_port>
+                <input_buffer>10</input_buffer>
+                <output_buffer>10</output_buffer>
+                <ni>0</ni>
+            </data>
+            <data index="5">
                 <input_vc>1</input_vc>
                 <output_vc>1</output_vc>
                 <port_dir>0</port_dir>
@@ -60,7 +85,7 @@
                 <output_buffer>10</output_buffer>
                 <ni>0</ni>
             </data>
-            <data index="4">
+            <data index="6">
                 <input_vc>1</input_vc>
                 <output_vc>1</output_vc>
                 <port_dir>1</port_dir>
@@ -83,17 +108,17 @@
         <buffer_size>10</buffer_size>
         <interrupt_delay>100</interrupt_delay>
     </template_ni_cfg>
-    <router_cfg size="16">
+    <router_cfg size="18">
         <data index="0">
             <id>0</id>
             <position>
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
-                    <input_vc>0</input_vc>
-                    <output_vc>0</output_vc>
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>6</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>1</port_axis_dir>
@@ -107,7 +132,7 @@
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
@@ -119,15 +144,39 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>4</neighbor_id>
+                    <neighbor_id>9</neighbor_id>
                     <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="3">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="4">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>3</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>0</port_dir>
@@ -139,14 +188,14 @@
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
-                <data index="4">
+                <data index="6">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>1</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -160,7 +209,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -177,7 +226,7 @@
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
@@ -189,22 +238,22 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>5</neighbor_id>
+                    <neighbor_id>10</neighbor_id>
                     <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="3">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>0</neighbor_id>
-                    <neighbor_port>4</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -212,11 +261,35 @@
                 <data index="4">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>4</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>0</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>2</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -230,7 +303,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -247,7 +320,7 @@
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
@@ -259,22 +332,22 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>6</neighbor_id>
+                    <neighbor_id>11</neighbor_id>
                     <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="3">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>1</neighbor_id>
-                    <neighbor_port>4</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -282,11 +355,35 @@
                 <data index="4">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>5</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>1</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>3</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -300,7 +397,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -317,7 +414,7 @@
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
@@ -329,9 +426,9 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>7</neighbor_id>
+                    <neighbor_id>12</neighbor_id>
                     <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -340,23 +437,47 @@
                 <data index="3">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>2</neighbor_id>
+                    <neighbor_id>0</neighbor_id>
                     <neighbor_port>4</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="4">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>6</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>-1</neighbor_id>
-                    <neighbor_port>-1</neighbor_port>
+                    <neighbor_id>4</neighbor_id>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -370,10 +491,10 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
-                    <input_vc>0</input_vc>
-                    <output_vc>0</output_vc>
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>6</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>1</port_axis_dir>
@@ -384,13 +505,13 @@
                     <ni>1</ni>
                 </data>
                 <data index="1">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>0</neighbor_id>
-                    <neighbor_port>2</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -399,22 +520,22 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>8</neighbor_id>
+                    <neighbor_id>13</neighbor_id>
                     <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="3">
-                    <input_vc>0</input_vc>
-                    <output_vc>0</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>-1</neighbor_id>
-                    <neighbor_port>-1</neighbor_port>
+                    <neighbor_id>1</neighbor_id>
+                    <neighbor_port>4</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -422,11 +543,35 @@
                 <data index="4">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>7</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>3</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>5</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -440,7 +585,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -454,13 +599,13 @@
                     <ni>1</ni>
                 </data>
                 <data index="1">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>1</neighbor_id>
-                    <neighbor_port>2</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -469,9 +614,9 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>9</neighbor_id>
+                    <neighbor_id>14</neighbor_id>
                     <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -480,10 +625,10 @@
                 <data index="3">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>4</neighbor_id>
+                    <neighbor_id>2</neighbor_id>
                     <neighbor_port>4</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -492,11 +637,35 @@
                 <data index="4">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>8</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>4</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>6</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -510,7 +679,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -524,13 +693,13 @@
                     <ni>1</ni>
                 </data>
                 <data index="1">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>2</neighbor_id>
-                    <neighbor_port>2</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -539,34 +708,58 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>10</neighbor_id>
-                    <neighbor_port>0</neighbor_port>
+                    <neighbor_id>15</neighbor_id>
+                    <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
-                    <ni>1</ni>
+                    <ni>0</ni>
                 </data>
                 <data index="3">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>5</neighbor_id>
+                    <neighbor_id>3</neighbor_id>
                     <neighbor_port>4</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="4">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>7</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -580,7 +773,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -594,13 +787,13 @@
                     <ni>1</ni>
                 </data>
                 <data index="1">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>3</neighbor_id>
-                    <neighbor_port>2</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -609,9 +802,9 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>11</neighbor_id>
+                    <neighbor_id>16</neighbor_id>
                     <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -620,10 +813,10 @@
                 <data index="3">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>6</neighbor_id>
+                    <neighbor_id>4</neighbor_id>
                     <neighbor_port>4</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -632,11 +825,35 @@
                 <data index="4">
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
-                    <port_dir>1</port_dir>
-                    <port_axis>0</port_axis>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>6</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>1</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>8</neighbor_id>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -650,10 +867,10 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
-                    <input_vc>0</input_vc>
-                    <output_vc>0</output_vc>
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>6</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>1</port_axis_dir>
@@ -664,13 +881,13 @@
                     <ni>1</ni>
                 </data>
                 <data index="1">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>4</neighbor_id>
-                    <neighbor_port>2</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -679,34 +896,58 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>12</neighbor_id>
+                    <neighbor_id>17</neighbor_id>
                     <neighbor_port>1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="3">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>5</neighbor_id>
+                    <neighbor_port>4</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="4">
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
-                    <port_axis_dir>1</port_axis_dir>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
-                <data index="4">
+                <data index="5">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>7</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>9</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -720,7 +961,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -737,34 +978,34 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>5</neighbor_id>
+                    <neighbor_id>0</neighbor_id>
                     <neighbor_port>2</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="2">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>13</neighbor_id>
-                    <neighbor_port>1</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="3">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>8</neighbor_id>
-                    <neighbor_port>4</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -772,11 +1013,35 @@
                 <data index="4">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>12</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>10</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -790,7 +1055,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -807,34 +1072,34 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>6</neighbor_id>
+                    <neighbor_id>1</neighbor_id>
                     <neighbor_port>2</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="2">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>14</neighbor_id>
-                    <neighbor_port>1</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="3">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>9</neighbor_id>
-                    <neighbor_port>4</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -842,11 +1107,35 @@
                 <data index="4">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>13</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>9</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>11</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -860,7 +1149,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -877,39 +1166,63 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>7</neighbor_id>
+                    <neighbor_id>2</neighbor_id>
                     <neighbor_port>2</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="2">
-                    <input_vc>1</input_vc>
-                    <output_vc>1</output_vc>
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>15</neighbor_id>
-                    <neighbor_port>1</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
                 <data index="3">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="4">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>14</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>0</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>1</port_axis_dir>
                     <neighbor_id>10</neighbor_id>
-                    <neighbor_port>4</neighbor_port>
+                    <neighbor_port>6</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
-                <data index="4">
+                <data index="6">
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>1</port_dir>
@@ -930,10 +1243,10 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
-                    <input_vc>0</input_vc>
-                    <output_vc>0</output_vc>
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>6</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>1</port_axis_dir>
@@ -947,9 +1260,9 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>8</neighbor_id>
+                    <neighbor_id>3</neighbor_id>
                     <neighbor_port>2</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -959,7 +1272,7 @@
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
@@ -968,6 +1281,30 @@
                     <ni>0</ni>
                 </data>
                 <data index="3">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>9</neighbor_id>
+                    <neighbor_port>4</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="4">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>15</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>0</port_dir>
@@ -979,14 +1316,14 @@
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
                 </data>
-                <data index="4">
+                <data index="6">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>13</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -1000,7 +1337,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -1017,9 +1354,9 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>9</neighbor_id>
+                    <neighbor_id>4</neighbor_id>
                     <neighbor_port>2</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -1029,7 +1366,7 @@
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
@@ -1040,10 +1377,10 @@
                 <data index="3">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>12</neighbor_id>
+                    <neighbor_id>10</neighbor_id>
                     <neighbor_port>4</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -1052,11 +1389,35 @@
                 <data index="4">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>16</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>12</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>14</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_port>5</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -1070,7 +1431,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -1087,9 +1448,9 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>10</neighbor_id>
+                    <neighbor_id>5</neighbor_id>
                     <neighbor_port>2</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -1099,7 +1460,7 @@
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
@@ -1110,10 +1471,10 @@
                 <data index="3">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
-                    <port_dir>0</port_dir>
-                    <port_axis>0</port_axis>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>13</neighbor_id>
+                    <neighbor_id>11</neighbor_id>
                     <neighbor_port>4</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -1122,11 +1483,35 @@
                 <data index="4">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>17</neighbor_id>
+                    <neighbor_port>3</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>13</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>1</port_dir>
                     <port_axis>0</port_axis>
                     <port_axis_dir>0</port_axis_dir>
-                    <neighbor_id>15</neighbor_id>
-                    <neighbor_port>3</neighbor_port>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
                     <ni>0</ni>
@@ -1140,7 +1525,7 @@
                 <x>0</x>
                 <y>0</y>
             </position>
-            <port_cfg size="5">
+            <port_cfg size="7">
                 <data index="0">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
@@ -1157,9 +1542,9 @@
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
                     <port_dir>2</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>1</port_axis_dir>
-                    <neighbor_id>11</neighbor_id>
+                    <neighbor_id>6</neighbor_id>
                     <neighbor_port>2</neighbor_port>
                     <input_buffer>10</input_buffer>
                     <output_buffer>10</output_buffer>
@@ -1169,7 +1554,7 @@
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>3</port_dir>
-                    <port_axis>1</port_axis>
+                    <port_axis>2</port_axis>
                     <port_axis_dir>0</port_axis_dir>
                     <neighbor_id>-1</neighbor_id>
                     <neighbor_port>-1</neighbor_port>
@@ -1180,8 +1565,196 @@
                 <data index="3">
                     <input_vc>1</input_vc>
                     <output_vc>1</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>12</neighbor_id>
+                    <neighbor_port>4</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="4">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
                     <port_dir>0</port_dir>
                     <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>1</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>16</neighbor_id>
+                    <neighbor_port>5</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+            </port_cfg>
+            <pipe_cycle>1</pipe_cycle>
+        </data>
+        <data index="16">
+            <id>16</id>
+            <position>
+                <x>0</x>
+                <y>0</y>
+            </position>
+            <port_cfg size="7">
+                <data index="0">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>6</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>16</neighbor_id>
+                    <neighbor_port>0</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>1</ni>
+                </data>
+                <data index="1">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>2</port_dir>
+                    <port_axis>2</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>7</neighbor_id>
+                    <neighbor_port>2</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="2">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>3</port_dir>
+                    <port_axis>2</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="3">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>13</neighbor_id>
+                    <neighbor_port>4</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="4">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>15</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>1</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>17</neighbor_id>
+                    <neighbor_port>5</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+            </port_cfg>
+            <pipe_cycle>1</pipe_cycle>
+        </data>
+        <data index="17">
+            <id>17</id>
+            <position>
+                <x>0</x>
+                <y>0</y>
+            </position>
+            <port_cfg size="7">
+                <data index="0">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>6</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>17</neighbor_id>
+                    <neighbor_port>0</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>1</ni>
+                </data>
+                <data index="1">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>2</port_dir>
+                    <port_axis>2</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>8</neighbor_id>
+                    <neighbor_port>2</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="2">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>3</port_dir>
+                    <port_axis>2</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="3">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>4</port_dir>
+                    <port_axis>1</port_axis>
                     <port_axis_dir>1</port_axis_dir>
                     <neighbor_id>14</neighbor_id>
                     <neighbor_port>4</neighbor_port>
@@ -1190,6 +1763,30 @@
                     <ni>0</ni>
                 </data>
                 <data index="4">
+                    <input_vc>0</input_vc>
+                    <output_vc>0</output_vc>
+                    <port_dir>7</port_dir>
+                    <port_axis>1</port_axis>
+                    <port_axis_dir>0</port_axis_dir>
+                    <neighbor_id>-1</neighbor_id>
+                    <neighbor_port>-1</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="5">
+                    <input_vc>1</input_vc>
+                    <output_vc>1</output_vc>
+                    <port_dir>0</port_dir>
+                    <port_axis>0</port_axis>
+                    <port_axis_dir>1</port_axis_dir>
+                    <neighbor_id>16</neighbor_id>
+                    <neighbor_port>6</neighbor_port>
+                    <input_buffer>10</input_buffer>
+                    <output_buffer>10</output_buffer>
+                    <ni>0</ni>
+                </data>
+                <data index="6">
                     <input_vc>0</input_vc>
                     <output_vc>0</output_vc>
                     <port_dir>1</port_dir>
@@ -1205,7 +1802,7 @@
             <pipe_cycle>1</pipe_cycle>
         </data>
     </router_cfg>
-    <ni_cfg size="16">
+    <ni_cfg size="18">
         <data index="0">
             <id>0</id>
             <connect_router>0</connect_router>
@@ -1329,6 +1926,22 @@
         <data index="15">
             <id>15</id>
             <connect_router>15</connect_router>
+            <connect_port>0</connect_port>
+            <pipe_cycle>1</pipe_cycle>
+            <buffer_size>10</buffer_size>
+            <interrupt_delay>100</interrupt_delay>
+        </data>
+        <data index="16">
+            <id>16</id>
+            <connect_router>16</connect_router>
+            <connect_port>0</connect_port>
+            <pipe_cycle>1</pipe_cycle>
+            <buffer_size>10</buffer_size>
+            <interrupt_delay>100</interrupt_delay>
+        </data>
+        <data index="17">
+            <id>17</id>
+            <connect_router>17</connect_router>
             <connect_port>0</connect_port>
             <pipe_cycle>1</pipe_cycle>
             <buffer_size>10</buffer_size>

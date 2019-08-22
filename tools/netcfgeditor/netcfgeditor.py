@@ -1,137 +1,12 @@
-/*
- * File name : netcfgeditor.cc
- * Function : Network configuration editor
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA  02110-1301, USA.
- *
- * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
- */
+#!/usr/bin/env python3
 
-/**
- * @ingroup TOOLS_NETCFGEDITOR
- * @file netcfgeditor.cc
- * @brief Implement network configuration editor.
- */
+import sys
+import argparse
 
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
-
-#include "esy_netcfg.h"
-#include "options/esy_options.h"
-
-int main( int argc, char * argv[])
-{
-    // Define arguments
-    EsyArgumentEnum a_topology( EsyNetCfg::NT_MESH_2D );    /**< @brief Network topology. */
-    std::vector< long > a_net_size( 2, 8 );     /**< @brief Size of network in each dimension. */
-
-    double a_pipe_cycle = -1;      /**< @brief Pipe cycle of router. */
-    long a_phy_port_num = -1;        /**< @brief The number of physical ports in each router. */
-    long a_in_vc_num = -1;           /**< @brief The number of virtual channels in each physical port. */
-    long a_out_vc_num = -1;          /**< @brief The number of virtual channels in each physical port. */
-    long a_in_buf_size = -1;        /**< @brief Input buffer size of each virtual channel. */
-    long a_out_buf_size = -1;       /**< @brief Output buffer size of each virtual channel. */
-    long a_axis = -1;           /**< @brief Port axis. */
-    EsyArgumentEnum a_axis_dir( EsyNetCfgPort::AXDIR_NUM ); /**< @brief Direction on axis. */
-    long a_conn_router = -1;     /**< @brief Connected router/NI. */
-    long a_conn_port = -1;       /**< @brief Connected port. */
-    bool a_conn_ni = false;         /**< @brief The port connect to NI. */
-    bool a_not_conn_ni = false;     /**< @brief The port does not connect to NI. */
-
-    double a_ni_pipe_cycle = -1;   /**< @brief Pipe cycle of NI. */
-    long a_ni_buf_size = -1;        /**< @brief Size of buffer in NI. */
-    double a_ni_int_delay = -1;      /**< @brief Delay of NI interruption. */
-    long a_ni_conn_router = -1;     /**< @brief Connected router. */
-    long a_ni_conn_port = -1;       /**< @brief Connected port. */
-
-    std::string a_netcfg_file_name = "../example/routing";      /**< @brief Network configuration file name. */
-
-    bool a_create = false;
-    bool a_view = false;
-    bool a_modify = false;
-    bool a_search = false;
-
-    long a_router_id = -1;
-    long a_ni_id = -1;
-    long a_port_id = -1;
-    bool a_template_router = false;
-    bool a_template_ni = false;
-
-    bool a_update = false;
-
-    EsyArgumentList argu;
-    a_topology.addOption( EsyNetCfg::NT_SWITCH,    "Switch" );
-    a_topology.addOption( EsyNetCfg::NT_RING,      "Ring" );
-    a_topology.addOption( EsyNetCfg::NT_MESH_2D,   "2DMesh" );
-    a_topology.addOption( EsyNetCfg::NT_TORUS_2D,  "2DTorus" );
-    a_topology.addOption( EsyNetCfg::NT_MESH_DIA,  "DiaMesh" );
-    a_topology.addOption( EsyNetCfg::NT_TORUS_DIA, "DiaTorus" );
-    a_topology.addOption( EsyNetCfg::NT_IRREGULAR, "Irregular" );
-    argu.insertEnum( "-topology", "Code for topology", &a_topology );
-    argu.insertLongVector( "-network_size", "Size of network in diamension", &a_net_size );
-
-    argu.insertDouble( "-pipe_cycle", "Pipeline cycle of routers", &a_pipe_cycle );
-    argu.insertLong( "-phy_number", "Number of physical port of a router", &a_phy_port_num );
-    argu.insertLong( "-in_vc_number", "Number of input virtual channel", &a_in_vc_num );
-    argu.insertLong( "-out_vc_number", "Number of output virtual channel", &a_out_vc_num );
-    argu.insertLong( "-in_buffer_size", "Buffer size of each VC", &a_in_buf_size );
-    argu.insertLong( "-out_buffer_size", "Output buffer size", &a_out_buf_size );
-    argu.insertLong( "-axis", "Axis of the port", &a_axis );
-    a_axis_dir.addOption( EsyNetCfgPort::AXDIR_UP,   "Up" );
-    a_axis_dir.addOption( EsyNetCfgPort::AXDIR_DOWN, "Down" );
-    argu.insertEnum( "-axis_dir", "Direction of axis", &a_axis_dir );
-    argu.insertLong( "-connect_router", "Connected router or NI. NI is after routers.", &a_conn_router );
-    argu.insertLong( "-connect_port", "Connected port. NI is after routers.", &a_conn_port );
-    a_axis_dir.addOption( EsyNetCfgPort::AXDIR_UP,   "Up" );
-    a_axis_dir.addOption( EsyNetCfgPort::AXDIR_DOWN, "Down" );
-    argu.insertBool( "-connect_ni", "Connect to NI.", &a_conn_ni );
-    argu.insertBool( "-not_connect_ni", "Not connect to NI.", & a_not_conn_ni );
-
-    argu.insertDouble( "-ni_pipe_cycle", "Pipeline cycle of NIs", &a_ni_pipe_cycle );
-    argu.insertLong( "-ni_buffer_size", "Buffer size of NI, #unit", &a_ni_buf_size );
-    argu.insertDouble( "-ni_interrupt_delay", "interruption delay of NI, #cycle", &a_ni_int_delay );
-    argu.insertLong( "-ni_connect_router", "Connected router of NI", &a_ni_conn_router );
-    argu.insertLong( "-ni_connect_port", "Connected port of NI", &a_ni_conn_port );
-
-    argu.insertOpenFile( "-network_cfg_file_name", "Network configuration file name", &a_netcfg_file_name, "", 1, NETCFG_EXTENSION );
-
-    argu.insertBool( "-create", "Create new network configuration file", &a_create );
-    argu.insertBool( "-view", "Print network configuration file", &a_view );
-    argu.insertBool( "-modify", "Modify network configuration file", &a_modify );
-    argu.insertBool( "-search", "Search parameters of specified network/router/port/ni", &a_search );
-
-    argu.insertLong( "-router_id", "ID of the router to modify", &a_router_id );
-    argu.insertBool( "-template_router", "Modify template router", &a_template_router );
-    argu.insertLong( "-port_id", "ID of the port to modify", &a_port_id );
-    argu.insertLong( "-ni_id", "ID of the NI to modify", &a_ni_id );
-    argu.insertBool( "-template_ni", "Modify template NI", &a_template_ni );
-
-    argu.insertBool( "-update", "Update network configuration", &a_update );
-
-    if ( argu.analyse( argc, argv ) != EsyArgumentList::RESULT_OK )
-    {
-        return 1;
-    }
-
-    // View the network configuration file.
-    if ( a_view )
-    {
-        // Read in network configuration file
+def create( args ) :
+    print( 'Create new network configuration file.' )
+    print( args )
+        '''// Read in network configuration file
         EsyNetCfg net_cfg;
         EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
         if ( xml_error.hasError() )
@@ -139,12 +14,12 @@ int main( int argc, char * argv[])
             std::cout << "Error: cannot read file " << a_netcfg_file_name << "." << std::endl;
             return 2;
         }
-        std::cout << net_cfg;
-    }
-    // Create new network configuration file.
-    else if ( a_create )
-    {
-        // default values
+        std::cout << net_cfg;'''
+
+def view( args ) :
+    print( 'Print network configuration file.' )
+    print( args )
+        '''// default values
         if ( a_pipe_cycle < 0 )
         {
             a_pipe_cycle = 1.0;
@@ -194,12 +69,12 @@ int main( int argc, char * argv[])
         {
             std::cout << "Error: cannot write file " << a_netcfg_file_name << "." << std::endl;
             return 2;
-        }
-    }
-    // Search parameters of network or specified router/ni/port
-    else if ( a_search )
-    {
-        // Read in network configuration file
+        }'''
+
+def modify( args ) :
+    print( 'Modify network configuration file.' )
+    print( args )
+        '''// Read in network configuration file
         EsyNetCfg net_cfg;
         EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
         if ( xml_error.hasError() )
@@ -287,11 +162,12 @@ int main( int argc, char * argv[])
             std::cout << "router_count = " << net_cfg.routerCount() << std::endl;
             std::cout << "ni_count = " << net_cfg.niCount() << std::endl;
         }
-    }
-    // Create new network configuration file.
-    else if ( a_modify )
-    {
-        EsyNetCfg net_cfg;
+    }'''
+
+def search( args ) :
+    print( 'Search parameters of specified network/router/port/NI.' )
+    print( args )
+        '''EsyNetCfg net_cfg;
         EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
         if ( xml_error.hasError() )
         {
@@ -497,16 +373,99 @@ int main( int argc, char * argv[])
         {
             std::cerr << "Error: cannot write file " << a_netcfg_file_name << "." << std::endl;
             return 2;
-        }
-    }
-    else
-    {
-        std::cout << "Please specify operation: " << std::endl;
-        std::cout << "  -create  Create new network configuration." << std::endl;
-        std::cout << "  -view    Print network configuration." << std::endl;
-        std::cout << "  -modify  Modify network configuration." << std::endl;
-        std::cout << "  -search  Search paramters of network or specified router/port/ni." << std::endl;
-    }
+        }'''
 
-    return 0;
-}
+def optionParser() :
+
+    # argument parser
+    parser = argparse.ArgumentParser( prog='netcfgeditor.py', description='Network Configuration Editor' )
+#    argu.insertOpenFile( "-network_cfg_file_name", "Network configuration file name", &a_netcfg_file_name, "", 1, NETCFG_EXTENSION );
+    subparsers = parser.add_subparsers( title='comamnds', description='valid subcommands', dest='command' )
+
+    # subcommand: create
+    parser_create = subparsers.add_parser( 'create', help='Create new network configuration file' )
+    parser_create.add_argument( '--file', help='Network configuration file name', required=True )
+    # topology group
+    parser_create_topology_group = parser_create.add_argument_group( 'arguments to specify topology' )
+    parser_create_topology_group.add_argument( '--topology', choices=['Switch', 'Ring', '2DMesh', '2DTorus', 'DiaMesh', 'DiaTorus', 'Irregular'], help='Code for topology', default='Switch' )
+    parser_create_topology_group.add_argument( '--network_size', help='Size of network in diamension', nargs='+', type=int, default=[1] )
+    # router group
+    parser_create_router_group = parser_create.add_argument_group( 'arguments to specify router configuration' )
+    parser_create_router_group.add_argument( '--pipe_cycle', help='Pipeline cycle of routers', type=float, default=1.0 )
+    parser_create_router_group.add_argument( '--phy_number', help='Number of physical port of a router', type=int, default=5 )
+    parser_create_router_group.add_argument( '--in_vc_number', help='Number of input virtual channel', type=int, default=1 )
+    parser_create_router_group.add_argument( '--out_vc_number', help='Number of output virtual channel', type=int, default=1 )
+    parser_create_router_group.add_argument( '--in_buffer_size', help='Size of input buffer of each VC', type=int, default=10 )
+    parser_create_router_group.add_argument( '--out_buffer_size', help='Size of output buffer of each VC', type=int, default=10 )
+    # NI group
+    parser_create_ni_group = parser_create.add_argument_group( 'arguments to specify NI configuration' )
+    parser_create_ni_group.add_argument( '--ni_pipe_cycle', help='Pipeline cycle of NIs', type=float, default=1.0 )
+    parser_create_ni_group.add_argument( '--ni_buffer_size', help='Buffer size of NI', type=int, default=10 )
+    parser_create_ni_group.add_argument( '--ni_interrupt_delay', help='Interruption delay of NI', type=float, default=100 )
+
+    # subcommand: view
+    parser_view = subparsers.add_parser( 'view', help='Print network configuration file' )
+    parser_view.add_argument( '--file', help='Network configuration file name', required=True )
+
+    # subcommand: modify
+    parser_modify = subparsers.add_parser( 'modify', help='Modify network configuration file' )
+    parser_modify.add_argument( '--file', help='Network configuration file name', required=True )
+    parser_modify.add_argument( '--update', help='Update network configuration', action='store_true', default=False )
+    # select component
+    parser_modify_select_group = parser_modify.add_argument_group( 'arguments to specify component to modify' )
+    parser_modify_select_group.add_argument( '--router_id', help='ID of the router to modify', type=int, default=-1 )
+    parser_modify_select_group.add_argument( '--template_router', help='Modify template router', action='store_true', default=False )
+    parser_modify_select_group.add_argument( '--port_id', help='ID of the port to modify', type=int, default=-1 )
+    parser_modify_select_group.add_argument( '--ni_id', help='ID of the NI to modify', type=int, default=-1 )
+    parser_modify_select_group.add_argument( '--template_ni', help='Modify template NI', action='store_true', default=False )
+    # router group
+    parser_modify_router_group = parser_modify.add_argument_group( 'arguments to modify router configuration' )
+    parser_modify_router_group.add_argument( '--pipe_cycle', help='Pipeline cycle of routers', type=float, default=1.0 )
+    parser_modify_router_group.add_argument( '--phy_number', help='Number of physical port of a router', type=int, default=5 )
+    # port group
+    parser_modify_port_group = parser_modify.add_argument_group( 'arguments to modify port configuration' )
+    parser_modify_port_group.add_argument( '--in_vc_number', help='Number of input virtual channel', type=int, default=1 )
+    parser_modify_port_group.add_argument( '--out_vc_number', help='Number of output virtual channel', type=int, default=1 )
+    parser_modify_port_group.add_argument( '--in_buffer_size', help='Size of input buffer of each VC', type=int, default=10 )
+    parser_modify_port_group.add_argument( '--out_buffer_size', help='Size of output buffer of each VC', type=int, default=10 )
+    parser_modify_port_group.add_argument( '--axis', help='Axis of the port', type=int, default=0 )
+    parser_modify_port_group.add_argument( '--axis_dir', choices=['Up', 'Down'], help='Direction of axis', default='Up' )
+    parser_modify_port_group.add_argument( '--connect_router', help='Connected router or NI', type=int, default=-1 )
+    parser_modify_port_group.add_argument( '--connect_port', help='Connected port', type=int, default=-1 )
+    parser_modify_port_group.add_argument( '--connect_ni', help='Connect to NI', action='store_true', default=False )
+    parser_modify_port_group.add_argument( '--not_connect_ni', help='Not connect to NI', action='store_true', default=False )
+    # NI group
+    parser_modify_ni_group = parser_modify.add_argument_group( 'arguments to modify NI configuration' )
+    parser_modify_ni_group.add_argument( '--ni_pipe_cycle', help='Pipeline cycle of NIs', type=float, default=1.0 )
+    parser_modify_ni_group.add_argument( '--ni_buffer_size', help='Buffer size of NI', type=int, default=10 )
+    parser_modify_ni_group.add_argument( '--ni_interrupt_delay', help='Interruption delay of NI', type=float, default=100 )
+    parser_modify_ni_group.add_argument( '--ni_connect_router', help='Connected router of NI', type=int, default=-1 )
+    parser_modify_ni_group.add_argument( '--ni_connect_port', help='Connected port of NI', type=int, default=-1 )
+
+    # subcommand: search
+    parser_search = subparsers.add_parser( 'search', help='Search parameters of specified network/router/port/NI' )
+    parser_search.add_argument( '--file', help='Network configuration file name', required=True )
+    # select component
+    parser_search_select_group = parser_search.add_argument_group( 'arguments to specify component to search' )
+    parser_search_select_group.add_argument( '--router_id', help='ID of the router to modify', type=int, default=-1 )
+    parser_search_select_group.add_argument( '--template_router', help='Modify template router', action='store_true', default=False )
+    parser_search_select_group.add_argument( '--port_id', help='ID of the port to modify', type=int, default=-1 )
+    parser_search_select_group.add_argument( '--ni_id', help='ID of the NI to modify', type=int, default=-1 )
+    parser_search_select_group.add_argument( '--template_ni', help='Modify template NI', action='store_true', default=False )
+
+    args = parser.parse_args()
+    return args
+
+# Main function
+if __name__ == "__main__" :
+    # parse option
+    args = optionParser()
+
+    if args.command == 'create' :
+        create( args )
+    elif args.command == 'view' :
+        view( args )
+    elif args.command == 'modify' :
+        modify( args )
+    elif args.command == 'search' :
+        search( args )

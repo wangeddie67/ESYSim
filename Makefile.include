@@ -2,6 +2,9 @@
 # Root Direction
 ESYSIM_ROOT := /home/snake1989/ESYSim
 
+# Third-part library direction
+BOOST_ROOT := /usr/include/boost/
+
 # Linux Command
 MAKE   := make -s
 AR     := ar qcv
@@ -29,7 +32,7 @@ BUILD_DIR := $(ESYSIM_ROOT)$(X)build
 BIN_DIR := $(ESYSIM_ROOT)$(X)bin
 
 # Include 
-INC_DIR := -I$(ESYSIM_ROOT)$(X)libs -I$(ESYSIM_ROOT)$(X)libs$(X)netcfg -I$(ESYSIM_ROOT)$(X)libs$(X)tinyxml
+INC_DIR := -I$(ESYSIM_ROOT)$(X)libs -I$(BOOST_ROOT)
 LINK_DIR :=
 LINK_OBJ := $(BUILD_DIR)$(X)libs$(X)tinyxml$(X)*.$(OEXT) $(BUILD_DIR)$(X)libs$(X)netcfg$(X)*.$(OEXT) $(BUILD_DIR)$(X)libs$(X)*.$(OEXT)
 
