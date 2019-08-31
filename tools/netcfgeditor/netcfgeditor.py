@@ -3,78 +3,50 @@
 import sys
 import argparse
 
-def create( args ) :
-    print( 'Create new network configuration file.' )
-    print( args )
-        '''// Read in network configuration file
-        EsyNetCfg net_cfg;
-        EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
-        if ( xml_error.hasError() )
-        {
-            std::cout << "Error: cannot read file " << a_netcfg_file_name << "." << std::endl;
-            return 2;
-        }
-        std::cout << net_cfg;'''
+sys.path.append('../../libs/netcfg')
+from netcfg import EsyNetCfg
 
 def view( args ) :
     print( 'Print network configuration file.' )
-    print( args )
-        '''// default values
-        if ( a_pipe_cycle < 0 )
-        {
-            a_pipe_cycle = 1.0;
-        }
-        if ( a_phy_port_num <= 0 )
-        {
-            a_phy_port_num = a_net_size.size() * 2 + 1;
-        }
-        if ( a_in_vc_num <= 0 )
-        {
-            a_in_vc_num = 1;
-        }
-        if ( a_out_vc_num <= 0 )
-        {
-            a_out_vc_num = 1;
-        }
-        if ( a_in_buf_size <= 0 )
-        {
-            a_in_buf_size = 10;
-        }
-        if ( a_out_buf_size <= 0 )
-        {
-            a_out_buf_size = 10;
-        }
-        if ( a_ni_pipe_cycle < 0 )
-        {
-            a_ni_pipe_cycle = 1.0;
-        }
-        if ( a_ni_buf_size <= 0 )
-        {
-            a_ni_buf_size = 10;
-        }
-        if ( a_ni_int_delay < 0 )
-        {
-            a_ni_int_delay = 100;
-        }
 
-        // Create new network configuration
-        EsyNetCfg net_cfg( ( EsyNetCfg::NoCTopology )( long )a_topology, a_net_size
-            , a_pipe_cycle, a_phy_port_num, a_in_vc_num, a_out_vc_num, a_in_buf_size, a_out_buf_size
-            , a_ni_pipe_cycle, a_ni_buf_size, a_ni_int_delay );
-        // Print network configuration
-        std::cout << net_cfg;
+    net_cfg = EsyNetCfg().readXml( args.file )
+    print( net_cfg )
 
-        EsyXmlError xml_error = net_cfg.writeXml( a_netcfg_file_name );
-        if ( xml_error.hasError() )
-        {
-            std::cout << "Error: cannot write file " << a_netcfg_file_name << "." << std::endl;
-            return 2;
-        }'''
+def create( args ) :
+    print( 'Create new network configuration file.' )
+    # argument check
+    if args.pipe_cycle <= 0.0 :
+        args.pipe_cycle = 1.0
+    if args.phy_number <= 0 :
+        args.phy_number = len( args.network_size ) * 2 + 1
+    if args.in_vc_number <= 0 :
+        args.in_vc_number = 1
+    if args.out_vc_number <= 0 :
+        args.out_vc_number = 1
+    if args.in_buffer_size <= 0 :
+        args.in_buffer_size = 10
+    if args.out_buffer_size <= 0 :
+        args.out_buffer_size = 10
+    if args.ni_pipe_cycle <= 0.0 :
+        args.a_ni_pipe_cycle = 1.0
+    if args.ni_buffer_size <= 0 :
+        args.ni_buffer_size = 10
+    if args.ni_interrupt_delay <= 0.0 :
+        args.ni_interrupt_delay = 100
+
+    # Create new network configuration
+    net_cfg = EsyNetCfg().createNetCfg( args.topology, args.net_size, args.pipe_cycle, \
+                                        args.phy_port_num, args.in_vc_num, args.out_vc_num, \
+                                        args.in_buf_size, args.out_buf_size, \
+                                        args.ni_pipe_cycle, args.ni_buf_size, args.ni_int_delay )
+    net_cfg.writeXml( args.file )
+    # Print network configuration
+    print( net_cfg )
 
 def modify( args ) :
     print( 'Modify network configuration file.' )
     print( args )
-        '''// Read in network configuration file
+    '''// Read in network configuration file
         EsyNetCfg net_cfg;
         EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
         if ( xml_error.hasError() )
@@ -167,7 +139,7 @@ def modify( args ) :
 def search( args ) :
     print( 'Search parameters of specified network/router/port/NI.' )
     print( args )
-        '''EsyNetCfg net_cfg;
+    '''0EsyNetCfg net_cfg;
         EsyXmlError xml_error = net_cfg.readXml( a_netcfg_file_name );
         if ( xml_error.hasError() )
         {
