@@ -19,12 +19,12 @@
 #
 # Copyright (C) 2019, Junshi Wang <wangeddie67@gmail.com>
 
+import enum
 import xml.etree.ElementTree as ET
 
 ##
 # @brief Structure of port configuration item.
 class EsyNetCfgPort :
-
     ##
     # @name Port direction enumerate
     # @{
@@ -36,119 +36,60 @@ class EsyNetCfgPort :
     port_dir_enum_northeast = 'NorthEast'
     port_dir_enum_southwest = 'SouthWest'
     port_dir_enum_southeast = 'SouthEast'
-    __port_dir_enum = [ port_dir_enum_north \
-                      , port_dir_enum_south \
-                      , port_dir_enum_west \
-                      , port_dir_enum_east \
-                      , port_dir_enum_northwest \
-                      , port_dir_enum_northeast \
-                      , port_dir_enum_southwest \
-                      , port_dir_enum_southeast ]
-    __port_dir_short_dict = { port_dir_enum_north     : 'N' \
-                            , port_dir_enum_south     : 'S' \
-                            , port_dir_enum_west      : 'W' \
-                            , port_dir_enum_east      : 'E' \
-                            , port_dir_enum_northwest : 'NW' \
-                            , port_dir_enum_northeast : 'NE' \
-                            , port_dir_enum_southwest : 'SW' \
-                            , port_dir_enum_southeast : 'SE' }
+    port_dir_enum = [ port_dir_enum_north
+                    , port_dir_enum_south
+                    , port_dir_enum_west
+                    , port_dir_enum_east
+                    , port_dir_enum_northwest
+                    , port_dir_enum_northeast
+                    , port_dir_enum_southwest
+                    , port_dir_enum_southeast ]
+
+    port_dir_short_enum_dict = { port_dir_enum_north     : 'N'
+                               , port_dir_enum_south     : 'S'
+                               , port_dir_enum_west      : 'W'
+                               , port_dir_enum_east      : 'E'
+                               , port_dir_enum_northwest : 'NW'
+                               , port_dir_enum_northeast : 'NE'
+                               , port_dir_enum_southwest : 'SW'
+                               , port_dir_enum_southeast : 'SE' }
+    ##
+    # @brief Access the short name of specified direction.
+    # @brief dir code of direction.
+    def portDirection2ShortStr( self, dir ) -> str :
+        return self.port_dir_short_dict[ dir ]
     ##
     # @}
 
     ##
     # @name Port axis direction enumerate
     # @{
-    port_axis_dir_enum_up   = 'Upward'
-    port_axis_dir_enum_down = 'Downward'
-    __port_axis_dir_enum = [ port_axis_dir_enum_up \
-                           , port_axis_dir_enum_down ]
+    port_axis_dir_enum_upward   = 'Upward'
+    port_axis_dir_enum_downward = 'Downward'
+    
+    port_axis_dir_enum = [ port_axis_dir_enum_upward \
+                         , port_axis_dir_enum_downward ]
     ##
     # @}
 
     ##
     # @brief Constructs an empty item with default value.
-    def __init__( self ) :
-        self.port_id = 0
-        self.input_vc_num = 1
-        self.output_vc_num = 1
-        self.port_dir = self.port_dir_enum_southwest
-        self.port_axis = 0
-        self.port_axis_dir = self.port_axis_dir_enum_down
-        self.neighbor_router = -1
-        self.neighbor_port = -1
-        self.input_buffer = 12
-        self.output_buffer = 12
-        self.network_interface = False
-
-    ##
-    # @brief Function to set parameters
-    # @{
-    ##
-    # @brief Construct an item for a template port.
-    # @param input_vc_num  Number of input virtual channel.
-    # @param output_vc_num Number of output virtual channel.
-    # @param input_buffer  Size of input buffer.
-    # @param output_buffer Size of output buffer.
-    def createTemplatePort( self, input_vc_num, output_vc_num, \
-                            input_buffer, output_buffer ) :
-        assert isinstance( input_vc_num, int ), 'input_vc_num must be an integer'
-        assert isinstance( output_vc_num, int ), 'output_vc_num must be an integer'
-        assert isinstance( input_buffer, int ), 'input_buffer must be an integer'
-        assert isinstance( output_buffer, int ), 'output_buffer must be an integer'
-        self.input_vc_num = input_vc_num
-        self.output_vc_num = output_vc_num
-        self.input_buffer = input_buffer
-        self.output_buffer = output_buffer
-    ##
-    # @brief Construct an item for a port
-    # @param port_id           Port index.
-    # @param input_vc_num      Number of input virtual channel.
-    # @param output_vc_num     Number of output virtual channel.
-    # @param dir               Port direction in GUI.
-    # @param axis              Axis of the port.
-    # @param axis_dir          Direction of port on axis.
-    # @param neighbor_router   Neighbor router.
-    # @param neighbor_port     Neighbor port.
-    # @param input_buffer      Size of input buffer.
-    # @param output_buffer     Size of output buffer.
-    # @param ni                Network interface flag of connection.
-    def createPort( self, port_id, input_vc_num, output_vc_num, \
-                    port_dir, port_axis, port_axis_dir, \
-                    neighbor_router, neighbor_port, \
-                    input_buffer, output_buffer, ni ) :
-        assert isinstance( port_id, int ), 'port_id must be an integer'
-        assert isinstance( input_vc_num, int ), 'input_vc_num must be an integer'
-        assert isinstance( output_vc_num, int ), 'output_vc_num must be an integer'
-        assert port_dir in self.__port_dir_enum, 'port_dir must be one of ' + str( self.__port_dir_enum )
-        assert isinstance( port_axis, int ), 'port_axis must be an integer'
-        assert port_axis_dir in self.__port_axis_dir_enum, 'port_dir must be one of ' + str( self.__port_axis_dir_enum )
-        assert isinstance( neighbor_router, int ), 'neighbor_router must be an integer'
-        assert isinstance( neighbor_port, int ), 'neighbor_port must be an integer'
-        assert isinstance( input_buffer, int ), 'input_buffer must be an integer'
-        assert isinstance( output_buffer, int ), 'output_buffer must be an integer'
-        assert isinstance( ni, (int, bool) ), 'output_buffer must be True or False'
-        self.port_id = port_id
-        self.input_vc_num = input_vc_num
-        self.port_dir = port_dir
-        self.port_axis = port_axis
-        self.port_axis_dir = port_axis_dir
-        self.neighbor_router = neighbor_router
-        self.neighbor_port = neighbor_port
-        self.input_buffer = input_buffer
-        self.output_buffer = output_buffer
-        self.network_interface = bool( ni )
-    ##
-    # @}
-
-    ##
-    # @brief Access the short name of specified direction.
-    # @brief dir code of direction.
-    def portDirection2ShortStr( self, dir ) :
-        return self.__port_dir_short_dict[ dir ]
+    def __init__( self ) -> None:
+        self.port_id = 0                # type: int
+        self.input_vc_num = 1           # type: int
+        self.output_vc_num = 1          # type: int
+        self.port_dir = self.port_dir_enum_southwest    # type: str
+        self.port_axis = 0              # type: int
+        self.port_axis_dir = self.port_axis_dir_enum_downward   # type: str
+        self.neighbor_router = -1       # type: int
+        self.neighbor_port = -1         # type: int
+        self.input_buffer = 12          # type: int
+        self.output_buffer = 12         # type: int
+        self.network_interface = False  # type: bool
 
     ##
     # @brief Return total virtual channel. Sum of input and output virtual channel.
-    def totalVcNumber( self ) :
+    def totalVcNumber( self ) -> int :
         return self.input_vc_num + self.output_vc_num
 
     ##
@@ -173,8 +114,7 @@ class EsyNetCfgPort :
     ##
     # @brief Read port configuration from XML file.
     # @param root  root of XML structure.
-    def readXml( self, root ) :
-        assert isinstance( root, ET.Element ), 'root must an entity of xml.etree.ElementTree.Element'
+    def readXml( self, root : ET.Element ) -> None :
         # Loop all child nodes
         child_node_list = root.getchildren()
         for child in child_node_list :
@@ -190,14 +130,14 @@ class EsyNetCfgPort :
             # Port direction in GUI.
             elif child.tag == self.__xml_tag_port_direction :
                 self.port_dir = child.text
-                assert self.port_dir in self.__port_dir_enum, 'Invalid value for port direction :' + self.port_dir
+                assert self.port_dir in self.port_dir_enum, 'Invalid value for port direction :' + self.port_dir
             # Port axis.
             elif child.tag == self.__xml_tag_port_axis :
                 self.port_axis = int( child.text )
             # Direction on port axis.
             elif child.tag == self.__xml_tag_port_axis_dir :
                 self.port_axis_dir = child.text
-                assert self.port_axis_dir in self.__port_axis_dir_enum, 'Invalid value for port axis direction :' + self.port_axis_dir
+                assert self.port_axis_dir in self.port_axis_dir_enum, 'Invalid value for port axis direction :' + self.port_axis_dir
             # Neighbor router id.
             elif child.tag == self.__xml_tag_port_neighbor_id :
                 self.neighbor_router = int( child.text )
@@ -212,13 +152,12 @@ class EsyNetCfgPort :
                 self.output_buffer = int( child.text )
             # Network interface.
             elif child.tag == self.__xml_tag_port_network_interface :
-                self.network_interface = int( child.text )
+                self.network_interface = bool( int( child.text ) )
 
     ##
     # @brief Write port configuration to XML file.
     # @param root  root of XML structure.
-    def writeXml( self, root ) :
-        assert isinstance( root, ET.Element ), 'root must an entity of xml.etree.ElementTree.Element'
+    def writeXml( self, root : ET.Element ) -> None :
         # Port id
         child_item = ET.SubElement( root, self.__xml_tag_port_id )
         child_item.text = str( self.port_id )
@@ -252,3 +191,67 @@ class EsyNetCfgPort :
         # Network interface, 0 or 1.
         child_item = ET.SubElement( root, self.__xml_tag_port_network_interface )
         child_item.text = str( int( self.network_interface ) )
+
+##
+# @brief Function to set parameters
+# @{
+##
+# @brief Construct an item for a template port.
+# @param input_vc_num  Number of input virtual channel.
+# @param output_vc_num Number of output virtual channel.
+# @param input_buffer  Size of input buffer.
+# @param output_buffer Size of output buffer.
+def createTemplatePort( port_id : int,
+                        input_vc_num : int,
+                        output_vc_num : int,
+                        input_buffer : int,
+                        output_buffer : int ) -> EsyNetCfgPort :
+    port_cfg = EsyNetCfgPort()
+    port_cfg.port_id = port_id
+    port_cfg.input_vc_num = input_vc_num
+    port_cfg.output_vc_num = output_vc_num
+    port_cfg.input_buffer = input_buffer
+    port_cfg.output_buffer = output_buffer
+    return port_cfg
+##
+# @brief Construct an item for a port
+# @param port_id           Port index.
+# @param input_vc_num      Number of input virtual channel.
+# @param output_vc_num     Number of output virtual channel.
+# @param dir               Port direction in GUI.
+# @param axis              Axis of the port.
+# @param axis_dir          Direction of port on axis.
+# @param neighbor_router   Neighbor router.
+# @param neighbor_port     Neighbor port.
+# @param input_buffer      Size of input buffer.
+# @param output_buffer     Size of output buffer.
+# @param ni                Network interface flag of connection.
+def createPort( port_id : int,
+                input_vc_num : int,
+                output_vc_num : int,
+                port_dir : str,
+                port_axis : int,
+                port_axis_dir : str,
+                neighbor_router : int,
+                neighbor_port : int,
+                input_buffer : int,
+                output_buffer : int,
+                ni : bool ) -> EsyNetCfgPort :
+    assert port_dir in EsyNetCfgPort.port_dir_enum, \
+        'port_dir must be one of ' + str( EsyNetCfgPort.port_dir_enum )
+    assert port_dir in EsyNetCfgPort.port_axis_dir_enum, \
+        'port_axis_dir must be one of ' + str( EsyNetCfgPort.port_axis_dir_enum )
+    port_cfg = EsyNetCfgPort()
+    port_cfg.port_id = port_id
+    port_cfg.input_vc_num = input_vc_num
+    port_cfg.port_dir = port_dir
+    port_cfg.port_axis = port_axis
+    port_cfg.port_axis_dir = port_axis_dir
+    port_cfg.neighbor_router = neighbor_router
+    port_cfg.neighbor_port = neighbor_port
+    port_cfg.input_buffer = input_buffer
+    port_cfg.output_buffer = output_buffer
+    port_cfg.network_interface = ni
+    return port_cfg
+##
+# @}

@@ -26,52 +26,13 @@ import xml.etree.ElementTree as ET
 class EsyNetCfgNI :
     ##
     # @brief Constructor an empty item with default values.
-    def __init__( self ) :
-        self.ni_id = 0
-        self.connect_router = 0
-        self.connect_port = 0
-        self.pipe_cycle = 0
-        self.buffer_size = 10
-        self.interrupt_delay = 200
-
-    ##
-    # @brief Function to set parameters
-    # @{
-    ##
-    # @brief Construct an item for a template NI.
-    # @param pipe_cycle      Pipeline cycle.
-    # @param buffer_size     Size of ejection buffer.
-    # @param interrupt_delay Delay to response NI interrupt.
-    def createTemplateNI( self, pipe_cycle, buffer_size, interrupt_delay ) :
-        assert isinstance( pipe_cycle, (int, float) ), 'pipe_cycle must be a float-point number or an integer'
-        assert isinstance( buffer_size, int ), 'buffer_size must be an integer'
-        assert isinstance( interrupt_delay, (int, float) ), 'interrupt_delay must be a float-point number or an integer'
-        self.pipe_cycle      = float( pipe_cycle )
-        self.buffer_size     = buffer_size
-        self.interrupt_delay = float( interrupt_delay )
-    ##
-    # @brief Construct an item for a NI
-    # @param ni_id           Network interface id.
-    # @param router          Connect router id.
-    # @param port            Connect port id.
-    # @param pipe_cycle      Pipeline cycle.
-    # @param buffer_size     Size of ejection buffer.
-    # @param interrupt_delay Delay to response NI interrupt.
-    def createNI( self, ni_id, connect_router, connect_port, pipe_cycle, buffer_size, interrupt_delay ) :
-        assert isinstance( ni_id, int ), 'ni_id must be an integer'
-        assert isinstance( connect_router, int ), 'connect_router must be an integer'
-        assert isinstance( connect_port, int ), 'connect_port must be an integer'
-        assert isinstance( pipe_cycle, (int, float) ), 'pipe_cycle must be a float-point number'
-        assert isinstance( buffer_size, int ), 'buffer_size must be an integer'
-        assert isinstance( interrupt_delay, (int, float) ), 'interrupt_delay must be an integer'
-        self.ni_id           = ni_id
-        self.connect_router  = connect_router
-        self.connect_port    = connect_port
-        self.pipe_cycle      = float( pipe_cycle )
-        self.buffer_size     = buffer_size
-        self.interrupt_delay = float( interrupt_delay )
-    ##
-    # @}
+    def __init__( self ) -> None :
+        self.ni_id = 0                  # type: str
+        self.connect_router = 0         # type: int
+        self.connect_port = 0           # type: int
+        self.pipe_cycle = 1.0           # type: float
+        self.buffer_size = 10           # type: int
+        self.interrupt_delay = 200.0    # type: float
 
     ##
     # @name Tag string for XML file
@@ -90,8 +51,7 @@ class EsyNetCfgNI :
     ##
     # @brief Read router configuration from XML file.
     # @param root  root of XML structure.
-    def readXml( self, root ) :
-        assert isinstance( root, ET.Element ), 'root must an entity of xml.etree.ElementTree.Element'
+    def readXml( self, root : ET.Element ) -> None :
         # Loop all child nodes
         child_node_list = root.getchildren()
         for child in child_node_list :
@@ -117,8 +77,7 @@ class EsyNetCfgNI :
     ##
     # @brief Write router configuration to XML file.
     # @param root  root of XML structure.
-    def writeXml( self, root ) :
-        assert isinstance( root, ET.Element ), 'root must an entity of xml.etree.ElementTree.Element'
+    def writeXml( self, root : ET.Element ) -> None :
         # NI id
         child_item = ET.SubElement( root, self.__xml_tag_ni_id )
         child_item.text = str( self.ni_id )
@@ -139,3 +98,44 @@ class EsyNetCfgNI :
         child_item.text = str( self.interrupt_delay )
     ##
     # @}
+
+##
+# @brief Function to set parameters
+# @{
+##
+# @brief Construct an item for a template NI.
+# @param pipe_cycle      Pipeline cycle.
+# @param buffer_size     Size of ejection buffer.
+# @param interrupt_delay Delay to response NI interrupt.
+def createTemplateNI( pipe_cycle : float,
+                      buffer_size : int,
+                      interrupt_delay : float ) -> EsyNetCfgNI :
+    net_cfg = EsyNetCfgNI()
+    net_cfg.pipe_cycle      = float( pipe_cycle )
+    net_cfg.buffer_size     = buffer_size
+    net_cfg.interrupt_delay = float( interrupt_delay )
+    return net_cfg
+##
+# @brief Construct an item for a NI
+# @param ni_id           Network interface id.
+# @param router          Connect router id.
+# @param port            Connect port id.
+# @param pipe_cycle      Pipeline cycle.
+# @param buffer_size     Size of ejection buffer.
+# @param interrupt_delay Delay to response NI interrupt.
+def createNI( ni_id : int,
+              connect_router : int,
+              connect_port : int,
+              pipe_cycle : float,
+              buffer_size : int,
+              interrupt_delay : float ) -> EsyNetCfgNI :
+    net_cfg = EsyNetCfgNI()
+    net_cfg.ni_id           = ni_id
+    net_cfg.connect_router  = connect_router
+    net_cfg.connect_port    = connect_port
+    net_cfg.pipe_cycle      = float( pipe_cycle )
+    net_cfg.buffer_size     = buffer_size
+    net_cfg.interrupt_delay = float( interrupt_delay )
+    return net_cfg
+##
+# @}
