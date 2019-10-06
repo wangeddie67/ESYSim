@@ -3,8 +3,16 @@
 import sys
 import argparse
 
-sys.path.append('../../libs')
-import netcfg
+sys.path.append('../../build/libs/netcfg')
+import py_esy_netcfg as netcfg
+import esy_netcfg_xml as netcfg_xml
+
+topology_dict = {"Switch":    netcfg.EsyNetCfg.NT_SWITCH,
+                 "Ring":      netcfg.EsyNetCfg.NT_RING,
+                 "2D-Mesh":   netcfg.EsyNetCfg.NT_MESH_2D,
+                 "2D-Torus":  netcfg.EsyNetCfg.NT_TORUS_2D,
+                 "Dia-Mesh":  netcfg.EsyNetCfg.NT_MESH_DIA,
+                 "Dia-Torus": netcfg.EsyNetCfg.NT_TORUS_DIA}
 
 def view( args ) :
     print( 'Print network configuration file.' )
@@ -176,7 +184,7 @@ def optionParser() :
     # topology group
     parser_create_topology_group = parser_create.add_argument_group( 'arguments to specify topology' )
     parser_create_topology_group.add_argument( '--topology',
-                                               choices=netcfg.EsyNetCfg.topology_enum,
+                                               choices=topology_dict.keys(),
                                                help='Code for topology',
                                                default='Switch' )
     parser_create_topology_group.add_argument( '--network_size',

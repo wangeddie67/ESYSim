@@ -1,21 +1,42 @@
 
+# SWIG interface file
+SWIG_INTS := $(wildcard *.i)
+
+ifneq ($(PYMODULE),)
+	CFLAGS += -fPIC
+endif
+
+# SWIG generated source file
+SWIG_SRCS_1 := $(patsubst %.i,%_wrap.cxx, $(SWIG_INTS))
+
+# SWIG depedence file
+SWIG_DEPS_1 := $(patsubst %.i,%.swig.$(DEXT), $(SWIG_INTS))
+SWIG_DEPS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(SWIG_DEPS_1)))
+
+# SWIG C++ extension libs
+SWIG_SO_LIBS_1 := $(patsubst %,%.so, $(PYMODULE))
+SWIG_SO_LIBS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X)_, $(SWIG_SO_LIBS_1))
+
 # Source File
-SRCS_1 := $(wildcard *.cpp *.cc *.c) $(INCLUDE_SRCFILE)
+SRCS_1 := $(wildcard *.cpp *.cc *.c) $(SWIG_SRCS_1) $(INCLUDE_SRCFILE)
 SRCS := $(filter-out $(EXCLUDE_SRCFILE), $(SRCS_1))
 
 # Object File
 OBJS_1 := $(patsubst %.cpp,%.$(OEXT), $(SRCS))
 OBJS_2 := $(patsubst %.cc,%.$(OEXT),  $(OBJS_1))
 OBJS_3 := $(patsubst %.c,%.$(OEXT),   $(OBJS_2))
-OBJS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(OBJS_3)))
+OBJS_4 := $(patsubst %.cxx,%.$(OEXT), $(OBJS_3))
+OBJS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(OBJS_4)))
 
 # Dependence File
 DEPS_1 := $(patsubst %.cpp,%.$(DEXT), $(SRCS))
 DEPS_2 := $(patsubst %.cc,%.$(DEXT),  $(DEPS_1))
 DEPS_3 := $(patsubst %.c,%.$(DEXT),   $(DEPS_2))
-DEPS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(DEPS_3)))
+DEPS_4 := $(patsubst %.cxx,%.$(DEXT), $(DEPS_3))
+DEPS := $(addprefix $(BUILD_DIR)$(X)$(MODULE)$(X), $(notdir $(DEPS_4)))
 
 # Dependent Files
+-include $(SWIG_DEPS)
 -include $(DEPS)
 
 # Make rules
@@ -26,6 +47,10 @@ $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.cc
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.cpp
 	@echo "[CCPP ] " $@
 	$(CCPP) -c  $(CFLAGS) -o $@ $<
+
+$(BUILD_DIR)$(X)$(MODULE)$(X)%_wrap.$(OEXT):$(BUILD_DIR)$(X)$(MODULE)$(X)%_wrap.cxx
+	@echo "[CCPP ] " $@
+	$(CCPP) -c  $(CFLAGS) -I$(PY3_DIR) -I. -o $@ $<
 
 $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(OEXT):%.c
 	@echo "[CC   ] " $@
@@ -43,22 +68,39 @@ $(BUILD_DIR)$(X)$(MODULE)$(X)%.$(DEXT):%.c
 	@echo "[DEP  ] " $@
 	$(CC)   -MM $(CFLAGS) $< | sed "s?$(patsubst %.c,%.$(OEXT),$<)?$(patsubst %.d,%.$(OEXT),$@)?" > $@
 
+$(BUILD_DIR)$(X)$(MODULE)$(X)%.swig.$(DEXT):%.i
+	@echo "[DEP  ] " $@
+	$(SWIG) -MM $< | sed "s?$(patsubst %.i,%_wrap.cxx,$<)?$(patsubst %.swig.d,%_wrap.cxx,$@)?" > $@
+
+$(BUILD_DIR)$(X)$(MODULE)$(X)%_wrap.$(DEXT):%.i
+	@echo "[SWIG ] " $(patsubst %.$(DEXT),%.cxx,$@)
+	$(SWIG) -o $(patsubst %.$(DEXT),%.cxx,$@) $<
+	@echo "[DEP  ] " $@
+	$(CC)   -MM $(CFLAGS) $< | sed "s?$(patsubst %.i,%_wrap.$(OEXT),$<)?$(patsubst %.d,%.$(OEXT),$@)?" > $@
+
 # Rules
 .PHONY: clean
 
 SUBMODULE_DEP := $(addprefix dep_, $(SUBMODULE) )
 SUBMODULE_OBJ := $(addprefix obj_, $(SUBMODULE) )
 
-depend: $(DEPS) $(SUBMODULE_DEP)
+depend: $(DEPS) $(SWIG_DEPS) $(SUBMODULE_DEP)
 
 $(SUBMODULE_DEP):
 	$(MKDIR) $(BUILD_DIR)$(X)$(MODULE)$(X)$(patsubst dep_%,%, $@)
 	$(MAKE) -C $(patsubst dep_%, %, $@) depend
 
-objs: $(OBJS) $(SUBMODULE_OBJ)
+objs: $(OBJS) $(SWIG_OBJS) $(SUBMODULE_OBJ)
+	$(MAKE) pymodule
 
 $(SUBMODULE_OBJ):
 	$(MAKE) -C $(patsubst obj_%, %, $@) objs
+
+pymodule: $(SWIG_SO_LIBS)
+
+$(SWIG_SO_LIBS):
+	@echo "[SO   ] " $@
+	$(CCPP) -shared $(OBJS) $(CFLAGS) -o $@
 
 clean:
 	$(RMDIR) $(BUILD_DIR)

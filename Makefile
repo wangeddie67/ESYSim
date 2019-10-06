@@ -1,7 +1,7 @@
 ﻿
 include Makefile.include
 
-SUBMODULE := esynet libs tools
+SUBMODULE := libs
 
 all:
 	@$(MAKE) depend

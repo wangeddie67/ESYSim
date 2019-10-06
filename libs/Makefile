@@ -2,7 +2,7 @@
 include ../Makefile.include
 
 MODULE := libs
-SUBMODULE := netcfg tinyxml
+SUBMODULE := netcfg
 
 EXCLUDE_SRCFILE = esy_soccfg.cc
 
