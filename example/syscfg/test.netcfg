@@ -1,0 +1,200 @@
+{
+    "links": [
+        {
+            "axis": -1,
+            "axis_dir": 1,
+            "dir": 6,
+            "input_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 1,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 0
+            },
+            "ni_int_delay": 10.0,
+            "output_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 0,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 0
+            }
+        },
+        {
+            "axis": -1,
+            "axis_dir": 0,
+            "dir": 6,
+            "input_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 0,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 0
+            },
+            "ni_int_delay": 10.0,
+            "output_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 1,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 0
+            }
+        },
+        {
+            "axis": -1,
+            "axis_dir": 1,
+            "dir": 6,
+            "input_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 2,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 0
+            },
+            "ni_int_delay": 10.0,
+            "output_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 0,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 1
+            }
+        },
+        {
+            "axis": -1,
+            "axis_dir": 0,
+            "dir": 6,
+            "input_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 0,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 1
+            },
+            "ni_int_delay": 10.0,
+            "output_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 2,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 0
+            }
+        },
+        {
+            "axis": -1,
+            "axis_dir": 1,
+            "dir": 6,
+            "input_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 0,
+                "ni": true,
+                "outperiod": 1.0,
+                "port": 0
+            },
+            "ni_int_delay": 10.0,
+            "output_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 1,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 1
+            }
+        },
+        {
+            "axis": -1,
+            "axis_dir": 0,
+            "dir": 6,
+            "input_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 1,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 1
+            },
+            "ni_int_delay": 10.0,
+            "output_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 0,
+                "ni": true,
+                "outperiod": 1.0,
+                "port": 0
+            }
+        },
+        {
+            "axis": -1,
+            "axis_dir": 1,
+            "dir": 6,
+            "input_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 1,
+                "ni": true,
+                "outperiod": 1.0,
+                "port": 0
+            },
+            "ni_int_delay": 10.0,
+            "output_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 2,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 1
+            }
+        },
+        {
+            "axis": -1,
+            "axis_dir": 0,
+            "dir": 6,
+            "input_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 2,
+                "ni": false,
+                "outperiod": 1.0,
+                "port": 1
+            },
+            "ni_int_delay": 10.0,
+            "output_port": {
+                "bufs": [
+                    10
+                ],
+                "id": 1,
+                "ni": true,
+                "outperiod": 1.0,
+                "port": 0
+            }
+        }
+    ],
+    "size": [
+        3
+    ],
+    "topology": 6
+}

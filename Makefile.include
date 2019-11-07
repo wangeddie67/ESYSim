@@ -1,6 +1,6 @@
 
 # Root Direction
-ESYSIM_ROOT := /home/eddie/ESYSim
+ESYSIM_ROOT := /home/snake1989/ESYSim
 
 # python 3
 PY3_DIR := /usr/include/python3.6
@@ -19,6 +19,7 @@ DIFF   := diff
 CS     := ;
 MV     := mv -vf
 EXEC   := ./
+CP     := cp -rf
 
 # File system
 OEXT := o
@@ -34,14 +35,19 @@ BIN_DIR := $(ESYSIM_ROOT)$(X)bin
 # Include 
 INC_DIR := -I$(ESYSIM_ROOT)$(X)libs
 LINK_DIR :=
-LINK_OBJ := $(BUILD_DIR)$(X)libs$(X)tinyxml$(X)*.$(OEXT) $(BUILD_DIR)$(X)libs$(X)netcfg$(X)*.$(OEXT) $(BUILD_DIR)$(X)libs$(X)*.$(OEXT)
+LINK_OBJ :=
+LINK_LIB :=
 
 # GNU C/C++ Command
 CCPP   := g++
 CC     := gcc
-OFLAGS := -g -Wall $(LINK_DIR) $(LINK_OBJ)
-CFLAGS := -g -Wall $(INC_DIR)
+OFLAGS = -g -Wall $(LINK_DIR) $(LINK_OBJ) $(LINK_LIB)
+CFLAGS = -g -Wall $(INC_DIR)
 
 # SWIG command
-SWIG   := swig -Wall -c++ -python -py3
+SWIG   := swig -Wall -c++ -python -py3 
+#-classic -cpperraswarn -includeall
+
+# PROTOC command
+PROTO  := protoc
 

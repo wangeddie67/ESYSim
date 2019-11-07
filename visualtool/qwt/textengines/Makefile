@@ -28,7 +28,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = textengines1.0.0
-DISTDIR = /home/snake1989/esysim-develop/visualtool/qwt/textengines/.tmp/textengines1.0.0
+DISTDIR = /home/snake1989/ESYSim/visualtool/qwt/textengines/.tmp/textengines1.0.0
 SUBTARGETS    = 
 
 

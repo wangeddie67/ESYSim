@@ -1,0 +1,11 @@
+
+syntax = "proto3";
+
+package esy_traffic;
+
+message NetworkPacket {
+    uint64 time = 1;
+    uint32 src_ni = 2;
+    uint32 dst_ni = 3;
+    uint32 length = 4;
+}

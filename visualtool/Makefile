@@ -35,7 +35,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = visualnoc1.0.0
-DISTDIR = /home/snake1989/esysim-develop/visualtool/obj/visualnoc1.0.0
+DISTDIR = /home/snake1989/ESYSim/visualtool/obj/visualnoc1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/snake1989/Qt5.10.1/5.10.1/gcc_64/lib
 LIBS          = $(SUBLIBS) -L./qwt/lib/ -lqwt -L/home/snake1989/Qt5.10.1/5.10.1/gcc_64/lib -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Xml -lQt5Concurrent -lQt5Core -lGL -lpthread 
@@ -1378,20 +1378,16 @@ moc/moc_nocwindow.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		define/version_include.h \
 		subwidgets/result_tab_widget.h \
 		subdialogs/result_base_dialog.h \
 		modelsview/link_tool_table.h \
 		modelsview/network_cfg_tree.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/graphics_config_tree.h \
 		nocwindow.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include nocwindow.h -o moc/moc_nocwindow.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include nocwindow.h -o moc/moc_nocwindow.cpp
 
 moc/moc_gui_component.cpp: ../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qwidget.h \
@@ -1547,7 +1543,7 @@ moc/moc_gui_component.cpp: ../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QWidge
 		define/gui_component.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include define/gui_component.h -o moc/moc_gui_component.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include define/gui_component.h -o moc/moc_gui_component.cpp
 
 moc/moc_network_cfg_tree.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -2014,14 +2010,10 @@ moc/moc_network_cfg_tree.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/network_cfg_tree.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/network_cfg_tree.h -o moc/moc_network_cfg_tree.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/network_cfg_tree.h -o moc/moc_network_cfg_tree.cpp
 
 moc/moc_path_trace_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -2488,17 +2480,10 @@ moc/moc_path_trace_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/path_trace_table.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/path_trace_table.h -o moc/moc_path_trace_table.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/path_trace_table.h -o moc/moc_path_trace_table.cpp
 
 moc/moc_router_state_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -2965,22 +2950,15 @@ moc/moc_router_state_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subwidgets/router_graphics_item.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/graphics_config_tree.h \
 		modelsview/application_gantt_chart.h \
 		subwidgets/port_graphics_item.h \
 		modelsview/router_state_table.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/router_state_table.h -o moc/moc_router_state_table.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/router_state_table.h -o moc/moc_router_state_table.cpp
 
 moc/moc_link_tool_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -3447,11 +3425,10 @@ moc/moc_link_tool_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/link_tool_table.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/link_tool_table.h -o moc/moc_link_tool_table.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/link_tool_table.h -o moc/moc_link_tool_table.cpp
 
 moc/moc_argument_list_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -3918,12 +3895,10 @@ moc/moc_argument_list_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_argument.h \
 		modelsview/argument_list_table.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/argument_list_table.h -o moc/moc_argument_list_table.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/argument_list_table.h -o moc/moc_argument_list_table.cpp
 
 moc/moc_analyse_result_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -4390,18 +4365,11 @@ moc/moc_analyse_result_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/analyse_result_table.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/analyse_result_table.h -o moc/moc_analyse_result_table.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/analyse_result_table.h -o moc/moc_analyse_result_table.cpp
 
 moc/moc_faults_state_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -4868,18 +4836,11 @@ moc/moc_faults_state_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/faults_state_table.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/faults_state_table.h -o moc/moc_faults_state_table.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/faults_state_table.h -o moc/moc_faults_state_table.cpp
 
 moc/moc_faults_list_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -5346,14 +5307,10 @@ moc/moc_faults_list_table.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_faultcfg.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
 		modelsview/faults_list_table.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/faults_list_table.h -o moc/moc_faults_list_table.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/faults_list_table.h -o moc/moc_faults_list_table.cpp
 
 moc/moc_graphics_config_tree.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -5820,11 +5777,10 @@ moc/moc_graphics_config_tree.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/graphics_config_tree.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/graphics_config_tree.h -o moc/moc_graphics_config_tree.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include modelsview/graphics_config_tree.h -o moc/moc_graphics_config_tree.cpp
 
 moc/moc_noc_analyse_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -6291,16 +6247,8 @@ moc/moc_noc_analyse_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
 		threads/analyse_benchmark_thread.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h \
 		threads/analyse_eventtrace_thread.h \
 		modelsview/path_trace_table.h \
@@ -6313,7 +6261,7 @@ moc/moc_noc_analyse_dialog.cpp: define/qt_include.h \
 		subdialogs/noc_analyse_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/noc_analyse_dialog.h -o moc/moc_noc_analyse_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/noc_analyse_dialog.h -o moc/moc_noc_analyse_dialog.cpp
 
 moc/moc_noc_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -6780,24 +6728,15 @@ moc/moc_noc_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
-		../interface/esy_faultcfg.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
 		modelsview/network_cfg_tree.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/router_state_table.h \
 		subwidgets/router_graphics_item.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
 		modelsview/graphics_config_tree.h \
 		modelsview/application_gantt_chart.h \
 		subwidgets/port_graphics_item.h \
 		threads/analyse_eventtrace_thread.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h \
 		threads/analyse_pathtrace_thread.h \
 		subwidgets/noc_view.h \
@@ -6807,7 +6746,7 @@ moc/moc_noc_dialog.cpp: define/qt_include.h \
 		subdialogs/noc_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/noc_dialog.h -o moc/moc_noc_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/noc_dialog.h -o moc/moc_noc_dialog.cpp
 
 moc/moc_process_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -7274,15 +7213,11 @@ moc/moc_process_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_interdata.h \
 		subdialogs/process_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/process_dialog.h -o moc/moc_process_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/process_dialog.h -o moc/moc_process_dialog.cpp
 
 moc/moc_result_base_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -7749,11 +7684,10 @@ moc/moc_result_base_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/result_base_dialog.h -o moc/moc_result_base_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/result_base_dialog.h -o moc/moc_result_base_dialog.cpp
 
 moc/moc_tools_para_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -8220,19 +8154,14 @@ moc/moc_tools_para_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
 		subwidgets/tools_config_dialog.h \
 		modelsview/argument_list_table.h \
-		../interface/esy_argument.h \
 		subdialogs/process_dialog.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_interdata.h \
 		subdialogs/tools_para_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/tools_para_dialog.h -o moc/moc_tools_para_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/tools_para_dialog.h -o moc/moc_tools_para_dialog.cpp
 
 moc/moc_link_tool_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -8699,12 +8628,11 @@ moc/moc_link_tool_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/link_tool_table.h \
 		subdialogs/link_tool_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/link_tool_dialog.h -o moc/moc_link_tool_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/link_tool_dialog.h -o moc/moc_link_tool_dialog.cpp
 
 moc/moc_faults_config_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -9171,22 +9099,14 @@ moc/moc_faults_config_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/faults_state_table.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
 		modelsview/faults_list_table.h \
-		../interface/esy_faultcfg.h \
 		subdialogs/faults_config_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/faults_config_dialog.h -o moc/moc_faults_config_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/faults_config_dialog.h -o moc/moc_faults_config_dialog.cpp
 
 moc/moc_graphics_config_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -9653,12 +9573,11 @@ moc/moc_graphics_config_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/graphics_config_tree.h \
 		subdialogs/graphics_config_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/graphics_config_dialog.h -o moc/moc_graphics_config_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subdialogs/graphics_config_dialog.h -o moc/moc_graphics_config_dialog.cpp
 
 moc/moc_noc_view.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -10125,22 +10044,15 @@ moc/moc_noc_view.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subwidgets/router_graphics_item.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/graphics_config_tree.h \
 		modelsview/application_gantt_chart.h \
 		subwidgets/port_graphics_item.h \
 		subwidgets/noc_view.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/noc_view.h -o moc/moc_noc_view.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/noc_view.h -o moc/moc_noc_view.cpp
 
 moc/moc_result_tab_widget.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -10607,12 +10519,11 @@ moc/moc_result_tab_widget.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
 		subwidgets/result_tab_widget.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/result_tab_widget.h -o moc/moc_result_tab_widget.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/result_tab_widget.h -o moc/moc_result_tab_widget.cpp
 
 moc/moc_tools_config_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -11079,13 +10990,11 @@ moc/moc_tools_config_dialog.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/argument_list_table.h \
-		../interface/esy_argument.h \
 		subwidgets/tools_config_dialog.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/tools_config_dialog.h -o moc/moc_tools_config_dialog.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/tools_config_dialog.h -o moc/moc_tools_config_dialog.cpp
 
 moc/moc_analyse_plot.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -11552,12 +11461,11 @@ moc/moc_analyse_plot.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/application_gantt_chart.h \
 		subwidgets/analyse_plot.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/analyse_plot.h -o moc/moc_analyse_plot.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/analyse_plot.h -o moc/moc_analyse_plot.cpp
 
 moc/moc_automation_control_panel.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -12024,11 +11932,10 @@ moc/moc_automation_control_panel.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subwidgets/automation_control_panel.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/automation_control_panel.h -o moc/moc_automation_control_panel.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/automation_control_panel.h -o moc/moc_automation_control_panel.cpp
 
 moc/moc_analyse_fliter_panel.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -12495,14 +12402,10 @@ moc/moc_analyse_fliter_panel.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		subwidgets/analyse_fliter_panel.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/analyse_fliter_panel.h -o moc/moc_analyse_fliter_panel.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include subwidgets/analyse_fliter_panel.h -o moc/moc_analyse_fliter_panel.cpp
 
 moc/moc_basic_thread.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -12969,11 +12872,10 @@ moc/moc_basic_thread.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		threads/basic_thread.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include threads/basic_thread.h -o moc/moc_basic_thread.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include threads/basic_thread.h -o moc/moc_basic_thread.cpp
 
 moc/moc_analyse_pathtrace_thread.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -13440,19 +13342,12 @@ moc/moc_analyse_pathtrace_thread.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		threads/basic_thread.h \
 		threads/analyse_pathtrace_thread.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include threads/analyse_pathtrace_thread.h -o moc/moc_analyse_pathtrace_thread.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include threads/analyse_pathtrace_thread.h -o moc/moc_analyse_pathtrace_thread.cpp
 
 moc/moc_analyse_eventtrace_thread.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -13919,21 +13814,13 @@ moc/moc_analyse_eventtrace_thread.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/application_gantt_chart.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h \
 		threads/analyse_eventtrace_thread.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include threads/analyse_eventtrace_thread.h -o moc/moc_analyse_eventtrace_thread.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include threads/analyse_eventtrace_thread.h -o moc/moc_analyse_eventtrace_thread.cpp
 
 moc/moc_analyse_benchmark_thread.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QApplication \
@@ -14400,19 +14287,11 @@ moc/moc_analyse_benchmark_thread.cpp: define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h \
 		threads/analyse_benchmark_thread.h \
 		moc/moc_predefs.h \
 		../../Qt5.10.1/5.10.1/gcc_64/bin/moc
-	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/esysim-develop/visualtool -I/home/snake1989/esysim-develop/interface -I/home/snake1989/esysim-develop/tinyxml -I/home/snake1989/esysim-develop/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include threads/analyse_benchmark_thread.h -o moc/moc_analyse_benchmark_thread.cpp
+	/home/snake1989/Qt5.10.1/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc/moc_predefs.h -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/snake1989/ESYSim/visualtool -I/home/snake1989/ESYSim/interface -I/home/snake1989/ESYSim/tinyxml -I/home/snake1989/ESYSim/visualtool/qwt/src -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtPrintSupport -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtGui -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtXml -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtConcurrent -I/home/snake1989/Qt5.10.1/5.10.1/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include threads/analyse_benchmark_thread.h -o moc/moc_analyse_benchmark_thread.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -14896,34 +14775,24 @@ obj/nocwindow.o: nocwindow.cc nocwindow.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		define/version_include.h \
 		subwidgets/result_tab_widget.h \
 		subdialogs/result_base_dialog.h \
 		modelsview/link_tool_table.h \
 		modelsview/network_cfg_tree.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/graphics_config_tree.h \
 		subdialogs/link_tool_dialog.h \
 		subdialogs/tools_para_dialog.h \
 		subwidgets/tools_config_dialog.h \
 		modelsview/argument_list_table.h \
-		../interface/esy_argument.h \
 		subdialogs/process_dialog.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_interdata.h \
 		subdialogs/noc_dialog.h \
-		../interface/esy_faultcfg.h \
 		modelsview/router_state_table.h \
 		subwidgets/router_graphics_item.h \
 		modelsview/path_trace_table.h \
 		modelsview/application_gantt_chart.h \
 		subwidgets/port_graphics_item.h \
 		threads/analyse_eventtrace_thread.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h \
 		threads/analyse_pathtrace_thread.h \
 		subwidgets/noc_view.h \
@@ -15406,15 +15275,11 @@ obj/nocmain.o: nocmain.cc ../../Qt5.10.1/5.10.1/gcc_64/include/QtGui/QtGui \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		define/version_include.h \
 		subwidgets/result_tab_widget.h \
 		subdialogs/result_base_dialog.h \
 		modelsview/link_tool_table.h \
 		modelsview/network_cfg_tree.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/graphics_config_tree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/nocmain.o nocmain.cc
 
@@ -15882,8 +15747,7 @@ obj/qt_include.o: define/qt_include.cc define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
-		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h
+		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qt_include.o define/qt_include.cc
 
 obj/gui_component.o: define/gui_component.cc define/gui_component.h \
@@ -16065,57 +15929,40 @@ obj/gui_component.o: define/gui_component.cc define/gui_component.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtGui/qinputmethod.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/gui_component.o define/gui_component.cc
 
-obj/esy_argument.o: ../interface/esy_argument.cc ../interface/esy_conv.h \
-		../interface/esy_argument.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+obj/esy_argument.o: ../interface/esy_argument.cc 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/esy_argument.o ../interface/esy_argument.cc
 
-obj/esy_conv.o: ../interface/esy_conv.cc ../interface/esy_conv.h
+obj/esy_conv.o: ../interface/esy_conv.cc 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/esy_conv.o ../interface/esy_conv.cc
 
-obj/esy_iodatafile_item.o: ../interface/esy_iodatafile_item.cc ../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h
+obj/esy_iodatafile_item.o: ../interface/esy_iodatafile_item.cc 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/esy_iodatafile_item.o ../interface/esy_iodatafile_item.cc
 
-obj/esy_iodatafile.o: ../interface/esy_iodatafile.cc ../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h
+obj/esy_iodatafile.o: ../interface/esy_iodatafile.cc 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/esy_iodatafile.o ../interface/esy_iodatafile.cc
 
-obj/esy_interdata.o: ../interface/esy_interdata.cc ../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h
+obj/esy_interdata.o: ../interface/esy_interdata.cc 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/esy_interdata.o ../interface/esy_interdata.cc
 
-obj/esy_networkcfg.o: ../interface/esy_networkcfg.cc ../interface/esy_conv.h \
-		../interface/esy_networkcfg.h \
-		../interface/esy_xmlerror.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+obj/esy_networkcfg.o: ../interface/esy_networkcfg.cc 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/esy_networkcfg.o ../interface/esy_networkcfg.cc
 
-obj/esy_xmlerror.o: ../interface/esy_xmlerror.cc ../interface/esy_xmlerror.h
+obj/esy_xmlerror.o: ../interface/esy_xmlerror.cc 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/esy_xmlerror.o ../interface/esy_xmlerror.cc
 
-obj/esy_faultcfg.o: ../interface/esy_faultcfg.cc ../interface/esy_conv.h \
-		../interface/esy_faultcfg.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h
+obj/esy_faultcfg.o: ../interface/esy_faultcfg.cc 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/esy_faultcfg.o ../interface/esy_faultcfg.cc
 
-obj/tinystr.o: ../tinyxml/tinystr.cpp ../tinyxml/tinystr.h
+obj/tinystr.o: ../tinyxml/tinystr.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/tinystr.o ../tinyxml/tinystr.cpp
 
-obj/tinyxml.o: ../tinyxml/tinyxml.cpp ../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+obj/tinyxml.o: ../tinyxml/tinyxml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/tinyxml.o ../tinyxml/tinyxml.cpp
 
-obj/tinyxmlparser.o: ../tinyxml/tinyxmlparser.cpp ../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+obj/tinyxmlparser.o: ../tinyxml/tinyxmlparser.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/tinyxmlparser.o ../tinyxml/tinyxmlparser.cpp
 
-obj/tinyxmlerror.o: ../tinyxml/tinyxmlerror.cpp ../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+obj/tinyxmlerror.o: ../tinyxml/tinyxmlerror.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/tinyxmlerror.o ../tinyxml/tinyxmlerror.cpp
 
 obj/network_cfg_tree.o: modelsview/network_cfg_tree.cc modelsview/network_cfg_tree.h \
@@ -16583,11 +16430,7 @@ obj/network_cfg_tree.o: modelsview/network_cfg_tree.cc modelsview/network_cfg_tr
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
-		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/network_cfg_tree.o modelsview/network_cfg_tree.cc
 
 obj/path_trace_table.o: modelsview/path_trace_table.cc modelsview/path_trace_table.h \
@@ -17055,14 +16898,7 @@ obj/path_trace_table.o: modelsview/path_trace_table.cc modelsview/path_trace_tab
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
-		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/path_trace_table.o modelsview/path_trace_table.cc
 
 obj/router_state_table.o: modelsview/router_state_table.cc modelsview/router_state_table.h \
@@ -17531,15 +17367,8 @@ obj/router_state_table.o: modelsview/router_state_table.cc modelsview/router_sta
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subwidgets/router_graphics_item.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/graphics_config_tree.h \
 		modelsview/application_gantt_chart.h \
 		subwidgets/port_graphics_item.h
@@ -18011,8 +17840,6 @@ obj/link_tool_table.o: modelsview/link_tool_table.cc modelsview/link_tool_table.
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_argument.h \
 		modelsview/argument_list_table.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/link_tool_table.o modelsview/link_tool_table.cc
 
@@ -18481,9 +18308,7 @@ obj/argument_list_table.o: modelsview/argument_list_table.cc modelsview/argument
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
-		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_argument.h
+		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/argument_list_table.o modelsview/argument_list_table.cc
 
 obj/analyse_result_table.o: modelsview/analyse_result_table.cc modelsview/analyse_result_table.h \
@@ -18952,14 +18777,7 @@ obj/analyse_result_table.o: modelsview/analyse_result_table.cc modelsview/analys
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+		modelsview/path_trace_table.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/analyse_result_table.o modelsview/analyse_result_table.cc
 
 obj/faults_state_table.o: modelsview/faults_state_table.cc modelsview/faults_state_table.h \
@@ -19428,14 +19246,7 @@ obj/faults_state_table.o: modelsview/faults_state_table.cc modelsview/faults_sta
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+		modelsview/path_trace_table.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/faults_state_table.o modelsview/faults_state_table.cc
 
 obj/faults_list_table.o: modelsview/faults_list_table.cc modelsview/faults_list_table.h \
@@ -19903,11 +19714,7 @@ obj/faults_list_table.o: modelsview/faults_list_table.cc modelsview/faults_list_
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
-		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_faultcfg.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h
+		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/faults_list_table.o modelsview/faults_list_table.cc
 
 obj/noc_graphics_config_tree.o: modelsview/noc_graphics_config_tree.cc modelsview/graphics_config_tree.h \
@@ -20376,8 +20183,6 @@ obj/noc_graphics_config_tree.o: modelsview/noc_graphics_config_tree.cc modelsvie
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_argument.h \
 		modelsview/argument_list_table.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/noc_graphics_config_tree.o modelsview/noc_graphics_config_tree.cc
 
@@ -20846,8 +20651,7 @@ obj/application_gantt_chart.o: modelsview/application_gantt_chart.cc modelsview/
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
-		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h
+		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/application_gantt_chart.o modelsview/application_gantt_chart.cc
 
 obj/noc_dialog.o: subdialogs/noc_dialog.cc subdialogs/noc_dialog.h \
@@ -21316,24 +21120,15 @@ obj/noc_dialog.o: subdialogs/noc_dialog.cc subdialogs/noc_dialog.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
-		../interface/esy_faultcfg.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
 		modelsview/network_cfg_tree.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/router_state_table.h \
 		subwidgets/router_graphics_item.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
 		modelsview/graphics_config_tree.h \
 		modelsview/application_gantt_chart.h \
 		subwidgets/port_graphics_item.h \
 		threads/analyse_eventtrace_thread.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h \
 		threads/analyse_pathtrace_thread.h \
 		subwidgets/noc_view.h \
@@ -21807,12 +21602,8 @@ obj/process_dialog.o: subdialogs/process_dialog.cc define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/process_dialog.h \
-		subdialogs/result_base_dialog.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_interdata.h
+		subdialogs/result_base_dialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/process_dialog.o subdialogs/process_dialog.cc
 
 obj/tools_para_dialog.o: subdialogs/tools_para_dialog.cc define/qt_include.h \
@@ -22280,21 +22071,13 @@ obj/tools_para_dialog.o: subdialogs/tools_para_dialog.cc define/qt_include.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/tools_para_dialog.h \
 		subdialogs/result_base_dialog.h \
 		subwidgets/tools_config_dialog.h \
 		modelsview/argument_list_table.h \
-		../interface/esy_argument.h \
 		subdialogs/process_dialog.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_interdata.h \
 		modelsview/analyse_result_table.h \
-		modelsview/path_trace_table.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+		modelsview/path_trace_table.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/tools_para_dialog.o subdialogs/tools_para_dialog.cc
 
 obj/link_tool_dialog.o: subdialogs/link_tool_dialog.cc subdialogs/link_tool_dialog.h \
@@ -22763,10 +22546,8 @@ obj/link_tool_dialog.o: subdialogs/link_tool_dialog.cc subdialogs/link_tool_dial
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/link_tool_table.h \
-		modelsview/argument_list_table.h \
-		../interface/esy_argument.h
+		modelsview/argument_list_table.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/link_tool_dialog.o subdialogs/link_tool_dialog.cc
 
 obj/faults_config_dialog.o: subdialogs/faults_config_dialog.cc subdialogs/faults_config_dialog.h \
@@ -23235,18 +23016,10 @@ obj/faults_config_dialog.o: subdialogs/faults_config_dialog.cc subdialogs/faults
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/faults_state_table.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		modelsview/faults_list_table.h \
-		../interface/esy_faultcfg.h
+		modelsview/faults_list_table.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/faults_config_dialog.o subdialogs/faults_config_dialog.cc
 
 obj/graphics_config_dialog.o: subdialogs/graphics_config_dialog.cc subdialogs/graphics_config_dialog.h \
@@ -23715,7 +23488,6 @@ obj/graphics_config_dialog.o: subdialogs/graphics_config_dialog.cc subdialogs/gr
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/graphics_config_tree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/graphics_config_dialog.o subdialogs/graphics_config_dialog.cc
 
@@ -24185,16 +23957,8 @@ obj/noc_analyse_dialog.o: subdialogs/noc_analyse_dialog.cc subdialogs/noc_analys
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h \
 		threads/analyse_benchmark_thread.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h \
 		threads/analyse_eventtrace_thread.h \
 		modelsview/path_trace_table.h \
@@ -24672,20 +24436,11 @@ obj/noc_view.o: subwidgets/noc_view.cc subwidgets/noc_view.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subwidgets/router_graphics_item.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/graphics_config_tree.h \
 		modelsview/application_gantt_chart.h \
-		subwidgets/port_graphics_item.h \
-		../interface/esy_eventtype.h \
-		../interface/esy_faultcfg.h
+		subwidgets/port_graphics_item.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/noc_view.o subwidgets/noc_view.cc
 
 obj/port_graphics_item.o: subwidgets/port_graphics_item.cc subwidgets/port_graphics_item.h \
@@ -25154,7 +24909,6 @@ obj/port_graphics_item.o: subwidgets/port_graphics_item.cc subwidgets/port_graph
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/graphics_config_tree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/port_graphics_item.o subwidgets/port_graphics_item.cc
 
@@ -25624,7 +25378,6 @@ obj/result_tab_widget.o: subwidgets/result_tab_widget.cc subwidgets/result_tab_w
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		subdialogs/result_base_dialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/result_tab_widget.o subwidgets/result_tab_widget.cc
 
@@ -26094,14 +25847,7 @@ obj/router_graphics_item.o: subwidgets/router_graphics_item.cc subwidgets/router
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/graphics_config_tree.h \
 		modelsview/application_gantt_chart.h \
 		subwidgets/port_graphics_item.h
@@ -26573,9 +26319,7 @@ obj/tools_config_dialog.o: subwidgets/tools_config_dialog.cc subwidgets/tools_co
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/argument_list_table.h \
-		../interface/esy_argument.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtCore/QRegExp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/tools_config_dialog.o subwidgets/tools_config_dialog.cc
 
@@ -27045,7 +26789,6 @@ obj/analyse_plot.o: subwidgets/analyse_plot.cc subwidgets/analyse_plot.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/application_gantt_chart.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/analyse_plot.o subwidgets/analyse_plot.cc
 
@@ -27514,8 +27257,7 @@ obj/automation_control_panel.o: subwidgets/automation_control_panel.cc subwidget
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
-		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h
+		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/automation_control_panel.o subwidgets/automation_control_panel.cc
 
 obj/analyse_fliter_panel.o: subwidgets/analyse_fliter_panel.cc subwidgets/analyse_fliter_panel.h \
@@ -27983,11 +27725,7 @@ obj/analyse_fliter_panel.o: subwidgets/analyse_fliter_panel.cc subwidgets/analys
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
-		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h
+		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/analyse_fliter_panel.o subwidgets/analyse_fliter_panel.cc
 
 obj/analyse_pathtrace_thread.o: threads/analyse_pathtrace_thread.cc threads/analyse_pathtrace_thread.h \
@@ -28456,14 +28194,7 @@ obj/analyse_pathtrace_thread.o: threads/analyse_pathtrace_thread.cc threads/anal
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		threads/basic_thread.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/analyse_pathtrace_thread.o threads/analyse_pathtrace_thread.cc
 
@@ -28933,14 +28664,6 @@ obj/analyse_benchmark_thread.o: threads/analyse_benchmark_thread.cc threads/anal
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/analyse_benchmark_thread.o threads/analyse_benchmark_thread.cc
 
@@ -29410,14 +29133,6 @@ obj/analyse_trafficwindow_thread.o: threads/analyse_trafficwindow_thread.cc thre
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/analyse_trafficwindow_thread.o threads/analyse_trafficwindow_thread.cc
 
@@ -29887,16 +29602,8 @@ obj/analyse_eventtrace_thread.o: threads/analyse_eventtrace_thread.cc threads/an
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/QDockWidget \
 		../../Qt5.10.1/5.10.1/gcc_64/include/QtWidgets/qdockwidget.h \
-		../interface/esy_xmlerror.h \
 		modelsview/path_trace_table.h \
-		../interface/esy_interdata.h \
-		../interface/esy_iodatafile.h \
-		../interface/esy_iodatafile_item.h \
-		../interface/esy_networkcfg.h \
-		../tinyxml/tinyxml.h \
-		../tinyxml/tinystr.h \
 		modelsview/application_gantt_chart.h \
-		../interface/esy_eventtype.h \
 		threads/basic_thread.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/analyse_eventtrace_thread.o threads/analyse_eventtrace_thread.cc
 
