@@ -1,5 +1,5 @@
 /*
- * File name : esy_packetgenerator.h
+ * File name : esy_packetgenerator.cpp
  * Function : Timing model of the packet generator.
  *
  * This program is free software; you can redistribute it and/or
@@ -21,9 +21,9 @@
  */
 
 /**
- * @ingroup ESYNET_TRAFFIC_GENERATOR
- * @file esynet_packet_gen.cc
- * @brief Implement the packet generator.
+ * @ingroup ESY_TRAFFIC_GEN
+ * @file esy_packetgenerator.cpp
+ * @brief Implement timing packet generator.
  */
 
 #include <cmath>
@@ -49,17 +49,20 @@ EsyPacketGenerator::EsyPacketGenerator( long ni_count,
     , m_packet_count( 0 )
     , m_enable( true )
     , mp_last_pac()
+    , m_max_time( 0 )
 {
 }
 
 std::vector< EsyNetworkPacketPtr >
-EsyPacketGenerator::generatePacket( double sim_cycle )
+EsyPacketGenerator::generatePacket( uint64_t sim_cycle )
 {
     std::vector< EsyNetworkPacketPtr > pac_list;
     if ( !m_enable )
     {
         return pac_list;
     }
+
+    m_max_time += 1;
 
     if ( profile() == TP_TRACE )
     {
@@ -75,7 +78,6 @@ EsyPacketGenerator::generatePacket( double sim_cycle )
                 return pac_list;
             }
         }
-        std::cout << sim_cycle << std::endl;
         if ( !readStream() )
         {
             return pac_list;
@@ -85,6 +87,8 @@ EsyPacketGenerator::generatePacket( double sim_cycle )
             EsyNetworkPacketPtr pac = readPacketFromFile();
             if ( pac == NULL )
             {
+                std::cout << "End of traffic trace file @ "
+                          << sim_cycle << std::endl;
                 m_enable = false;
                 break;
             }

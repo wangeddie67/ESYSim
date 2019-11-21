@@ -20,18 +20,16 @@
  * Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
  */
 
-%module esy_engine
+%module esynet
 
 %{
 /* Includes the header in the wrapper code */
-#include "esy_event_queue.h"
+#include "esynet_sim.h"
 %}
 
 /* Include STL/C++ Library */
 %include "stdint.i"
 %include "std_string.i"
-%include "std_shared_ptr.i"
-%shared_ptr( EsyEvent )
 
 /* Parse the header file to generate wrappers */
-%include "esy_event_queue.h"
+%include "esynet_sim.h"

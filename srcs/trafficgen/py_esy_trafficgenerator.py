@@ -67,7 +67,7 @@ def buildTrafficGenerator( args, network_cfg, rand_obj ) -> EsyPacketGenerator :
                                      traffic_profile, 
                                      args.traffic_pir,
                                      args.traffic_packet_size,
-                                     10,
+                                     -1,
                                      rand_obj )
 
     if args.traffic_profile == 'Trace' :
@@ -83,20 +83,4 @@ def buildTrafficGenerator( args, network_cfg, rand_obj ) -> EsyPacketGenerator :
 def closeTrafficGenerator( traffic_gen : EsyPacketGenerator ) :
     traffic_gen.closeReadFile()
     traffic_gen.closeWriteFile()
-
-import esy_traffic_pb2 as esy_traffic
-import struct
-
-def dumpTrafficTrace( file_name : str ) :
-    file_obj = open( file_name, 'rb' )
-    max_time_str = file_obj.read( int( 64 / 8 ) )
-    max_time = struct.unpack( 'Q', max_time_str )[0]
-    print( max_time_str, max_time )
-
-    pac_bp = esy_traffic.NetworkPacket()
-    while True:
-        if pac_bp.ParseFromString( file_obj.read() ) :
-            print( pac_bp.time, pac_bp.src_ni, pac_bp.dst_ni, pac_bp.length )
-        else :
-            break
 

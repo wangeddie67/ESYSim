@@ -1,6 +1,6 @@
 #
 # File name : __init__.py
-# Function : Initilization file of module syscfg.
+# Function : Initilization file of module engine.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -19,13 +19,29 @@
 #
 # Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
 
+##
+# @ingroup ESY_SIM_ENGINE
+# @package engine
+# Simulation engine, including event and event queue
+
+##
+# @ingroup ESY_SIM_ENGINE
+# @file engine/__init__.py
+# @brief Initialization file of python module engine.
+
+##
+# @class engine.EsyEventQueue
+# @brief
+
+##
+# @fun engine.addOptions
+# @brief
+
 import os
 import sys
 sys.path.append( os.path.split(__file__)[ 0 ] )
 
-from .esy_engine import EsyPacketGenerator
+from .esy_engine import EsyEventQueue
 from .py_esy_engine import addOptions, \
-                           buildEngine, \
-                           closeEngine, \
-                           dumpEventTrace
+                           buildEngine
 

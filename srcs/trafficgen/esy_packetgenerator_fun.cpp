@@ -21,8 +21,8 @@
  */
 
 /**
- * @ingroup ESYNET_TRAFFIC_GENERATOR
- * @file esynet_packet_gen.cc
+ * @ingroup ESY_TRAFFIC_GEN
+ * @file esy_packetgenerator_fun.cpp
  * @brief Implement the packet generator.
  */
 
@@ -191,18 +191,19 @@ EsyPacketGeneratorFun::genPacketProfiles( long id )
     return EsyNetworkPacketPtr( pac );
 }
 
-bool
+uint64_t 
 EsyPacketGeneratorFun::openReadFile( const std::string& name )
 {
     m_read_stream.open( name, std::ios::in | std::ios::binary );
-    m_read_stream.read( (char*)&m_max_time, sizeof( uint64_t ) );
+    uint64_t max_time;
+    m_read_stream.read( (char*)&max_time, sizeof( uint64_t ) );
     if ( m_read_stream )
     {
-        return true;
+        return max_time;
     }
     else
     {
-        return false;
+        return 0;
     }
 }
 
@@ -210,8 +211,8 @@ bool
 EsyPacketGeneratorFun::openWriteFile( const std::string& name )
 {
     m_write_stream.open( name, std::ios::out | std::ios::binary );
-    m_max_time = 0;
-    m_write_stream.write( (char*)&m_max_time, sizeof( uint64_t ) );
+    uint64_t max_time = 0;
+    m_write_stream.write( (char*)&max_time, sizeof( uint64_t ) );
     if ( m_write_stream )
     {
         return true;
@@ -233,13 +234,14 @@ EsyPacketGeneratorFun::closeReadFile()
 }
 
 bool
-EsyPacketGeneratorFun::closeWriteFile()
+EsyPacketGeneratorFun::closeWriteFile( uint64_t max_time )
 {
     if ( m_write_stream )
     {
         m_write_stream.flush();
         m_write_stream.seekp( 0, std::ios::beg );
-        m_write_stream.write( (char*)&m_max_time, sizeof(uint64_t) );
+        uint64_t max_time_t = max_time;
+        m_write_stream.write( (char*)&max_time_t, sizeof(uint64_t) );
         m_write_stream.flush();
         m_write_stream.close();
     }
@@ -249,8 +251,17 @@ EsyPacketGeneratorFun::closeWriteFile()
 EsyNetworkPacketPtr
 EsyPacketGeneratorFun::readPacketFromFile()
 {
+    m_read_stream.read( (char*)m_fstream_buf, sizeof( uint8_t ) );
+    uint8_t pac_size = m_fstream_buf[ 0 ];
+    m_read_stream.read( (char*)m_fstream_buf + 1,
+                        sizeof( uint8_t ) * pac_size );
+    if ( m_read_stream.eof() )
+    {
+        return EsyNetworkPacketPtr( NULL );
+    }
+
     esy_traffic::NetworkPacket pac_bp;
-    if ( pac_bp.ParseFromIstream( &m_read_stream ) )
+    if ( pac_bp.ParseFromArray( m_fstream_buf + 1, pac_size ) )
     {
         EsyNetworkPacket* pac = new EsyNetworkPacket( pac_bp.time(),
                                                       pac_bp.src_ni(),
@@ -273,6 +284,18 @@ EsyPacketGeneratorFun::writePacketToFile( EsyNetworkPacketPtr pac )
     pac_bp.set_dst_ni( pac->dstNi() );
     pac_bp.set_length( pac->length() );
 
-    m_max_time = pac->time();
-    return pac_bp.SerializeToOstream( &m_write_stream );
+    uint8_t pac_size = pac_bp.ByteSize();
+    m_fstream_buf[0] = pac_size;
+    pac_bp.SerializeToArray( m_fstream_buf + 1, pac_size );
+    m_write_stream.write( (char*)m_fstream_buf,
+                          sizeof(uint8_t) * (pac_size + 1) );
+
+    if ( m_write_stream )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

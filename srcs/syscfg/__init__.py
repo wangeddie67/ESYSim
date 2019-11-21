@@ -19,6 +19,10 @@
 #
 # Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
 
+##
+# @package syscfg
+# @brief System configuration.
+
 import os
 import sys
 sys.path.append( os.path.split(__file__)[ 0 ] )

@@ -28,7 +28,8 @@ sys.path.append( '../' )
 import syscfg
 import randgen
 import trafficgen
-
+import engine
+import esynet
 
 def optionParser() :
     # argument parser
@@ -39,6 +40,7 @@ def optionParser() :
     syscfg.addNetworkCfgOptions( parser )
     randgen.addOptions( parser )
     trafficgen.addOptions( parser )
+    engine.addOptions( parser )
 
     parser.add_argument( '--log_file', '-l',
         help='Log file name',
@@ -96,10 +98,20 @@ if __name__ == "__main__" :
     traffic_gen = trafficgen.buildTrafficGenerator(
         args, network_cfg, rand_obj )
 
-    for i in range( 0, 100 ) :
-        pac_list = traffic_gen.generatePacket( i )
-        for pac in pac_list :
-            print( pac.time(), pac.srcNi(), pac.dstNi(), pac.length() )
+    # create event queue
+    event_queue = engine.buildEngine( args )
+
+    esynet_sim = esynet.Esynet( network_cfg, 
+                                rand_obj,
+                                traffic_gen,
+                                event_queue )
+
+    # simulation
+    printLog( 'Simulation start @ {0}'.format( event_queue.currTime() ),
+        log_file_obj )
+    event_queue.simAll()
+    printLog( 'Simulation end @ {0}'.format( event_queue.currTime() ),
+        log_file_obj )
 
     trafficgen.closeTrafficGenerator( traffic_gen )
 

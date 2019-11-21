@@ -1,6 +1,6 @@
 #
 # File name : __init__.py
-# Function : Initilization file of module syscfg.
+# Function : Initilization file of module trafficgen.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -19,6 +19,10 @@
 #
 # Copyright (C) 2017, Junshi Wang <wangeddie67@gmail.com>
 
+##
+# @package trafficgen
+# @brief Traffic generator
+
 import os
 import sys
 sys.path.append( os.path.split(__file__)[ 0 ] )
@@ -27,6 +31,5 @@ from .esy_packetgen import EsyPacketGenerator
 from .py_esy_trafficgenerator import addOptions, \
                                      str2ProfileEnum, \
                                      buildTrafficGenerator, \
-                                     closeTrafficGenerator, \
-                                     dumpTrafficTrace
+                                     closeTrafficGenerator
 

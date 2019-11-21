@@ -12,6 +12,7 @@ SWIG_MODULE := esy_packetgen
 
 # python files to copy to module path
 PYTHON_SRC := py_esy_trafficgenerator.py \
+              py_esy_traffic_trace.py \
               esy_traffic_pb2.py \
               __init__.py
 

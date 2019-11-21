@@ -1,6 +1,6 @@
 #
 # File name : py_esy_syscfg.py
-# Function : XML interface of system configuration structure.
+# Function : Json interface of system configuration structure.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License

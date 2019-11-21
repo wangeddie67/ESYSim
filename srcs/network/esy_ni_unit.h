@@ -1,5 +1,5 @@
 /*
- * File name : esynet_ni_unit.h
+ * File name : esy_ni_unit.h
  * Function : Declare NI module.
  *
  * This program is free software; you can redistribute it and/or
@@ -22,18 +22,12 @@
 
 /**
  * @ingroup ESYNET_NI
- * @file esynet_ni_unit.h
+ * @file esy_ni_unit.h
  * @brief Declare NI module.
  */
 
-#ifndef ESYNET_NI_UNIT_H
-#define ESYNET_NI_UNIT_H
-
-#include "esy_interdata.h"
-#include "esy_netcfg.h"
-#include "esynet_config.h"
-#include "esynet_sim_base.h"
-#include "esynet_statistics.h"
+#ifndef ESY_NETWORK_ESY_NI_UNIT_H_
+#define ESY_NETWORK_ESY_NI_UNIT_H_
 
 #include <cmath>
 
@@ -48,8 +42,8 @@ private:
     long m_router;  /*!< @brief Connected router id. */
     long m_port;    /*!< @brief Connected router port. */
 
-    const EsyNetCfg & m_network_cfg;    /*!< @brief Reference to network configuration. */
-    const EsyNetCfgNI & m_ni_cfg;       /*!< @brief Reference to configurtion of network interface. */
+#    const EsyNetCfg & m_network_cfg;    /*!< @brief Reference to network configuration. */
+#    const EsyNetCfgNI & m_ni_cfg;       /*!< @brief Reference to configurtion of network interface. */
 
     std::vector< EsynetFlit > m_inject_queue;   /*!< @brief Injected flit queue. */
     long m_inject_vc;                           /*!< @brief Selected virtual channel. */

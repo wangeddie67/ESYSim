@@ -21,8 +21,11 @@
  */
 
 /**
- * @ingroup ESYNET_TRAFFIC_GENERATOR
- * @file esynet_packet_gen.h
+ * @defgroup ESY_TRAFFIC_GEN Traffic Generator
+ */
+/**
+ * @ingroup ESY_TRAFFIC_GEN
+ * @file esy_packetgenerator_fun.h
  * @brief Declare the packet generator.
  */
 
@@ -33,15 +36,26 @@
 #include <fstream>
 #include <memory>
 
+/**
+ * @ingroup ESY_TRAFFIC_GEN
+ * @brief Generated packet.
+ */
 class EsyNetworkPacket
 {
 private:
-    uint64_t m_time;
-    uint32_t m_src_ni;
-    uint32_t m_dst_ni;
-    uint32_t m_length;
+    uint64_t m_time;    /*!< @brief Time to inject packet. */
+    uint32_t m_src_ni;  /*!< @brief Source NI. */
+    uint32_t m_dst_ni;  /*!< @brief Destination NI. */
+    uint32_t m_length;  /*!< @brief Packet length. */
 
 public:
+    /**
+     * @brief Construct function with specified fields.
+     * @param time   Time to inject packet.
+     * @param src    Source NI.
+     * @param dst    Destination NI.
+     * @param length Packet length.
+     */
     EsyNetworkPacket( uint64_t time,
                       uint32_t src,
                       uint32_t dst,
@@ -52,19 +66,52 @@ public:
         , m_length( length )
     {}
 
+    /**
+     * @name Function to access variables.
+     * @{
+     */
+    /**
+     * @brief Return time to inject packet. 
+     */
     uint64_t time() const { return m_time; }
+    /**
+     * @brief Return source NI.
+     */
     uint32_t srcNi() const { return m_src_ni; }
+    /**
+     * @brief Return destination NI.
+     */
     uint32_t dstNi() const { return m_dst_ni; }
+    /**
+     * @brief Return length.
+     */
     uint32_t length() const { return m_length; }
+    /**
+     * @}
+     */
 
+    /**
+     * @name Function to set variables.
+     * @{
+     */
+    /**
+     * @brief Set time to inject packet.
+     */
     void setTime( uint64_t time ) { m_time = time; }
+    /**
+     * @}
+     */
 };
 
+/**
+ * @ingroup ESY_TRAFFIC_GEN
+ * @brief Shared pointer of generated packets.
+ */
 typedef std::shared_ptr< EsyNetworkPacket > EsyNetworkPacketPtr;
 
 /**
- * @ingroup ESYNET_TRAFFIC_GENERATOR
- * @brief Packet generator.
+ * @ingroup ESY_TRAFFIC_GEN
+ * @brief Function model of packet generator.
  */
 class EsyPacketGeneratorFun
 {
@@ -93,15 +140,19 @@ private:
 
     EsyRandGen* mp_rand_gen;    /*!< @brief Pointer to random generator. */
 
-    uint64_t m_max_time;            /*!< @brief Maximum time in trace file. */
     std::ifstream m_read_stream;    /*!< @brief Read file stream. */
     std::ofstream m_write_stream;   /*!< @brief Write file stream. */
+    uint8_t m_fstream_buf[ 256 ];  /*!< @brief Data buffer for file stream. */
 
 public:
     /**
-     * @brief constructor function
-     * @param network_cfg Reference to network configuration structure.
-     * @param argument_cfg Reference to option list.
+     * @brief Construct function with specified fields.
+     * @param ni_count Total number of network interface
+     * @param network_size Network size.
+     * @param profile Traffic profiles.
+     * @param pir Packet injection rate.
+     * @param packet_size Size of generated packet.
+     * @param rand_gen Pointer to random generator.
      */
     EsyPacketGeneratorFun( long ni_count, 
                            std::vector< long > network_size,
@@ -111,11 +162,41 @@ public:
                            EsyRandGen* rand_gen
                          );
 
+    /**
+     * @name Function to access variables.
+     * @{
+     */
+    /**
+     * @brief Return number of NIs.
+     */
     long niCount() const { return m_ni_count; }
+    /**
+     * @brief Return traffic profile.
+     */
     EsynetTrafficProfile profile() const { return m_traffic_profile; }
+    /**
+     * @brief Return packet injected rate.
+     */
     double pir() const { return m_packet_inject_rate; }
+    /**
+     * @brief Return packet size.
+     */
     double pacSize() const { return m_packet_size; }
+    /**
+     * @brief Return pointer to random generator.
+     */
     EsyRandGen* randGen() const { return mp_rand_gen; }
+    /**
+     * @brief Return input stream of trace file to read.
+     */
+    std::ifstream& readStream()  { return m_read_stream; }
+    /**
+     * @brief Return output stream of trace file to write.
+     */
+    std::ofstream& writeStream() { return m_write_stream; }
+    /**
+     * @}
+     */
 
     /**
      * @brief Generate packet for one router at one cycle according to traffic
@@ -125,13 +206,45 @@ public:
      */
     EsyNetworkPacketPtr genPacketProfiles( long id );
 
-    std::ifstream& readStream()  { return m_read_stream; }
-    std::ofstream& writeStream() { return m_write_stream; }
-    bool openReadFile( const std::string& name );
+    /**
+     * @brief Open trace file to read.
+     * @param name file name to open.
+     * @return The maximum time from file.
+     * @retval 0 if the file is not open correctly.
+     */
+    uint64_t openReadFile( const std::string& name );
+    /**
+     * @brief Open trace file to write.
+     * @param name file name to open.
+     * @return True if the file is opened correctly.
+     */
     bool openWriteFile( const std::string& name );
+    /**
+     * @brief Close trace file to read.
+     * @return True if the file is closed correctly.
+     */
     bool closeReadFile();
-    bool closeWriteFile();
+    /**
+     * @brief Close trace file to write.
+     *
+     * Write @a max_time to the head of trace file.
+     * 
+     * @param max_time Maximum cycle to write at the head of trace file.
+     * @return True if the file is closed correctly.
+     */
+    bool closeWriteFile( uint64_t max_time );
+
+    /**
+     * @brief Read one packet from trace file.
+     * @return Shared pointer of the read network packet.
+     * @retval Null-pointer if no packet is read.
+     */
     EsyNetworkPacketPtr readPacketFromFile();
+    /**
+     * @brief Write one packet from trace file.
+     * @param pac Shared pointer of the read network packet.
+     * @return True if the packet is write correctly.
+     */
     bool writePacketToFile( EsyNetworkPacketPtr pac );
 };
 

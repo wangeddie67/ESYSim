@@ -1,5 +1,5 @@
 /*
- * File name : esynet_ni_unit.cc
+ * File name : esy_ni_unit.cc
  * Function : Implement NI module.
  *
  * This program is free software; you can redistribute it and/or
@@ -22,12 +22,11 @@
 
 /**
  * @ingroup ESYNET_NI
- * @file esynet_ni_unit.cc
+ * @file esy_ni_unit.cpp
  * @brief Implement NI module.
  */
 
-#include "esynet_ni_unit.h"
-#include "esynet_random_unit.h"
+#include "esy_ni_unit.h"
 
 EsynetNI::EsynetNI( const EsyNetCfg & network_cfg, long id, long router, long port )
     : EsynetSimBaseUnit()
@@ -150,13 +149,10 @@ void EsynetNI::niSimPipeline()
 
 }
 
-void EsynetNI::injectPacket( const EsynetFlit& t_flit )
+void EsynetNI::injectPacket( uint64_t time, uint32_t dst, uint32_t length )
 {
-    // inject flits
-    long pac_size = t_flit.flitSize();
-
     // loop all flits in packet
-    for ( long l = 0; l < pac_size; l ++ )
+    for ( uint32_t l = 0; l < length; l ++ )
     {
         esynet::EsynetPayload flit_data;
         // generate flit data

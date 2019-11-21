@@ -1,5 +1,5 @@
 /*
- * File name : esynet_event_queue.h
+ * File name : esy_event_queue.h
  * Function : Declare event queue.
  *
  * This program is free software; you can redistribute it and/or
@@ -21,27 +21,31 @@
  */
 
 /**
- * @ingroup ESYNET_SIM_ENGINE
- * @file esynet_event_queue.h
- * @brief Declare ESYNet event queue.
+ * @defgroup ESY_SIM_ENGINE Simulation Engine
+ * @brief Event and event queue.
+ */
+
+/**
+ * @ingroup ESY_SIM_ENGINE
+ * @file esy_event_queue.h
+ * @brief Declare event and event queue.
  */
 
 #ifndef ENGINE_ESY_EVENT_QUEUE_H_
 #define ENGINE_ESY_EVENT_QUEUE_H_
 
-#include <set>
 #include <map>
 #include <iostream>
 #include <memory>
 
 /**
- * @ingroup ESYNET_SIM_ENGINE
+ * @ingroup ESY_SIM_ENGINE
  * @brief Event structure.
  */
 class EsyEvent
 {
-public:
-    uint64_t m_time;        /*!< @brief Event time. */
+protected:
+    uint64_t m_time;        /*!< @brief Event response time. */
     uint16_t m_type;        /*!< @brief Event type. */
     void*    mp_payload;    /*!< @brief Event payload. */
 
@@ -62,21 +66,12 @@ public:
      * @brief Construct an instance with all field specified.
      * @param time event time.
      * @param type event type.
-     * @param payload event payload.
+     * @param payload pointer to event payload.
      */
     EsyEvent( uint64_t time, uint16_t type, void* payload )
         : m_time( time )
         , m_type( type )
         , mp_payload( payload )
-    {}
-    /**
-     * @brief Construct an instance by copying from exist instance.
-     * @param t Instance to copy.
-     */
-    EsyEvent( const EsyEvent& t )
-        : m_time( t.m_time )
-        , m_type( t.m_type )
-        , mp_payload( t.mp_payload )
     {}
     /**
      * @}
@@ -87,7 +82,7 @@ public:
      * @{
      */
     /**
-     * @brief Return event time.
+     * @brief Return event reponse time.
      */
     uint64_t eventTime() const { return m_time; }
     /**
@@ -103,47 +98,58 @@ public:
      */
 };
 
+/**
+ * @ingroup ESY_SIM_ENGINE
+ * @brief Shared pointer of event
+ */
 typedef std::shared_ptr< EsyEvent > EsyEventPtr;
 
-/* return if message $a$ is before message $b$ */
-bool operator<(const EsyEventPtr & a, const EsyEventPtr & b);
-
 /**
- * @ingroup ESYNET_SIM_ENGINE
+ * @ingroup ESY_SIM_ENGINE
  * @brief Event queue.
  */
-class EsyEventQueue : public std::multiset< EsyEventPtr >
+class EsyEventQueue
 {
 public:
-    typedef void (*EsyEventFun)(EsyEventQueue* queue,
-                                uint64_t time,
-                                void* payload);
+    /**
+     * @brief Type of response function
+     */
+    typedef void (*EsyEventFun)(EsyEventQueue* queue, void* payload);
+
+    static uint16_t SIM_STOP_EVENT; /*!< @brief Cofe of simulation stop event.
+        Constant value is 0. */
 
 private:
     uint64_t m_curr_time;       /*!< @brief Simulation time. */
     uint64_t m_event_counter;   /*!< @brief Number of message injected. */
+    std::multimap< uint64_t, EsyEventPtr > m_event_map; /*!< @brief Sorted map 
+        between event time and event pointer */
     std::map< uint16_t, EsyEventFun > m_event_fun_map;  /*!< @brief Map between
         event type and event function. */
 
 public:
     /**
      * @brief Construction function.
-     * @param start_time Start simulation time.
-     * @param sim_platform Pointer to simlation platform.
-     * @param argument_cfg Pointer to option list.
+     * @param sim_length Simulaion length is cycle.
      */
-    EsyEventQueue( double start_time );
-    /**
-     * @brief Destruction function.
-     */
-    ~EsyEventQueue();
+    EsyEventQueue( uint64_t sim_length );
 
     /**
-     * @brief Insert new event into the event queue.
+     * @brief Return current simulation time.
+     */
+    uint64_t currTime() const { return m_curr_time; }
+
+    /**
+     * @brief Insert new event into the event queue and increase event counter.
      * @param e Event to insert.
      */
-    void insertEvent( const EsyEventPtr & e ) { m_event_counter++; insert(e); }
+    void insertEvent( const EsyEventPtr & e );
 
+    /**
+     * @brief Register event type and response function.
+     * @param type Code of event type.
+     * @param fun  Pointer to event response function.
+     */
     void registerEvent( uint16_t type, EsyEventFun fun )
     {
         m_event_fun_map.insert(
@@ -151,11 +157,15 @@ public:
     }
 
     /**
-     * @brief Handle all event before specified simulation time.
-     * @param sim_cycle Simulation time.
+     * @brief Handle all events before specified simulation time.
+     * @param sim_cycle Simulation time to pause.
      */
-    void simulator( uint64_t sim_cycle );
+    bool simulate( uint64_t sim_cycle );
 
+    /**
+     * @brief Run entire simulation until simulation stop.
+     */
+    void simAll();
 };
 
 #endif

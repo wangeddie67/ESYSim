@@ -26,23 +26,23 @@
  * @brief Declare network platform
  */
 
-#ifndef ESYNET_FOUNDATION_H
-#define ESYNET_FOUNDATION_H
+#ifndef ESYNET_ESYNET_SIM_H_
+#define ESYNET_ESYNET_SIM_H_
 
-#include "esy_linktool.h"
-#include "esynet_ni_unit.h"
-#include "esynet_router_unit.h"
-#include "esynet_packet_generator.h"
+#include "../engine/esy_event_queue.h"
+#include "../randgen/esy_random.h"
+#include "../syscfg/esy_netcfg.h"
+#include "../trafficgen/esy_packetgenerator.h"
 
 /**
  * @ingroup ESYNET_NETWORK
  * @brief Simulation platform.
  */
-class EsynetFoundation : public EsynetSimBaseUnit
+class Esynet
 {
 public:
     /**
-     * @brief State of measurement.
+     * @brief State- of measurement.
      */
     enum MeasureState
     {
@@ -52,15 +52,21 @@ public:
         MEASURE_END    /*!< Measurement has finished. */
     };
 
+    enum EventType
+    {
+        EVENT_CYCLE = 1,        /*!< Clock event. */
+        EVENT_PAC_INJECT = 2,   /*!< Packet Injection. */
+    };
+
 protected:
-    const EsyNetCfg & m_network_cfg;        /*!< @brief Reference to network configuration structure. */
-    const EsynetConfig & m_argument_cfg;    /*!< @brief Reference to argument configuration structure. */
+    EsyRandGen* mp_random_gen;
+    EsyPacketGenerator* mp_packet_gen;
 
-    std::vector< EsynetRouter > m_router_list;  /*!< @brief Vector of router component. */
-    std::vector< EsynetNI > m_ni_list;  /*!< @brief Vector of process element componenet. */
+    //std::vector< EsynetRouter > m_router_list;  /*!< @brief Vector of router component. */
+    //std::vector< EsynetNI > m_ni_list;  /*!< @brief Vector of process element componenet. */
 
-    EsynetPacketGenerator m_packet_generator; /*!< @brief packet generator */
-    EsynetFoundationStatistic m_statistic;  /*!< @brief Global statistic unit. */
+    //EsynetPacketGenerator m_packet_generator; /*!< @brief packet generator */
+    //EsynetFoundationStatistic m_statistic;  /*!< @brief Global statistic unit. */
     MeasureState m_latency_measure_state;  /*!< @brief State of measurement of average latency. */
     MeasureState m_throughput_measure_state;  /*!< @brief State of measurement of throughput. */
     MeasureState m_injection_state; /*!< @brief State of injection and acception if the number of packet is limited. */
@@ -78,7 +84,12 @@ public:
      * @param network_cfg  reference to network configuration structure.
      * @param argument_cfg reference to argument configuration structure.
      */
-    EsynetFoundation( const EsyNetCfg & network_cfg, const EsynetConfig & argument_cfg );
+    Esynet( const EsyNetCfg & network_cfg,
+            EsyRandGen* random_gen,
+            EsyPacketGenerator* packet_gen,
+            EsyEventQueue* event_queue
+          );
+
 
     /**
      * @name Functions to access variables
@@ -88,27 +99,17 @@ public:
      * @brief Access state of latency measurement #m_latency_measure_state.
      * @return stat of latency measurement #m_latency_measure_state.
      */
-    inline MeasureState latencyMeasureState() const { return m_latency_measure_state; }
+    MeasureState latencyMeasureState() const { return m_latency_measure_state; }
     /**
      * @brief Access state of throughput measurement #m_throughput_measure_state.
      * @return stat of throughput measurement #m_throughput_measure_state.
      */
-    inline MeasureState throughputMeasureState() const { return m_throughput_measure_state; }
+    MeasureState throughputMeasureState() const { return m_throughput_measure_state; }
     /**
      * @brief Access state of throughput measurement # m_injection_state*.
      * @return stat of throughput measurement #m_injection_state.
      */
-    inline MeasureState limitedInjectionState() const { return m_injection_state; }
-    /**
-     * @brief Access the specified router.
-     * @param id  id of specified router.
-     * @return  reference to this router entity.
-     */
-    inline EsynetRouter & router( long id ) { return m_router_list[ id ]; }
-    /**
-     * @brief Return list of accepted packet.
-     */
-    std::vector< EsynetEvent > acceptList();
+    MeasureState limitedInjectionState() const { return m_injection_state; }
     /**
      * @}
      */
@@ -148,69 +149,17 @@ public:
     void informationPropagate();
 
     /**
-     * @name Functions to handle simulation event
-     * @{
-     */
-    /**
-     * @brief Message injection event handler.
-     *
-     * - Fill in the field of packet id and flit flag.
-     * - Generate a new packet and inject the packet into PE.
-     *
-     * @param mesg  including the packet to inject.
-     */
-    void receiveEvgMessage(const EsynetEvent & mesg);
-    /**
-     * @brief Router period event handler.
-     *
-     * - insert next router period event into message queue.
-     * - run router pipeline.
-     * - collect the statistic variable.
-     * - propagate information between routers and PEs.
-     *
-     * @param mesg  including the router and the period.
-     */
-    void receiveRouterMessage(const EsynetEvent & mesg);
-    /**
-     * @brief Receive flit event handler.
-     *
-     * - injected the flit into the input buffer of router.
-     * - clear the flag of flit on link.
-     *
-     * @param mesg  including the flit to receive.
-     */
-    void receiveWireMessage(const EsynetEvent & mesg);
-    /**
-     * @brief Receive credit event handler.
-     * @param mesg  including the credit to receive.
-     */
-    void receiveCreditMessage(const EsynetEvent & mesg);
-    /**
-     * @brief Receive NI read event handler.
-     * @param mesg  including the ni read to receive.
-     */
-    void receiveNiReadMessage(const EsynetEvent & mesg);
-    /**
-     * @}
-     */
-
-    /**
      * @brief Collect simulation results and print them out through standard
      * error and link tool interface.
      */
     void simulationResults();
 
-    /**
-     * @brief Overwrite the handler to simulation event.
-     *
-     * - set the simulation period of routers and PEs.
-     * - handle the simulation event by calling corresponding functions.
-     * - collect new generated events.
-     *
-     * @param time  current simulation time.
-     * @param mess  message to handle.
-     */
-    void eventHandler(double time, const EsynetEvent & mess);
+    void handleClockEvent( EsyEventQueue* queue );
+
+    void handlePacketInjectEvent( EsyEventQueue* queue,
+                                  uint32_t src_ni,
+                                  uint32_t dst_ni,
+                                  uint32_t length );
 };
 
 #endif

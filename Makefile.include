@@ -39,8 +39,8 @@ LINK_OBJ :=
 LINK_LIB :=
 
 # GNU C/C++ Command
-CCPP   := g++
-CC     := gcc
+CCPP   := g++ -std=c++11
+CC     := gcc -std=c11
 OFLAGS = -g -Wall $(LINK_DIR) $(LINK_OBJ) $(LINK_LIB)
 CFLAGS = -g -Wall $(INC_DIR)
 

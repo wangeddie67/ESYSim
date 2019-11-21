@@ -1,5 +1,5 @@
 /*
- * File name : esynet_event_queue.h
+ * File name : esy_event_queue.h
  * Function : Implement event queue.
  *
  * This program is free software; you can redistribute it and/or
@@ -21,54 +21,92 @@
  */
 
 /**
- * @ingroup ESYNET_SIM_ENGINE
- * @file esynet_event_queue.h
- * @brief Implement ESYNet event queue.
+ * @ingroup ESY_SIM_ENGINE
+ * @file esy_event_queue.cpp
+ * @brief Implement event queue.
  */
 
 #include "esy_event_queue.h"
 
-bool operator<( const EsyEventPtr & a, const EsyEventPtr & b )
-{
-    return a->eventTime() < b->eventTime();
-}
+uint16_t EsyEventQueue::SIM_STOP_EVENT = 0;
 
-EsyEventQueue::EsyEventQueue( double start_time )
-    : m_curr_time( start_time )
+EsyEventQueue::EsyEventQueue( uint64_t sim_length )
+    : m_curr_time( 0 )
     , m_event_counter( 0 )
 {
+    // Append stop event.
+    EsyEventPtr stop_event( new EsyEvent( sim_length, SIM_STOP_EVENT, NULL ) );
+    insertEvent( stop_event );
 }
 
-void EsyEventQueue::simulator( uint64_t sim_cycle )
+void
+EsyEventQueue::insertEvent(const EsyEventPtr& e)
 {
-    // loop while there is any packets in queue
-    while( size() > 0 )
+    m_event_counter++;
+    m_event_map.insert(
+        std::pair< uint64_t, EsyEventPtr >( e->eventTime(), e ) );
+}
+
+
+bool
+EsyEventQueue::simulate( uint64_t sim_cycle )
+{
+    // Loop all packets in the queue
+    while( m_event_map.size() > 0 )
     {
-        // get the first message and its time
-        EsyEventPtr curr_event = *begin();
+        // Get the first message and its time
+        EsyEventPtr curr_event = m_event_map.begin()->second;
         m_curr_time = curr_event->eventTime();
-        // current time is later than sim_cycle, end simulator step
+
+        // If current time is later than sim_cycle, end simulation step
         if( m_curr_time > sim_cycle )
         {
-            return;
+            return true;
         }
 
-        // remove first message from queue
-        erase( begin() );
+        // Remove first message from queue.
+        m_event_map.erase( m_event_map.begin() );
 
+        // If meeting simulation stop event, quit simulation.
+        if ( curr_event->eventType() == SIM_STOP_EVENT )
+        {
+            return false;
+        }
+
+        // Get response function to this event.
         std::map< uint16_t, EsyEventFun >::iterator iter =
             m_event_fun_map.find( curr_event->eventType() );
- 
-        if( iter != m_event_fun_map.end() )
+
+        // If there is unkown event type, print error information.
+        if( iter == m_event_fun_map.end() )
         {
             std::cout << "[ERROR] Unknown event type "
                 << curr_event->eventType() << "." << std::endl;
         }
+        // Call response function
         else
         {
             EsyEventFun fun = iter->second;
-            fun( this, m_curr_time, curr_event->eventPayload() );
+            fun( this, curr_event->eventPayload() );
         }
+    }
+
+    // Return true so that simulation can continue
+    return true;
+}
+
+void
+EsyEventQueue::simAll()
+{
+    uint64_t sim_cycle = m_curr_time;
+    bool end_flag = true;
+
+    // Loop simulation step until the simulation stop event
+    while ( end_flag )
+    {
+        // Simulation step
+        sim_cycle += 1;
+        end_flag = simulate( sim_cycle );
     }
 }
 
